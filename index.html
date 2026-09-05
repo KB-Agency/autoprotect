@@ -1,0 +1,2369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AUTOPROTECTTMN — детейлинг-студия в Тюмени: плёнка, полировка, салон</title>
+<meta name="description" content="AUTOPROTECTTMN — детейлинг-студия в Тюмени: оклейка защитной полиуретановой плёнкой, смена цвета кузова, полировка с керамикой, шумоизоляция, перешив салона. Опыт мастеров более 15 лет, гарантия 1 год.">
+<meta name="theme-color" content="#0a0a0b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUTOPROTECTTMN">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="AUTOPROTECTTMN — детейлинг-студия в Тюмени">
+<meta property="og:description" content="Защитная полиуретановая плёнка, смена цвета кузова, полировка с керамикой, шумоизоляция и перешив салона. Опыт мастеров более 15 лет, гарантия 1 год.">
+<meta property="og:image" content="assets/og-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js" integrity="sha384-fljlqkjWlmSFjkESkQvm77heIZpoWmXEOzlCA7kOpGUH+95Zk0yGfQieWM2q136E" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<!-- Leaflet — живая тёмная карта в контактах. Грузится с CDN; если сети нет,
+     карта просто не показывается, а под ней остаётся рисованная схема. -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous" referrerpolicy="no-referrer">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<style>
+  :root{
+    --ink:#0a0a0b;
+    --graphite:#141416;
+    --graphite-2:#1c1c1f;
+    --graphite-3:#242428;
+    --line:#2e2e32;
+    --paper:#f1efe9;
+    --paper-dim:#9a9892;
+    --gold:#c9a962;
+    --gold-bright:#eed7a3;
+    --gold-dim:#7d6a42;
+    --ease:cubic-bezier(0.65,0,0.35,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--gold); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---- Появление при скролле. Класс .reveal вешает JS, поэтому при
+         отключённом JS ничего не прячется и весь контент виден сразу. ---- */
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  }
+  .reveal.visible{ opacity:1; transform:none; }
+
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ============ NAV ============ */
+  nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 6vw;
+    mix-blend-mode:difference;
+  }
+  .logo{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:700;
+    font-size:16px;
+    letter-spacing:0.02em;
+    color:var(--paper);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo span{color:var(--gold);}
+  .logo-svg{ width:126px; height:50px; display:block; flex-shrink:0; }
+  .nav-links{
+    display:flex;
+    gap:36px;
+  }
+  .nav-links a{
+    font-size:13px;
+    color:var(--paper);
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.02em;
+  }
+  .nav-cta{
+    font-size:13px;
+    padding:10px 18px;
+    border:1px solid var(--paper);
+    color:var(--paper);
+    font-family:'JetBrains Mono', monospace;
+  }
+  @media (max-width:800px){ .nav-links{display:none;} }
+
+  .burger-btn{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    width:32px; height:32px;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:6px;
+    z-index:200;
+  }
+  .burger-btn span{
+    display:block; width:22px; height:1.5px; background:var(--paper);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger-btn.open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2){ opacity:0; }
+  .burger-btn.open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0;
+    background:var(--ink);
+    z-index:150;
+    display:flex; flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:28px;
+    padding:0 8vw;
+    opacity:0; pointer-events:none;
+    visibility:hidden;
+    transform:translateY(-12px);
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s linear 0.3s;
+  }
+  .mobile-menu.open{ opacity:1; pointer-events:auto; visibility:visible; transform:translateY(0); transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s; }
+  .mobile-menu a{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:32px; font-weight:600; color:var(--paper);
+  }
+  .mobile-menu a.mobile-cta{
+    margin-top:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; color:var(--gold);
+    border:1px solid var(--gold-dim); padding:14px 24px;
+  }
+
+  @media (max-width:800px){ .burger-btn{ display:flex; } }
+
+  /* ============ HERO (video slot placeholder) ============ */
+  .hero{
+    position:relative;
+    height:100vh;
+    min-height:640px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% 60%, rgba(201,169,98,0.05), transparent 65%),
+      var(--ink);
+    overflow:hidden;
+  }
+  .hero-canvas{ position:absolute; inset:0; width:100%; height:100%; display:block; opacity:0.6; z-index:0; }
+  .hero-cta{ position:relative; z-index:2; }
+  .hero-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent 75%);
+            mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent 75%);
+  }
+  .hero h1{
+    font-size:clamp(40px, 7vw, 96px);
+    color:var(--paper);
+    max-width:1000px;
+    position:relative; z-index:2;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold);
+  }
+  .hero p{
+    margin-top:24px;
+    color:var(--paper-dim);
+    font-size:16px;
+    max-width:480px;
+    position:relative; z-index:2;
+  }
+  .scroll-cue{
+    position:absolute;
+    top:50%; right:6vw;
+    transform:translateY(-50%) rotate(90deg);
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.2em;
+    color:var(--paper-dim);
+    z-index:2;
+  }
+
+  /* ============ SECTIONS SHARED ============ */
+  section{ padding:130px 6vw; position:relative; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-dim);
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--gold-dim);}
+
+  /* ============ SERVICES ============ */
+  /* ---- Атмосфера секций. Плоские заливки через одну (то ink, то graphite)
+         давали резкую грань на стыке. Теперь каждая секция начинается и
+         заканчивается базовым тоном, а свой оттенок набирает плавно внутри
+         — стыки становятся невидимыми. Плюс мягкие радиальные подсветки,
+         как в блоке контактов, чтобы не было ощущения плоскости. ---- */
+  .services{
+    background:
+      radial-gradient(900px 520px at 78% 12%, rgba(201,169,98,0.07), transparent 62%),
+      radial-gradient(700px 460px at 8% 88%, rgba(143,168,201,0.045), transparent 66%),
+      var(--ink);
+  }
+  .services-head{ max-width:640px; margin-bottom:64px; }
+  .services-head h2{ font-size:clamp(32px, 4vw, 52px); margin-bottom:20px; }
+  .services-head p{ color:var(--paper-dim); font-size:17px; line-height:1.6; max-width:520px; }
+
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .service-card{
+    position:relative;
+    background:var(--graphite);
+    padding:44px 36px;
+    min-height:300px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .service-card::before{
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%), rgba(201,169,98,0.16), rgba(201,169,98,0.05) 40%, transparent 70%);
+    opacity:0; transition:opacity 0.4s ease; z-index:0;
+  }
+  .service-card::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(115deg, transparent 20%, rgba(232,207,148,0.25) 45%, rgba(232,207,148,0.5) 50%, rgba(232,207,148,0.25) 55%, transparent 80%);
+    background-size:250% 250%;
+    background-position:var(--sheen-x,-100%) var(--sheen-y,-100%);
+    mix-blend-mode:overlay; opacity:0; transition:opacity 0.4s ease; pointer-events:none; z-index:1;
+  }
+  .service-card:hover::before, .service-card:hover::after{ opacity:1; }
+  .service-card:hover{ background:var(--graphite-2); }
+  .card-number{ font-size:13px; color:var(--gold-dim); position:relative; z-index:2; }
+  .card-title{ font-family:'Bricolage Grotesque', sans-serif; font-size:24px; font-weight:600; margin:22px 0 12px; position:relative; z-index:2; transition:color 0.3s ease; }
+  .service-card:hover .card-title{ color:var(--gold-bright); }
+  .card-desc{ font-size:14px; color:var(--paper-dim); line-height:1.6; position:relative; z-index:2; max-width:280px; }
+  .card-price{ margin-top:26px; font-size:12px; color:var(--gold); position:relative; z-index:2; display:flex; align-items:center; gap:8px; }
+  .card-price::after{ content:'→'; transition:transform 0.3s ease; }
+  .service-card:hover .card-price::after{ transform:translateX(4px); }
+  @media (max-width:900px){ .card-grid{ grid-template-columns:1fr; } }
+
+  .services-full-link{
+    display:inline-flex; align-items:center; gap:10px;
+    margin-top:32px; font-size:14px; color:var(--gold);
+    font-family:'JetBrains Mono', monospace; letter-spacing:0.03em;
+    border-bottom:1px solid var(--gold-dim); padding-bottom:4px;
+    transition:gap 0.3s var(--ease), color 0.3s ease;
+  }
+  .services-full-link:hover{ gap:16px; color:var(--gold-bright); }
+
+  /* ============ CONFIGURATOR ============ */
+  .configurator{
+    /* тон набирается плавно: сверху и снизу — базовый ink, поэтому стык
+       с соседними секциями не читается как линия */
+    background:
+      radial-gradient(760px 480px at 22% 24%, rgba(201,169,98,0.06), transparent 64%),
+      linear-gradient(180deg, var(--ink) 0%, var(--graphite) 14%, var(--graphite) 86%, var(--ink) 100%);
+    padding:0;
+  }
+  .config-wrap{
+    display:grid;
+    grid-template-columns:0.8fr 1.2fr;
+    min-height:640px;
+  }
+  .config-left{
+    padding:100px 5vw 60px;
+    display:flex;
+    flex-direction:column;
+    border-right:1px solid var(--line);
+  }
+  .config-left h2{ font-size:clamp(30px,3.4vw,44px); margin-bottom:16px; }
+  .config-left > p{ color:var(--paper-dim); font-size:15px; line-height:1.65; max-width:360px; margin-bottom:36px; }
+  .group-label{ font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper-dim); margin-bottom:14px; }
+
+  .finish-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:32px; }
+  .finish-btn{
+    background:var(--graphite-2); border:1px solid var(--line); color:var(--paper-dim);
+    font-family:'JetBrains Mono', monospace; font-size:11px; padding:11px 4px; cursor:pointer;
+    transition:all 0.25s var(--ease);
+  }
+  .finish-btn:hover{ border-color:var(--gold-dim); color:var(--paper); }
+  .finish-btn.active{ background:var(--gold); border-color:var(--gold); color:var(--ink); font-weight:600; }
+
+  .swatch-grid{ display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:auto; }
+  .swatch-btn{
+    width:100%; aspect-ratio:1; border-radius:50%; cursor:pointer; border:2px solid transparent; position:relative; padding:0;
+    transition:transform 0.25s var(--ease);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1), inset 0 -6px 10px rgba(0,0,0,0.35), inset 0 4px 6px rgba(255,255,255,0.12);
+  }
+  .swatch-btn:hover{ transform:translateY(-3px); }
+  .swatch-btn.active::after{ content:''; position:absolute; inset:-6px; border-radius:50%; border:1.5px solid var(--gold); }
+
+  .selection-readout{ margin-top:30px; padding-top:22px; border-top:1px solid var(--line); }
+  .readout-color-name{ font-family:'Bricolage Grotesque', sans-serif; font-size:19px; font-weight:600; margin-bottom:4px; }
+  .readout-finish-name{ font-size:12px; color:var(--gold); text-transform:uppercase; letter-spacing:0.05em; }
+
+  .cta-btn{
+    margin-top:26px; background:transparent; border:1px solid var(--gold-dim); color:var(--paper);
+    font-family:'Inter', sans-serif; font-size:14px; font-weight:500; padding:15px 20px; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; transition:all 0.3s var(--ease);
+  }
+  .cta-btn:hover{ background:var(--gold); border-color:var(--gold); color:var(--ink); }
+  .cta-arrow{ transition:transform 0.3s var(--ease); }
+  .cta-btn:hover .cta-arrow{ transform:translateX(4px); }
+
+  .config-right{
+    position:relative;
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 8%, rgba(255,255,255,0.05), transparent 60%),
+      radial-gradient(ellipse 120% 90% at 50% 55%, #1c1c1f 0%, #0d0d0e 55%, #050506 100%),
+      radial-gradient(ellipse 160% 110% at 50% 100%, rgba(0,0,0,0.7), transparent 60%),
+      #060607;
+  }
+  #carCanvas{ width:100%; height:100%; display:block; cursor:grab; touch-action:none; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  #carCanvas:active{ cursor:grabbing; }
+  .drag-hint{
+    position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.08em; text-transform:uppercase;
+    display:flex; align-items:center; gap:8px; pointer-events:none;
+  }
+  .loading-tag{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    font-size:12px; color:var(--gold-dim); letter-spacing:0.1em; text-transform:uppercase;
+  }
+  @media (max-width:900px){
+    .config-wrap{ grid-template-columns:1fr; }
+    .config-left{ border-right:none; border-bottom:1px solid var(--line); padding-top:60px; }
+    .config-right{ height:480px; }
+  }
+  /* На телефоне кружки в 3 колонки раздувались до ~96px. Держим 6 в ряд,
+     но ограничиваем размер: ~46px — и компактно, и палец попадает. */
+  @media (max-width:900px){
+    .swatch-grid{ grid-template-columns:repeat(6,1fr); gap:10px; max-width:340px; }
+  }
+  @media (max-width:380px){
+    .swatch-grid{ gap:8px; }
+  }
+
+  /* ============ PROCESS ============ */
+  .process{
+    background:
+      radial-gradient(820px 500px at 12% 18%, rgba(201,169,98,0.06), transparent 62%),
+      radial-gradient(680px 440px at 92% 82%, rgba(143,168,201,0.05), transparent 66%),
+      var(--ink);
+  }
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:1px;
+    margin-top:64px;
+    background:rgba(46,46,50,0.55);
+  }
+  .step{
+    position:relative;
+    /* без backdrop-filter: размытие пересчитывалось на каждом кадре скролла */
+    background:linear-gradient(180deg, rgba(20,20,22,0.72), rgba(10,10,11,0.86));
+    padding:36px 28px 40px;
+    display:flex; flex-direction:column; gap:14px;
+    transition:background 0.35s var(--ease);
+  }
+  .step:hover{ background:var(--graphite); }
+  .step-num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.15em; color:var(--gold-dim);
+    transition:color 0.35s ease;
+  }
+  .step:hover .step-num{ color:var(--gold); }
+  /* золотая линия-коннектор: прорастает по верхнему краю при наведении */
+  .step::before{
+    content:'';
+    position:absolute; top:-1px; left:0; right:0; height:1px;
+    background:var(--gold);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform 0.45s var(--ease);
+  }
+  .step:hover::before{ transform:scaleX(1); }
+  .step-title{ font-family:'Bricolage Grotesque', sans-serif; font-size:17px; font-weight:600; }
+  .step-desc{ font-size:13.5px; color:var(--paper-dim); line-height:1.6; }
+  .step-meta{ margin-top:auto; padding-top:12px; font-family:'JetBrains Mono', monospace; font-size:11px; color:var(--gold-dim); }
+  /* шагов 5 — в две колонки последний растягиваем на всю ширину,
+     иначе пустая ячейка светится цветом фона-сетки */
+  @media (max-width:1100px){
+    .process-grid{ grid-template-columns:repeat(2,1fr); }
+    .step:last-child{ grid-column:1 / -1; }
+  }
+  @media (max-width:600px){
+    .process-grid{ grid-template-columns:1fr; }
+    .step:last-child{ grid-column:auto; }
+  }
+
+  /* ============ СЛАЙДЕР «С ПЛЁНКОЙ / БЕЗ ПЛЁНКИ» ============ */
+  .compare{
+    background:
+      radial-gradient(820px 500px at 20% 15%, rgba(201,169,98,0.06), transparent 62%),
+      linear-gradient(180deg, var(--ink) 0%, var(--graphite) 15%, var(--graphite) 85%, var(--ink) 100%);
+  }
+  .compare-stage{
+    position:relative;
+    margin-top:56px;
+    aspect-ratio:16/9;
+    max-height:620px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    user-select:none;
+    touch-action:pan-y;      /* вертикальный скролл страницы не блокируем */
+    cursor:ew-resize;
+  }
+  .compare-layer{ position:absolute; inset:0; }
+  .compare-layer svg{ display:block; width:100%; height:100%; }
+  /* Верхний слой обрезается по позиции ручки — так «проявляется» нижний */
+  .compare-top{ clip-path:inset(0 0 0 var(--split, 50%)); }
+  .compare-handle{
+    position:absolute; top:0; bottom:0;
+    left:var(--split, 50%);
+    width:2px; margin-left:-1px;
+    background:var(--gold);
+    box-shadow:0 0 18px rgba(201,169,98,0.55);
+    z-index:3;
+  }
+  /* без круга — только стрелки на самой грани, так сдержаннее */
+  .compare-knob{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    display:flex; align-items:center; gap:16px;
+    color:var(--gold);
+    font-size:19px; line-height:1;
+    text-shadow:0 0 10px rgba(10,10,11,0.9), 0 0 22px rgba(10,10,11,0.7);
+    pointer-events:none;
+  }
+  .compare-stage:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+  .compare-tag{
+    position:absolute; top:18px; z-index:2;
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.14em;
+    padding:8px 14px;
+    background:rgba(10,10,11,0.78);
+    border:1px solid var(--line);
+  }
+  .compare-tag-before{ left:18px; color:#d98a8a; }
+  .compare-tag-after{ right:18px; color:var(--gold-bright); }
+  .compare-note{
+    margin-top:18px; font-family:'JetBrains Mono', monospace;
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.06em;
+  }
+  @media (max-width:700px){
+    .compare-stage{ aspect-ratio:4/3; }
+    .compare-knob{ font-size:16px; gap:12px; }
+  }
+
+  /* ============ FAQ ============ */
+  .faq{
+    background:
+      radial-gradient(760px 460px at 88% 20%, rgba(201,169,98,0.055), transparent 64%),
+      linear-gradient(180deg, var(--ink) 0%, var(--graphite) 16%, var(--graphite) 84%, var(--ink) 100%);
+  }
+  .faq-list{ margin-top:56px; max-width:840px; }
+  .faq-item{ border-top:1px solid var(--line); }
+  .faq-item:last-child{ border-bottom:1px solid var(--line); }
+  .faq-item summary{
+    list-style:none; cursor:pointer;
+    padding:26px 44px 26px 0;
+    position:relative;
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:clamp(16px,1.9vw,20px); font-weight:600; color:var(--paper);
+    transition:color 0.25s ease;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary:hover{ color:var(--gold-bright); }
+  /* плюс, который превращается в минус при раскрытии */
+  .faq-item summary::after{
+    content:''; position:absolute; right:6px; top:50%;
+    width:13px; height:1px; background:var(--gold);
+    transition:transform 0.3s var(--ease);
+  }
+  .faq-item summary::before{
+    content:''; position:absolute; right:12px; top:50%;
+    width:1px; height:13px; background:var(--gold);
+    transform:translateY(-50%);
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .faq-item[open] summary::before{ opacity:0; transform:translateY(-50%) rotate(90deg); }
+  .faq-answer{ padding:0 60px 30px 0; color:var(--paper-dim); font-size:15px; line-height:1.7; max-width:640px; }
+
+  /* ============ STATS ============ */
+  .stats{
+    background:
+      radial-gradient(900px 540px at 50% 50%, rgba(201,169,98,0.05), transparent 68%),
+      var(--ink);
+    overflow:hidden;
+  }
+  .stats-canvas-wrap{ position:absolute; inset:0; opacity:0.5; }
+  #linesCanvas{ width:100%; height:100%; display:block; }
+  .stats-inner{ position:relative; z-index:2; }
+  .stats-inner h2{ font-size:clamp(30px,3.6vw,46px); max-width:600px; }
+  .stats-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:48px; margin-top:60px; }
+  .stat-item{ border-top:1px solid var(--line); padding-top:22px; }
+  .stat-number{ font-family:'Bricolage Grotesque', sans-serif; font-size:clamp(38px,4vw,60px); font-weight:700; display:flex; align-items:baseline; gap:4px; }
+  .stat-number .suffix{ font-size:0.5em; color:var(--gold); font-weight:600; }
+  .stat-label{ font-size:13.5px; color:var(--paper-dim); margin-top:10px; max-width:200px; }
+  @media (max-width:900px){ .stats-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ============ CONTACT / FOOTER ============ */
+  .contact{
+    position:relative;
+    overflow:hidden;
+    background:
+      radial-gradient(1000px 550px at 10% -10%, rgba(201,169,98,0.14), transparent 60%),
+      radial-gradient(800px 500px at 100% 110%, rgba(143,168,201,0.09), transparent 65%),
+      linear-gradient(180deg, var(--ink) 0%, var(--graphite) 15%, var(--graphite) 100%);
+  }
+  .contact-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 65% 65% at 20% 15%, black, transparent 70%);
+            mask-image:radial-gradient(ellipse 65% 65% at 20% 15%, black, transparent 70%);
+  }
+  .contact-wrap{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:1fr 1fr; gap:70px; align-items:center;
+  }
+  .contact-inner{ max-width:560px; }
+  .contact h2{ font-size:clamp(32px,4vw,54px); margin-bottom:20px; }
+  .contact p{ color:var(--paper-dim); font-size:16px; max-width:400px; margin-bottom:32px; }
+  .contact-info{ display:flex; flex-direction:column; gap:10px; }
+  .contact-info a{ font-size:15px; color:var(--paper); transition:color 0.25s ease; }
+  .contact-info a:hover{ color:var(--gold); }
+  .contact-info .label{ font-size:11px; color:var(--gold-dim); text-transform:uppercase; letter-spacing:0.1em; margin-top:16px; }
+
+  /* ---- стилизованная карта (рисуем сами, без внешних виджетов:
+         сайт открывают локально, и чужой светлый iframe ломал бы стиль) ---- */
+  .map-card{
+    border:1px solid var(--line);
+    background:var(--graphite-2);
+    overflow:hidden;
+  }
+  /* Живая карта лежит ПОВЕРХ рисованной. Рисованная — подложка на случай,
+     если нет интернета или тайлы не догрузились: тогда вместо пустого
+     прямоугольника заказчик видит нормальную схему проезда. */
+  .map-stage{ position:relative; }
+  .map-svg{ display:block; width:100%; height:auto; }
+  .map-live{
+    position:absolute; inset:0;
+    opacity:0; visibility:hidden;
+    transition:opacity 0.6s var(--ease);
+    background:#16161a;
+    /* Свои слои Leaflet держит на z-index 400–700. Без изоляции они
+       конкурируют с оверлеем подписей и перекрывают его. */
+    isolation:isolate;
+  }
+  .map-live.ready{ opacity:1; visibility:visible; }
+  .map-live .leaflet-container{ background:#16161a; font-family:'Inter', sans-serif; }
+  /* Подложка Esri «Dark Gray Canvas» — средне-серая. Контрастом вытягиваем
+     её в тонкую светлую сеть дорог на почти чёрном, как в макете.
+     Числа подобраны именно под Esri: со старыми тайлами CARTO они были
+     совсем другими, при смене поставщика фильтр надо перенастраивать. */
+  .map-live .leaflet-tile-pane{
+    filter:brightness(0.95) contrast(1.7) saturate(0.18);
+  }
+  .map-live .leaflet-control-attribution{
+    background:rgba(10,10,11,0.72) !important;
+    color:#6f6f76 !important; font-size:9px !important;
+    padding:2px 6px !important;
+  }
+  .map-live .leaflet-control-attribution a{ color:#8d8b86 !important; }
+  .map-live .leaflet-control-zoom a{
+    background:rgba(20,20,22,0.9) !important; color:var(--paper) !important;
+    border-color:var(--line) !important;
+  }
+  .map-live .leaflet-control-zoom a:hover{ background:var(--graphite-3) !important; color:var(--gold) !important; }
+  /* Метка + вертикальный золотой луч: тот же приём, что и красная линия
+     на референсе — сразу тянет взгляд к точке на общем плане города. */
+  .map-pin-live{ position:relative; width:14px; height:14px; }
+  .map-pin-live::before{
+    content:''; position:absolute; left:50%; top:-190px;
+    width:1px; height:390px; margin-left:-0.5px;
+    background:linear-gradient(180deg, transparent, var(--gold) 42%, var(--gold) 58%, transparent);
+    opacity:0.5;
+  }
+  .map-pin-live::after{
+    content:''; position:absolute; inset:0; border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 4px rgba(201,169,98,0.2), 0 0 18px rgba(201,169,98,0.75);
+  }
+
+  /* ---- слой подписей поверх карты, в духе технической схемы ---- */
+  .map-overlay{
+    position:absolute; inset:0; z-index:900;
+    pointer-events:none;
+  }
+  .map-city{
+    position:absolute; right:26px; top:22px; text-align:right;
+  }
+  .map-city-name{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:clamp(26px, 3.4vw, 44px); font-weight:600; line-height:1;
+    color:var(--paper);
+    text-shadow:0 2px 24px rgba(0,0,0,0.9);
+  }
+  .map-city-sub{
+    margin-top:6px;
+    font-size:10px; letter-spacing:0.24em; color:var(--paper-dim);
+    text-shadow:0 1px 12px rgba(0,0,0,0.9);
+  }
+  .map-callout{
+    position:absolute; left:22px; bottom:22px;
+    display:flex; gap:12px;
+    padding:12px 16px 12px 12px;
+    background:rgba(8,8,10,0.82);
+    border:1px solid var(--line);
+  }
+  .map-callout-bar{ width:3px; background:var(--gold); flex-shrink:0; }
+  .map-callout-title{
+    font-size:11.5px; letter-spacing:0.16em; color:var(--paper); margin-bottom:6px;
+  }
+  .map-callout-line{
+    font-size:10px; letter-spacing:0.1em; color:var(--paper-dim); line-height:1.7;
+  }
+  .map-callout-line b{ color:var(--gold); font-weight:400; }
+  @media (max-width:520px){
+    /* Карта узкая — даём ей высоту, иначе подписи занимают половину кадра.
+       Подложку кропаем по этой же высоте, чтобы не было щели снизу. */
+    .map-stage{ min-height:320px; }
+    .map-svg{ height:320px; object-fit:cover; }
+    .map-city{ right:14px; top:12px; }
+    .map-city-name{ font-size:21px; }
+    .map-city-sub{ font-size:8.5px; letter-spacing:0.18em; margin-top:3px; }
+    .map-callout{ left:12px; bottom:12px; padding:9px 11px 9px 8px; gap:9px; }
+    .map-callout-title{ font-size:9.5px; margin-bottom:4px; }
+    .map-callout-line{ font-size:8.5px; line-height:1.6; }
+  }
+  .map-pin-pulse{ fill:var(--gold); opacity:0.35; animation:mapPulse 2.6s ease-out infinite; transform-origin:center; }
+  @keyframes mapPulse{
+    0%{ transform:scale(0.6); opacity:0.5; }
+    70%{ transform:scale(2.6); opacity:0; }
+    100%{ transform:scale(2.6); opacity:0; }
+  }
+  .map-pin-dot{ fill:var(--gold); }
+  .map-pin-ring{ fill:none; stroke:var(--gold); stroke-width:1.5; }
+  .map-label{ fill:var(--paper-dim); font-family:'JetBrains Mono', monospace; font-size:9px; letter-spacing:0.12em; }
+  .map-footer{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    padding:18px 22px;
+    border-top:1px solid var(--line);
+    background:var(--graphite);
+  }
+  .map-address{ font-size:13px; color:var(--paper); }
+  .map-address span{ display:block; font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--gold-dim); letter-spacing:0.1em; margin-bottom:5px; }
+  .map-offline{ display:block; font-family:'JetBrains Mono', monospace; font-style:normal; font-size:10px; letter-spacing:0.08em; color:var(--paper-dim); margin-top:7px; }
+  /* авторское display:block перебивает атрибут hidden — возвращаем его силу */
+  .map-offline[hidden]{ display:none; }
+  .map-link{
+    font-family:'JetBrains Mono', monospace; font-size:11.5px; color:var(--gold);
+    display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+    border-bottom:1px solid var(--gold-dim); padding-bottom:3px;
+    transition:gap 0.3s var(--ease), color 0.25s ease;
+  }
+  .map-link:hover{ gap:14px; color:var(--gold-bright); }
+  @media (max-width:1000px){
+    .contact-wrap{ grid-template-columns:1fr; gap:48px; }
+    .contact-inner{ max-width:none; }
+  }
+
+  footer{
+    padding:80px 6vw 28px;
+    color:var(--paper-dim); letter-spacing:0.02em;
+    /* без жёсткой border-top — граница растворяется градиентом */
+    background:linear-gradient(180deg, var(--graphite) 0%, var(--ink) 22%, var(--ink) 100%);
+  }
+  .footer-cols{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:60px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand-title{
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+    font-size:22px; color:var(--paper); margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .footer-brand-title span{ color:var(--gold); }
+  .footer-brand-desc{ font-size:13.5px; color:var(--paper-dim); line-height:1.6; max-width:320px; }
+  .footer-col-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--gold-dim); margin-bottom:22px;
+  }
+  .footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col li a{
+    font-size:13.5px; color:var(--paper); transition:color 0.25s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .footer-col li a:hover{ color:var(--gold); }
+  .footer-col li .item-hint{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--paper-dim); letter-spacing:0.05em; }
+  .footer-col li .item-static{ font-size:13.5px; color:var(--paper); display:inline-flex; align-items:center; gap:8px; }
+  .footer-bottom{
+    padding-top:28px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.05em;
+  }
+  .footer-bottom .mono{ font-family:'JetBrains Mono', monospace; }
+  .footer-credit{ color:var(--paper); transition:color 0.25s ease; }
+  .footer-credit:hover{ color:var(--gold); }
+  @media (max-width:900px){
+    .footer-cols{ grid-template-columns:1fr 1fr; gap:40px 30px; }
+  }
+  @media (max-width:560px){
+    .footer-cols{ grid-template-columns:1fr; }
+  }
+
+  /* ============ ПРОЕКТЫ (карусель работ) ============ */
+  /* Один блок — одна машина: название, кадры, история. Живёт и на главной,
+     и на странице работ, поэтому стили одинаковые в обоих файлах. */
+  .project{ max-width:1120px; margin:0 auto; }
+  .project + .project{ margin-top:clamp(64px,9vw,120px); }
+  .project-title{
+    position:relative;
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800; letter-spacing:-0.025em; line-height:1.02;
+    font-size:clamp(30px,5.4vw,60px);
+    padding-bottom:18px;
+  }
+  /* золотая черта под названием машины — вместо подписи-приписки */
+  .project-title::after{
+    content:''; position:absolute; left:0; bottom:0;
+    width:58px; height:2px; background:var(--gold);
+  }
+  .project-meta{
+    display:flex; align-items:center; gap:11px; flex-wrap:wrap;
+    margin-top:14px; font-size:11px; letter-spacing:0.16em; color:var(--gold-dim);
+  }
+  .project-meta::before{ content:''; width:22px; height:1px; background:var(--gold-dim); flex-shrink:0; }
+
+  .project-stage{
+    position:relative; margin-top:26px;
+    aspect-ratio:16/9;
+    background:var(--graphite-2);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  /* Вертикальные ролики (сторис с телефона) показываем в таком же
+     горизонтальном кадре, что и остальные — иначе страница выглядит как
+     мобильная вёрстка, растянутая на десктоп. Сам ролик вписывается целиком
+     (`contain`), а пустые бока закрывает сильно размытый постер того же
+     кадра. Развернуть вертикальное видео в горизонт нельзя: по бокам просто
+     нет снятой картинки. */
+  .project--portrait .project-slide{ background:var(--graphite-2); }
+  .project--portrait .project-slide::before{
+    content:''; position:absolute; inset:0;
+    background-image:var(--poster);
+    background-size:cover; background-position:center;
+    transform:scale(1.2);
+    filter:blur(34px) saturate(0.55) brightness(0.4);
+  }
+  .project--portrait .project-slide video{
+    position:relative;
+    object-fit:contain;
+    background:transparent;
+  }
+  /* Слайды лежат друг на друге, а не в потоке — высота кадра не прыгает
+     при листании, даже если фото разной пропорции. */
+  .project-slide{
+    position:absolute; inset:0; margin:0;
+    opacity:0; visibility:hidden;
+    transition:opacity 0.45s var(--ease);
+  }
+  .project-slide.is-active{ opacity:1; visibility:visible; }
+  .project-slide img,
+  .project-slide video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  .project-soon{
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    letter-spacing:0.2em; color:var(--paper-dim);
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.014) 0 12px, transparent 12px 24px),
+      var(--graphite-2);
+  }
+
+  .project-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:42px; height:62px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(10,10,11,0.62); border:1px solid var(--line);
+    color:var(--paper); cursor:pointer; z-index:3;
+    transition:background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .project-arrow:hover{ background:var(--ink); color:var(--gold); border-color:var(--gold-dim); }
+  .project-arrow--prev{ left:0; border-left:none; }
+  .project-arrow--next{ right:0; border-right:none; }
+  .project-counter{
+    position:absolute; right:12px; bottom:12px; z-index:3;
+    padding:5px 10px; background:rgba(10,10,11,0.72); border:1px solid var(--line);
+    font-size:10px; letter-spacing:0.14em; color:var(--paper-dim);
+  }
+  .project-counter b{ color:var(--paper); font-weight:400; }
+
+  .project-dots{ display:flex; gap:8px; margin-top:16px; }
+  .project-dots button{
+    width:26px; height:2px; padding:0; border:none; cursor:pointer;
+    background:var(--line); transition:background 0.25s ease;
+  }
+  .project-dots button[aria-selected="true"]{ background:var(--gold); }
+
+  .project-story{
+    margin-top:22px; max-width:620px;
+    color:var(--paper-dim); font-size:16px; line-height:1.7;
+  }
+
+  /* Если кадр один — навигация не нужна и только мешает. */
+  .project.is-single .project-arrow,
+  .project.is-single .project-dots,
+  .project.is-single .project-counter{ display:none; }
+
+  @media (max-width:760px){
+    .project-arrow{ width:36px; height:52px; }
+    .project-stage{ margin-top:18px; }
+    .project-story{ font-size:15px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .project-slide{ transition:none; }
+  }
+
+  .works-cases{
+    background:
+      radial-gradient(760px 460px at 88% 14%, rgba(201,169,98,0.05), transparent 64%),
+      var(--graphite);
+    border-bottom:1px solid var(--line);
+  }
+  .works-cases .services-head{ margin-bottom:56px; }
+  .works-cases .services-full-link{ margin-top:64px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="AUTOPROTECTTMN — на главную"><svg class="logo-svg" viewBox="0 0 644 256" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="0" y="117" width="18" height="16"/><rect x="626" y="117" width="18" height="16"/></g><g fill="none" stroke="currentColor" stroke-width="9"><path d="M150 78 V14 H494 V78"/><path d="M150 178 V242 H494 V178"/></g><text x="322" y="177" fill="currentColor" text-anchor="middle" font-family="'Bricolage Grotesque','Arial Black',sans-serif" font-weight="800" font-size="134" textLength="596" lengthAdjust="spacingAndGlyphs">AUTO PROTECT</text></svg></a>
+  <div class="nav-links">
+    <a href="services.html">Услуги</a>
+    <a href="#configurator">Подбор цвета</a>
+    <a href="#works">Работы</a>
+    <a href="#stats">О студии</a>
+    <a href="#contact">Контакты</a>
+  </div>
+  <a href="#contact" class="nav-cta">Записаться</a>
+  <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html">Услуги</a>
+  <a href="#configurator">Подбор цвета</a>
+  <a href="#works">Работы</a>
+  <a href="#stats">О студии</a>
+  <a href="#contact">Контакты</a>
+  <a href="#contact" class="mobile-cta">Записаться →</a>
+</div>
+
+<section class="hero">
+  <canvas id="heroCanvas" class="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <h1>Совершенство <em>не</em><br>видно сразу</h1>
+  <p>Раскрываем то, что скрыто под каждым слоем защиты — вручную, без компромиссов.</p>
+  <a href="#configurator" class="cta-btn hero-cta">
+    <span>Подобрать цвет и плёнку</span>
+    <span class="cta-arrow">→</span>
+  </a>
+  <div class="scroll-cue mono">SCROLL</div>
+</section>
+
+<section class="services" id="services">
+  <div class="eyebrow">01 — услуги</div>
+  <div class="services-head">
+    <h2>Не мойка.<br>Преображение и защита.</h2>
+    <p>Наведите курсор на карточку — свет скользит по поверхности так же, как по настоящей плёнке.</p>
+  </div>
+  <div class="card-grid">
+    <div class="service-card" data-card>
+      <div class="card-number mono">01</div>
+      <div>
+        <div class="card-title">Защитная плёнка</div>
+        <div class="card-desc">Полиуретан Legend PPF, Membrane TPU PREMIUM и VEGA PPF — защита лака от сколов, гравия и щёток на мойке.</div>
+      </div>
+      <div class="card-price mono">от 60 000 ₽</div>
+    </div>
+    <div class="service-card" data-card>
+      <div class="card-number mono">02</div>
+      <div>
+        <div class="card-title">Смена цвета</div>
+        <div class="card-desc">Матовые, глянцевые и сатиновые плёнки — новый образ без покраски и без потери заводского лака.</div>
+      </div>
+      <div class="card-price mono">от 300 000 ₽</div>
+    </div>
+    <div class="service-card" data-card>
+      <div class="card-number mono">03</div>
+      <div>
+        <div class="card-title">Полировка и керамика</div>
+        <div class="card-desc">Убираем паутинку и микроцарапины, сверху — керамическое покрытие, которое держит блеск.</div>
+      </div>
+      <div class="card-price mono">от 45 000 ₽</div>
+    </div>
+    <div class="service-card" data-card>
+      <div class="card-number mono">04</div>
+      <div>
+        <div class="card-title">Салон</div>
+        <div class="card-desc">Перешив руля, сидений и потолка в натуральную кожу, химчистка салона.</div>
+      </div>
+      <div class="card-price mono">от 10 000 ₽</div>
+    </div>
+    <div class="service-card" data-card>
+      <div class="card-number mono">05</div>
+      <div>
+        <div class="card-title">Шумоизоляция</div>
+        <div class="card-desc">Шумо-виброизоляция кузова: тише на трассе, меньше вибраций и дребезга в салоне.</div>
+      </div>
+      <div class="card-price mono">от 28 000 ₽</div>
+    </div>
+    <div class="service-card" data-card>
+      <div class="card-number mono">06</div>
+      <div>
+        <div class="card-title">Охрана и тюнинг</div>
+        <div class="card-desc">Установка комплексов Pandora и StarLine, монтаж обвесов, бронирование лобового стекла.</div>
+      </div>
+      <div class="card-price mono">от 15 000 ₽</div>
+    </div>
+  </div>
+  <a href="services.html" class="services-full-link">Смотреть все услуги и цены <span class="cta-arrow">→</span></a>
+</section>
+
+<section class="configurator" id="configurator">
+  <div class="config-wrap">
+    <div class="config-left">
+      <div class="eyebrow">02 — конфигуратор</div>
+      <h2>Один автомобиль.<br>Любой характер.</h2>
+      <p>Вращайте модель мышью, выберите оттенок и фактуру — это стилизованный силуэт премиум-седана, ориентир для встречи в студии.</p>
+
+      <div>
+        <div class="group-label mono">Фактура плёнки</div>
+        <div class="finish-row" role="group" aria-label="Выбор фактуры плёнки">
+          <button class="finish-btn active" data-finish="matte">Матовая</button>
+          <button class="finish-btn" data-finish="gloss">Глянец</button>
+          <button class="finish-btn" data-finish="satin">Сатин</button>
+        </div>
+
+        <div class="group-label mono">Цвет</div>
+        <div class="swatch-grid" role="group" aria-label="Выбор цвета">
+          <!-- Оттенки сняты пипеткой с фотографий реально оклеенных этой
+               студией машин (см. папку «Примеры цвет»), а не выдуманы:
+               Range Rover, Ram Rho, AMG GTR, W223, Jaguar F-Type, G63. -->
+          <button class="swatch-btn active" style="background:#19191b" data-color="#19191b" data-name="Чёрный" aria-label="Чёрный"></button>
+          <button class="swatch-btn" style="background:#75634e" data-color="#75634e" data-name="Песочный" aria-label="Песочный"></button>
+          <!-- Кружок показывает цвет плёнки как он есть, data-color задаёт материал.
+               Они намеренно разные: свет и тонмаппинг осветляют кузов, поэтому
+               материал #005a00 отрисовывается на кузове как #016102 — тот самый
+               тёмно-зелёный. Замерено gl.readPixels по кузову. -->
+          <button class="swatch-btn" style="background:#006600" data-color="#005a00" data-name="Зелёный" aria-label="Зелёный"></button>
+          <button class="swatch-btn" style="background:#336593" data-color="#336593" data-name="Голубой" aria-label="Голубой"></button>
+          <!-- Бордовый: кружок показывает цвет плёнки, data-color задаёт материал.
+               Свет и тонмаппинг притемняют краску, поэтому материал #9a0000
+               отрисовывается на кузове как #8a0005 — нужный #8B0000.
+               Замерено gl.readPixels по кузову. -->
+          <button class="swatch-btn" style="background:#8B0000" data-color="#9a0000" data-name="Бордовый" aria-label="Бордовый"></button>
+          <button class="swatch-btn" style="background:#7c8283" data-color="#7c8283" data-name="Серый" aria-label="Серый"></button>
+        </div>
+      </div>
+
+      <div class="selection-readout">
+        <div class="readout-color-name" id="colorName">Чёрный</div>
+        <div class="readout-finish-name mono" id="finishName">Матовая фактура</div>
+      </div>
+
+      <a href="#contact" class="cta-btn">
+        <span>Обсудить подбор плёнки</span>
+        <span class="cta-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="config-right">
+      <canvas id="carCanvas"></canvas>
+      <div class="loading-tag mono" id="loadingTag">ЗАГРУЗКА МОДЕЛИ...</div>
+      <div class="drag-hint mono" id="dragHint" style="opacity:0">← ПОТЯНИТЕ, ЧТОБЫ ПОВЕРНУТЬ →</div>
+    </div>
+  </div>
+</section>
+
+<section class="compare" id="protection">
+  <div class="eyebrow">03 — защита</div>
+  <div class="services-head">
+    <h2>Что плёнка делает с капотом.</h2>
+    <p>Потяните ползунок. Слева — лак без защиты после пары сезонов: паутинка от моек, песка и щёток. Справа — тот же капот под полиуретаном.</p>
+  </div>
+
+  <!-- Обе половины — один и тот же капот, отрисованный кодом. Нижний слой
+       (поцарапанный) виден слева, верхний (чистый) обрезается по ползунку.
+       Мелкие царапины досыпает JS в #swirlField — без JS остаётся базовая
+       текстура на фильтре, эффект слабее, но блок не ломается. -->
+  <div class="compare-stage" id="compareStage" tabindex="0" role="slider"
+       aria-label="Сравнение: капот без плёнки и под защитной плёнкой"
+       aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="50% — поровну">
+
+    <div class="compare-layer">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="envBefore" cx="0.5" cy="0.45" r="0.75">
+            <stop offset="0" stop-color="#141416"/><stop offset="1" stop-color="#050506"/>
+          </radialGradient>
+          <linearGradient id="paintBefore" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0" stop-color="#141418"/>
+            <stop offset="0.5" stop-color="#0e0e11"/>
+            <stop offset="1" stop-color="#08080a"/>
+          </linearGradient>
+          <clipPath id="hoodClip">
+            <path d="M410 56 L1190 56 Q1258 58 1266 114 L1332 766 Q1338 832 1268 840 L332 840 Q262 832 268 766 L334 114 Q342 58 410 56 Z"/>
+          </clipPath>
+          <!-- мутный, размазанный блик: свет рассеивается на битом лаке -->
+          <linearGradient id="hazeBefore" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.3"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="hazeBlur"><feGaussianBlur stdDeviation="26"/></filter>
+          <filter id="microScratch" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" seed="17" result="n"/>
+            <feColorMatrix in="n" type="matrix"
+              values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  1.1 0 0 0 -0.76"/>
+          </filter>
+        </defs>
+
+        <rect width="1600" height="900" fill="url(#envBefore)"/>
+        <path d="M410 56 L1190 56 Q1258 58 1266 114 L1332 766 Q1338 832 1268 840 L332 840 Q262 832 268 766 L334 114 Q342 58 410 56 Z" fill="url(#paintBefore)"/>
+
+        <g clip-path="url(#hoodClip)">
+          <!-- лампы: те же две полосы, но размытые в мутную дымку -->
+          <g filter="url(#hazeBlur)" opacity="0.5">
+            <g transform="rotate(-7 800 250)">
+              <rect x="330" y="212" width="420" height="34" fill="url(#hazeBefore)"/>
+              <rect x="830" y="196" width="430" height="34" fill="url(#hazeBefore)"/>
+            </g>
+            <g transform="rotate(-7 800 545)">
+              <rect x="330" y="522" width="420" height="30" fill="url(#hazeBefore)"/>
+              <rect x="830" y="506" width="430" height="30" fill="url(#hazeBefore)"/>
+            </g>
+          </g>
+          <!-- рёбра силового купола -->
+          <path d="M505 58 L455 840" stroke="#000" stroke-opacity="0.55" stroke-width="16" fill="none"/>
+          <path d="M514 58 L464 840" stroke="#ffffff" stroke-opacity="0.05" stroke-width="3" fill="none"/>
+          <path d="M1095 58 L1145 840" stroke="#000" stroke-opacity="0.55" stroke-width="16" fill="none"/>
+          <path d="M1086 58 L1136 840" stroke="#ffffff" stroke-opacity="0.05" stroke-width="3" fill="none"/>
+          <!-- Паутинку рисует JS на canvas и подставляет сюда картинкой.
+               Раньше это были ~10 000 отдельных <path> — браузер держал их
+               все в DOM и на скролле страница заметно лагала. -->
+          <image id="swirlImage" x="0" y="0" width="1600" height="900" preserveAspectRatio="none"/>
+          <rect width="1600" height="900" filter="url(#microScratch)" opacity="0.22"/>
+        </g>
+
+        <!-- воздухозаборник у жабо -->
+        <rect x="596" y="86" width="408" height="52" rx="9" fill="#0a0a0c" stroke="#000" stroke-opacity="0.7" stroke-width="3"/>
+        <g stroke="#26262c" stroke-width="2">
+          <path d="M612 96 H988 M612 106 H988 M612 116 H988 M612 126 H988"/>
+        </g>
+        <path d="M410 56 L1190 56" stroke="#000" stroke-opacity="0.75" stroke-width="6" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="compare-layer compare-top" id="compareTop">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <radialGradient id="envAfter" cx="0.5" cy="0.45" r="0.75">
+            <stop offset="0" stop-color="#141416"/><stop offset="1" stop-color="#050506"/>
+          </radialGradient>
+          <linearGradient id="paintAfter" x1="0" y1="0" x2="0.3" y2="1">
+            <stop offset="0" stop-color="#121216"/>
+            <stop offset="0.5" stop-color="#0b0b0e"/>
+            <stop offset="1" stop-color="#050507"/>
+          </linearGradient>
+          <clipPath id="hoodClip2">
+            <path d="M410 56 L1190 56 Q1258 58 1266 114 L1332 766 Q1338 832 1268 840 L332 840 Q262 832 268 766 L334 114 Q342 58 410 56 Z"/>
+          </clipPath>
+          <!-- лампа в живом лаке: резкое ядро с быстрым спадом -->
+          <linearGradient id="lampCore" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+            <stop offset="0.3" stop-color="#ffffff" stop-opacity="0.35"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="1"/>
+            <stop offset="0.7" stop-color="#ffffff" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="lampGlow"><feGaussianBlur stdDeviation="9"/></filter>
+        </defs>
+
+        <rect width="1600" height="900" fill="url(#envAfter)"/>
+        <path d="M410 56 L1190 56 Q1258 58 1266 114 L1332 766 Q1338 832 1268 840 L332 840 Q262 832 268 766 L334 114 Q342 58 410 56 Z" fill="url(#paintAfter)"/>
+
+        <g clip-path="url(#hoodClip2)">
+          <!-- Отражение двух ламп. Полоса разрывается и смещается на ребре
+               купола — именно этот излом читается как объём панели. -->
+          <g transform="rotate(-7 800 250)">
+            <g filter="url(#lampGlow)" opacity="0.5">
+              <rect x="300" y="212" width="440" height="34" fill="url(#lampCore)"/>
+              <rect x="834" y="196" width="450" height="34" fill="url(#lampCore)"/>
+            </g>
+            <rect x="306" y="225" width="428" height="6" fill="#ffffff" opacity="0.62"/>
+            <rect x="840" y="209" width="438" height="6" fill="#ffffff" opacity="0.62"/>
+          </g>
+          <g transform="rotate(-7 800 545)">
+            <g filter="url(#lampGlow)" opacity="0.4">
+              <rect x="300" y="522" width="440" height="30" fill="url(#lampCore)"/>
+              <rect x="834" y="506" width="450" height="30" fill="url(#lampCore)"/>
+            </g>
+            <rect x="306" y="534" width="428" height="5" fill="#ffffff" opacity="0.5"/>
+            <rect x="840" y="518" width="438" height="5" fill="#ffffff" opacity="0.5"/>
+          </g>
+          <!-- рёбра силового купола: чёткая тень + светлая фаска -->
+          <path d="M505 58 L455 840" stroke="#000" stroke-opacity="0.6" stroke-width="16" fill="none"/>
+          <path d="M514 58 L464 840" stroke="#ffffff" stroke-opacity="0.22" stroke-width="3.5" fill="none"/>
+          <path d="M1095 58 L1145 840" stroke="#000" stroke-opacity="0.6" stroke-width="16" fill="none"/>
+          <path d="M1086 58 L1136 840" stroke="#ffffff" stroke-opacity="0.22" stroke-width="3.5" fill="none"/>
+        </g>
+
+        <rect x="596" y="86" width="408" height="52" rx="9" fill="#0a0a0c" stroke="#000" stroke-opacity="0.7" stroke-width="3"/>
+        <g stroke="#2e2e36" stroke-width="2">
+          <path d="M612 96 H988 M612 106 H988 M612 116 H988 M612 126 H988"/>
+        </g>
+        <path d="M410 56 L1190 56" stroke="#000" stroke-opacity="0.75" stroke-width="6" fill="none"/>
+        <path d="M414 60 L1186 60" stroke="#ffffff" stroke-opacity="0.1" stroke-width="2" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="compare-tag compare-tag-before mono">БЕЗ ПЛЁНКИ</div>
+    <div class="compare-tag compare-tag-after mono">С ПЛЁНКОЙ</div>
+    <div class="compare-handle" id="compareHandle">
+      <div class="compare-knob" aria-hidden="true">
+        <svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 2 L2.5 8 L8.5 14"/></svg>
+        <svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 2 L8.5 8 L2.5 14"/></svg>
+      </div>
+    </div>
+  </div>
+  <div class="compare-note">ДЕМОНСТРАЦИЯ ЭФФЕКТА — ИЛЛЮСТРАЦИЯ, НЕ ФОТО КОНКРЕТНОЙ РАБОТЫ</div>
+</section>
+
+
+<section class="works-cases" id="works">
+  <div class="eyebrow">04 — работы</div>
+  <div class="services-head">
+    <h2>Машины, которые уже ездят.</h2>
+    <p>Съёмка в боксе и на улице, без ретуши цвета. Пролистайте кадры — на каждом проекте видно и процесс, и результат.</p>
+  </div>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Audi RS6</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/audi-rs6-2.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/audi-rs6-2.jpg">
+          <source src="assets/video/audi-rs6-2.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Mercedes-Maybach S-Class</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/maybach-3.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/maybach-3.jpg">
+          <source src="assets/video/maybach-3.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">BMW X5 M</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/bmw-x5m-4.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/bmw-x5m-4.jpg">
+          <source src="assets/video/bmw-x5m-4.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project" data-project>
+    <h3 class="project-title">Land Rover Defender</h3>
+    <div class="project-meta mono">Защита кузова полиуретаном</div>
+    <div class="project-stage">
+      <figure class="project-slide is-active">
+        <video controls playsinline preload="none" poster="assets/poster/defender.jpg">
+          <source src="assets/video/defender.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <a class="services-full-link" href="works.html">Смотреть все работы <span class="cta-arrow">→</span></a>
+</section>
+<section class="process" id="process">
+  <div class="eyebrow">05 — процесс</div>
+  <div class="services-head">
+    <h2>Как проходит работа.</h2>
+    <p>От первого звонка до выдачи автомобиля — пять понятных шагов, без сюрпризов по срокам и стоимости.</p>
+  </div>
+  <div class="process-grid">
+    <div class="step">
+      <div class="step-num">ШАГ 01</div>
+      <div class="step-title">Заявка и консультация</div>
+      <div class="step-desc">Звоните или пишете — уточняем модель авто, состояние кузова и что именно нужно защитить.</div>
+      <div class="step-meta">15 минут</div>
+    </div>
+    <div class="step">
+      <div class="step-num">ШАГ 02</div>
+      <div class="step-title">Подбор плёнки и расчёт</div>
+      <div class="step-desc">Приезжаете в студию — смотрим кузов вживую, собираем палитру образцов и считаем точную стоимость.</div>
+      <div class="step-meta">в день визита</div>
+    </div>
+    <div class="step">
+      <div class="step-num">ШАГ 03</div>
+      <div class="step-title">Подготовка кузова</div>
+      <div class="step-desc">Мойка, обезжиривание, устранение загрязнений. Плёнка ложится только на идеально чистую поверхность.</div>
+      <div class="step-meta">до 1 дня</div>
+    </div>
+    <div class="step">
+      <div class="step-num">ШАГ 04</div>
+      <div class="step-title">Оклейка</div>
+      <div class="step-desc">Раскрой по лекалам, нанесение вручную, подгибы кромок. Никакой спешки — от этого зависит срок службы.</div>
+      <div class="step-meta">1–5 дней</div>
+    </div>
+    <div class="step">
+      <div class="step-num">ШАГ 05</div>
+      <div class="step-title">Приёмка и гарантия</div>
+      <div class="step-desc">Осматриваем результат вместе с вами при ярком свете, выдаём гарантию и рассказываем про уход.</div>
+      <div class="step-meta">гарантия 1 год</div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" id="stats">
+  <div class="stats-canvas-wrap"><canvas id="linesCanvas"></canvas></div>
+  <div class="stats-inner">
+    <div class="eyebrow">06 — доверие</div>
+    <h2>Цифры, а не обещания.</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number mono" data-count="15" data-suffix="+ лет">0</div>
+        <div class="stat-label">опыта работы с автомобильными плёнками у наших мастеров и руководителей</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number mono" data-count="1" data-suffix=" год">0</div>
+        <div class="stat-label">гарантии от самопроизвольного отклеивания при соблюдении условий эксплуатации</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number mono" data-count="2" data-suffix=" дня">0</div>
+        <div class="stat-label">на оклейку лицевой части — капот, бампер, крылья и светотехника</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number mono" data-count="3" data-suffix=" бренда">0</div>
+        <div class="stat-label">полиуретана в работе: Legend PPF, Membrane TPU PREMIUM и VEGA PPF</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq" id="faq">
+  <div class="eyebrow">07 — вопросы</div>
+  <div class="services-head">
+    <h2>Что обычно спрашивают.</h2>
+    <p>Короткие ответы на то, что волнует перед первой оклейкой. Остальное разберём на консультации.</p>
+  </div>
+  <div class="faq-list">
+    <details class="faq-item">
+      <summary>Сколько держится плёнка?</summary>
+      <div class="faq-answer">Гарантию на сам материал даёт производитель плёнки. От студии — гарантия 1 год на то, что плёнка не отклеится самопроизвольно, при соблюдении условий эксплуатации. Условия проговариваем при выдаче автомобиля, там нет ничего неожиданного: аккуратная мойка и разумное обращение с кромками.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Можно ли мыть машину на мойке?</summary>
+      <div class="faq-answer">Да. Обычная бесконтактная мойка плёнке не вредит. Единственное, о чём просим — не направлять струю высокого давления вплотную к кромкам и стыкам плёнки, и первые несколько дней после оклейки дать материалу окончательно схватиться.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Снимается ли плёнка без вреда для лака?</summary>
+      <div class="faq-answer">Да, в этом и смысл: плёнка принимает удары на себя вместо заводского лака. Снимаем аккуратно, с прогревом — родное покрытие остаётся под ней в том же состоянии, в каком было на момент оклейки.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Сколько времени занимает оклейка?</summary>
+      <div class="faq-answer">Лицевая часть — капот, бампер, передние крылья, светотехника, стойки, зеркала и зоны ручек — 2 рабочих дня. Полная оклейка кузова — 4–5 дней. Точный срок называем после осмотра автомобиля, потому что многое решает состояние кузова.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Можно оклеить не всю машину, а частично?</summary>
+      <div class="faq-answer">Конечно, так делает большинство клиентов. Самый частый вариант — оклейка лицевой части: капот, бампер, передние крылья и светотехника принимают на себя почти весь гравий. Отдельно можно забронировать лобовое стекло.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Какими плёнками работаете?</summary>
+      <div class="faq-answer">Глянцевые и матовые полиуретаны — Legend PPF. Глянцевые — Membrane TPU PREMIUM. Матовые и сатиновые — VEGA PPF. Конкретный материал подбираем под задачу и бюджет на консультации.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Что ещё делаете, кроме плёнки?</summary>
+      <div class="faq-answer">Полировку кузова с керамическим покрытием, шумо-виброизоляцию, бронирование лобового стекла, установку охранных комплексов Pandora и StarLine, монтаж обвесов, перешив руля, салона и потолка в натуральную кожу, химчистку салона. Полный список с ценами — на странице услуг.</div>
+    </details>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-grid"></div>
+  <div class="contact-wrap">
+    <div class="contact-inner">
+      <div class="eyebrow">08 — контакт</div>
+      <h2>Свяжитесь с нами.</h2>
+      <p>Приезжайте со своим автомобилем — соберём палитру образцов и посчитаем точную стоимость на месте.</p>
+      <div class="contact-info">
+        <div class="label mono">Телефон</div>
+        <a href="tel:+79829384032">+7 (982) 938-40-32</a>
+        <a href="tel:+79224748887">+7 (922) 474-88-87</a>
+        <div class="label mono">Адрес</div>
+        <a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">Тюмень, ул. 50 лет Октября, 202, литера А</a>
+        <div class="label mono">Режим работы</div>
+        <span style="font-size:15px;">Пн — Пт, 9:00 — 19:00</span>
+        <span style="font-size:15px;">Сб и Вс — по предварительной договорённости</span>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <div class="map-stage">
+      <!-- Подложка: схема нарисована по реальной геометрии района (развязка
+           Республики × 50 лет Октября, Гилевская роща). Видна, пока грузится
+           живая карта, и остаётся насовсем, если интернета нет. -->
+      <!-- Подложка. Намеренно НЕ изображает настоящую карту: рисованная
+           схема улиц всегда проигрывает настоящей и читается как подделка.
+           Здесь спокойный кадр с меткой — он виден, пока грузится живая
+           карта, и остаётся, если интернета нет. -->
+      <svg class="map-svg" viewBox="0 0 480 340" role="img" aria-label="Студия AUTOPROTECTTMN — Тюмень, улица 50 лет Октября, 202">
+        <defs>
+          <radialGradient id="mapFade" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="0.65" stop-color="#fff" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
+          <mask id="mapMask"><rect width="480" height="340" fill="url(#mapFade)"/></mask>
+          <pattern id="mapGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M40 0 V40 M0 40 H40" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <rect width="480" height="340" fill="#16161a"/>
+        <rect width="480" height="340" fill="url(#mapGrid)" mask="url(#mapMask)"/>
+        <circle cx="240" cy="170" r="118" fill="none" stroke="#c9a962" stroke-opacity="0.07" stroke-width="1"/>
+        <circle cx="240" cy="170" r="74"  fill="none" stroke="#c9a962" stroke-opacity="0.10" stroke-width="1"/>
+
+        <!-- перекрестье прицела: тот же приём, что в рамке логотипа -->
+        <g stroke="#c9a962" stroke-opacity="0.22" stroke-width="1">
+          <path d="M240 30 V96"/><path d="M240 244 V310"/>
+          <path d="M60 170 H166"/><path d="M314 170 H420"/>
+        </g>
+
+        <g transform="translate(240,170)">
+          <circle class="map-pin-pulse" r="14"/>
+          <circle class="map-pin-ring" r="20"/>
+          <circle class="map-pin-dot" r="6"/>
+        </g>
+
+        <text class="map-label" x="240" y="222" text-anchor="middle">УЛ. 50 ЛЕТ ОКТЯБРЯ, 202</text>
+        <text class="map-label" x="20" y="326">ТЮМЕНЬ</text>
+      </svg>
+        <div class="map-live" id="mapLive" aria-hidden="true"></div>
+        <div class="map-overlay">
+          <div class="map-city">
+            <div class="map-city-name">Тюмень</div>
+            <div class="map-city-sub mono">РОССИЯ / RUSSIA</div>
+          </div>
+          <div class="map-callout">
+            <div class="map-callout-bar"></div>
+            <div>
+              <div class="map-callout-title mono">AUTOPROTECTTMN</div>
+              <div class="map-callout-line mono">УЛ. 50 ЛЕТ ОКТЯБРЯ, 202</div>
+              <div class="map-callout-line mono">ПН–ПТ — <b>9:00–19:00</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-footer">
+        <div class="map-address">
+          <span>КАК НАС НАЙТИ</span>
+          ул. 50 лет Октября, 202, литера А
+          <em class="map-offline" id="mapOffline" hidden>Карта откроется при подключении к интернету</em>
+        </div>
+        <a class="map-link" href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">
+          Открыть в 2ГИС <span class="cta-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <div class="footer-brand-title">AUTOPROTECT<span>TMN</span></div>
+      <div class="footer-brand-desc">Детейлинг-студия в Тюмени. Защитная полиуретановая плёнка, смена цвета, полировка с керамикой, шумоизоляция, перешив салона и охранные комплексы. Опыт мастеров — более 15 лет.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Навигация</div>
+      <ul>
+        <li><a href="services.html">Услуги и цены</a></li>
+        <li><a href="#configurator">Подбор цвета</a></li>
+        <li><a href="works.html">Наши работы</a></li>
+        <li><a href="#stats">О студии</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Контакты</div>
+      <ul>
+        <li><a href="tel:+79829384032">+7 (982) 938-40-32</a></li>
+        <li><a href="tel:+79224748887">+7 (922) 474-88-87</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">Тюмень, ул. 50 лет Октября, 202А</a></li>
+        <li><span class="item-static"><span class="item-hint">ПН — ПТ</span> 9:00 — 19:00</span></li>
+        <li><span class="item-static"><span class="item-hint">СБ — ВС</span> по договорённости</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Соцсети</div>
+      <ul>
+        <li><a href="https://www.instagram.com/autoprotecttmn" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">2ГИС</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="mono">© 2026 AUTOPROTECTTMN · ВСЕ ПРАВА ЗАЩИЩЕНЫ</div>
+    <div class="mono">СДЕЛАНО В <a href="https://www.kbagency.ru/" target="_blank" rel="noopener" class="footer-credit">KB AGENCY</a></div>
+  </div>
+</footer>
+
+<script>
+  /* ============ MOBILE MENU ============ */
+  /* ============ СЛАЙДЕР «С ПЛЁНКОЙ / БЕЗ ПЛЁНКИ» ============ */
+  (function(){
+    const stage = document.getElementById('compareStage');
+    if(!stage) return;
+
+    // Рисуем «паутинку» один раз на offscreen-canvas и отдаём в SVG
+    // картинкой. Это ~10 000 штрихов, но в DOM попадает один элемент.
+    const swirlImg = document.getElementById('swirlImage');
+    function buildSwirls(){
+      const cv = document.createElement('canvas');
+      cv.width = 1600; cv.height = 900;
+      const cx2 = cv.getContext('2d');
+      cx2.lineCap = 'round';
+      // Царапины видно только там, куда падает свет ламп — вне бликов лак
+      // выглядит целым. Поэтому яркость считаем от расстояния до двух полос
+      // (их наклон -7°, центры примерно на y=228 и y=538).
+      function lit(x, y){
+        const k = Math.tan(-7 * Math.PI / 180);
+        const d1 = Math.abs(y - (228 + (x - 800) * k));
+        const d2 = Math.abs(y - (538 + (x - 800) * k));
+        const d = Math.min(d1, d2);
+        // мягкий, широкий спад + небольшая базовая видимость по всей панели:
+        // вне бликов затёртый лак тоже читается, просто слабее
+        return Math.max(0, 1 - d / 340) * 0.82 + 0.18;
+      }
+
+      // короткая дуга: длинные штрихи читаются как трещины, а не как паутинка
+      function stroke(x, y, len, rotDeg, curve, alpha, width){
+        cx2.save();
+        cx2.translate(x, y);
+        cx2.rotate(rotDeg * Math.PI / 180);
+        cx2.strokeStyle = 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
+        cx2.lineWidth = width;
+        cx2.beginPath();
+        cx2.moveTo(0, 0);
+        cx2.quadraticCurveTo(len / 2, curve, len, 0);
+        cx2.stroke();
+        cx2.restore();
+      }
+
+      // Волосяные риски — основная масса затёртостей
+      for(let i = 0; i < 9000; i++){
+        const x = 275 + Math.random() * 1050;
+        const y = 58 + Math.random() * 780;
+        const L = lit(x, y);
+        if(L <= 0.02 || Math.random() > L * 0.9 + 0.05) continue;
+        const len = 6 + Math.random() * 26;
+        stroke(x, y, len, Math.random() * 360, len * 0.05,
+               0.03 + L * (0.05 + Math.random() * 0.22),
+               0.3 + Math.random() * 0.35);
+      }
+
+      // Поверх — круговые завихрения от полировки тряпкой
+      const centers = [[560,250],[980,215],[640,560],[1080,545],[820,390]];
+      for(let c = 0; c < centers.length; c++){
+        const ccx = centers[c][0], ccy = centers[c][1];
+        for(let i = 0; i < 700; i++){
+          const ang = Math.random() * Math.PI * 2;
+          const rad = 15 + Math.random() * 195;
+          const x = ccx + Math.cos(ang) * rad;
+          const y = ccy + Math.sin(ang) * rad;
+          if(x < 280 || x > 1320 || y < 60 || y > 835) continue;
+          const L = lit(x, y);
+          if(L <= 0.05) continue;
+          const len = 5 + Math.random() * 17;
+          // дуга развёрнута по касательной к своему центру
+          stroke(x, y, len, (ang * 180 / Math.PI) + 90, len * 0.35,
+                 0.03 + L * (0.06 + Math.random() * 0.24),
+                 0.3 + Math.random() * 0.35);
+        }
+      }
+      swirlImg.setAttribute('href', cv.toDataURL('image/png'));
+    }
+
+    // Отрисовка паутинки занимает ~0.5 сек — не делаем её на старте, иначе
+    // страница подвисает при первой загрузке. Готовим заранее, когда блок
+    // подъезжает к экрану (rootMargin), чтобы к моменту показа уже был готов.
+    if(swirlImg){
+      if('IntersectionObserver' in window){
+        const swirlObs = new IntersectionObserver((es)=>{
+          if(es[0].isIntersecting){
+            swirlObs.disconnect();
+            const run = ()=> buildSwirls();
+            'requestIdleCallback' in window
+              ? requestIdleCallback(run, { timeout:1200 })
+              : setTimeout(run, 0);
+          }
+        }, { rootMargin:'900px 0px' });
+        swirlObs.observe(stage);
+      } else {
+        setTimeout(buildSwirls, 400);
+      }
+    }
+
+    const handle = document.getElementById('compareHandle');
+    const top = document.getElementById('compareTop');
+    let pct = 50;
+
+    function apply(p){
+      pct = Math.min(100, Math.max(0, p));
+      stage.style.setProperty('--split', pct + '%');
+      stage.setAttribute('aria-valuenow', Math.round(pct));
+      stage.setAttribute('aria-valuetext', Math.round(pct) + '% — ' +
+        (pct > 65 ? 'больше видно кузов без плёнки' :
+         pct < 35 ? 'больше видно кузов под плёнкой' : 'поровну'));
+    }
+    apply(50);
+
+    function fromEvent(e){
+      const r = stage.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left;
+      apply(x / r.width * 100);
+    }
+
+    let dragging = false;
+    stage.addEventListener('pointerdown', (e)=>{
+      dragging = true;
+      stage.setPointerCapture(e.pointerId);
+      fromEvent(e);
+    });
+    stage.addEventListener('pointermove', (e)=>{
+      if(dragging){ e.preventDefault(); fromEvent(e); }
+    });
+    function stop(e){
+      if(!dragging) return;
+      dragging = false;
+      try{ stage.releasePointerCapture(e.pointerId); }catch(_){}
+    }
+    stage.addEventListener('pointerup', stop);
+    stage.addEventListener('pointercancel', stop);
+
+    // клавиатура — блок доступен без мыши
+    stage.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowLeft'){ apply(pct - 4); e.preventDefault(); }
+      if(e.key === 'ArrowRight'){ apply(pct + 4); e.preventDefault(); }
+      if(e.key === 'Home'){ apply(0); e.preventDefault(); }
+      if(e.key === 'End'){ apply(100); e.preventDefault(); }
+    });
+  })();
+
+  /* ============ ЖИВАЯ ТЁМНАЯ КАРТА ============ */
+  // Показываем карту ТОЛЬКО когда реально приехали тайлы. Пока их нет
+  // (медленная сеть, нет интернета, CDN недоступен) — под ней остаётся
+  // рисованная схема, и заказчик никогда не видит пустой прямоугольник.
+  (function(){
+    const box = document.getElementById('mapLive');
+    if(!box || typeof L === 'undefined') return;
+    const LAT = 57.12001, LON = 65.62484;
+    const GIS = 'https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010';
+    try{
+      const map = L.map(box, {
+        zoomControl:true,
+        scrollWheelZoom:false,   // чтобы страница не «залипала» при прокрутке
+        attributionControl:true
+      // Центр кадра смещён к городу: студия стоит на юго-восточной окраине,
+      // и по центру половину кадра занимали бы река и пустая промзона.
+      }).setView([57.1235, 65.6135], 14);
+
+      // Убираем стандартную приписку Leaflet (она идёт с флагом) —
+      // оставляем только обязательную атрибуцию поставщика тайлов.
+      map.attributionControl.setPrefix('');
+
+      // Тёмная подложка Esri: работает без API-ключа.
+      // CARTO с сентября 2026 впечатывает в тайлы «API KEY REQUIRED», а
+      // публичные тайлы OSM отдают «Access blocked» — оба варианта отпали.
+      // ВНИМАНИЕ: у Esri порядок токенов {z}/{y}/{x}, а не {z}/{x}/{y}.
+      const ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/';
+      const tiles = L.tileLayer(ESRI + 'World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution:'&copy; Esri, HERE, Garmin, &copy; OpenStreetMap',
+        maxZoom:16
+      });
+      // отдельный слой с названиями улиц — в базовом слое их почти нет
+      const labels = L.tileLayer(ESRI + 'World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom:16, pane:'overlayPane'
+      });
+
+      // Если тайлы не пришли за 6 с — честно говорим об этом в подписи,
+      // иначе заглушка выглядит как поломка.
+      const offline = document.getElementById('mapOffline');
+      const giveUp = setTimeout(function(){ if(offline) offline.hidden = false; }, 9000);
+
+      let shown = false;
+      tiles.on('tileload', function(){
+        if(shown) return;
+        shown = true;
+        clearTimeout(giveUp);
+        if(offline) offline.hidden = true;
+        box.classList.add('ready');
+        box.removeAttribute('aria-hidden');
+        map.invalidateSize();
+      });
+      tiles.addTo(map);
+      labels.addTo(map);
+
+      L.marker([LAT, LON], {
+        icon: L.divIcon({ className:'', html:'<div class="map-pin-live"></div>', iconSize:[14,14], iconAnchor:[7,7] }),
+        title:'AUTOPROTECTTMN — ул. 50 лет Октября, 202'
+      }).addTo(map).bindPopup('<b>AUTOPROTECTTMN</b><br>ул. 50 лет Октября, 202, литера А<br><a href="'+GIS+'" target="_blank" rel="noopener">Открыть в 2ГИС</a>');
+
+      window.addEventListener('resize', ()=> map.invalidateSize());
+    }catch(e){
+      // Leaflet не загрузился (нет сети или CDN недоступен) — остаёмся на
+      // заглушке и объясняем это подписью.
+      const offline = document.getElementById('mapOffline');
+      if(offline) offline.hidden = false;
+    }
+  })();
+
+
+  /* ============ КАРУСЕЛЬ ПРОЕКТОВ ============ */
+  // Без библиотек: листание стрелками, точками, свайпом и клавишами.
+  // Если JS не отработал, первый слайд всё равно виден — он размечен
+  // классом is-active прямо в HTML.
+  (function(){
+    const roots = document.querySelectorAll('[data-project]');
+    if(!roots.length) return;
+
+    roots.forEach(function(root){
+      const slides  = Array.prototype.slice.call(root.querySelectorAll('.project-slide'));
+      const stage   = root.querySelector('.project-stage');
+      const dotsBox = root.querySelector('.project-dots');
+      const counter = root.querySelector('.project-counter');
+      const prev    = root.querySelector('.project-arrow--prev');
+      const next    = root.querySelector('.project-arrow--next');
+      if(slides.length < 2){ root.classList.add('is-single'); return; }
+
+      let index = slides.findIndex(function(s){ return s.classList.contains('is-active'); });
+      if(index < 0) index = 0;
+
+      // точки строим кодом — их всегда столько же, сколько кадров
+      const dots = slides.map(function(_, i){
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('role', 'tab');
+        b.setAttribute('aria-label', 'Кадр ' + (i + 1));
+        b.addEventListener('click', function(){ go(i); });
+        dotsBox.appendChild(b);
+        return b;
+      });
+
+      function go(next_i){
+        const n = (next_i + slides.length) % slides.length;
+        if(n === index) return;
+        // видео на уходящем кадре останавливаем, иначе звук играет из-за кулис
+        const leaving = slides[index].querySelector('video');
+        if(leaving && !leaving.paused) leaving.pause();
+
+        slides[index].classList.remove('is-active');
+        slides[n].classList.add('is-active');
+        index = n;
+        paint();
+      }
+
+      function paint(){
+        dots.forEach(function(d, i){ d.setAttribute('aria-selected', i === index ? 'true' : 'false'); });
+        if(counter) counter.innerHTML = '<b>' + (index + 1) + '</b> / ' + slides.length;
+      }
+
+      if(prev) prev.addEventListener('click', function(){ go(index - 1); });
+      if(next) next.addEventListener('click', function(){ go(index + 1); });
+
+      // свайп: считаем только явно горизонтальный жест, чтобы не перехватывать
+      // вертикальную прокрутку страницы
+      let x0 = null, y0 = null;
+      stage.addEventListener('touchstart', function(e){
+        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+      }, { passive:true });
+      stage.addEventListener('touchend', function(e){
+        if(x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        const dy = e.changedTouches[0].clientY - y0;
+        if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+        x0 = y0 = null;
+      }, { passive:true });
+
+      root.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); go(index - 1); }
+        if(e.key === 'ArrowRight'){ e.preventDefault(); go(index + 1); }
+      });
+
+      paint();
+    });
+  })();
+  /* ============ SCROLL REVEAL ============ */
+  // Класс .reveal навешивается здесь, а не в разметке — если JS не отработал
+  // или пользователь просил меньше анимаций, контент просто виден сразу.
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll(
+      '.services-head, .service-card, .step, .faq-item, .stat-item, ' +
+      '.services-full-link, .contact-inner, .map-card, .footer-col, .project, ' +
+      '.config-left > *, .price-row, .cat-header, .ba-card, .video-card, .page-hero > *'
+    );
+    els.forEach(el=>{
+      el.classList.add('reveal');
+      // лёгкая лесенка внутри одного ряда карточек — соседи появляются друг за другом
+      const sibs = el.parentElement ? Array.from(el.parentElement.children) : [];
+      const i = sibs.indexOf(el);
+      if(i > 0 && i < 6) el.style.transitionDelay = (i * 70) + 'ms';
+    });
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(el=>obs.observe(el));
+
+    // Страховка. Наблюдатель в редких случаях не срабатывает для элементов
+    // у самого низа длинной страницы — тогда контент остался бы невидимым.
+    // Обычная проверка по скроллу это подстраховывает.
+    let ticking = false;
+    function checkAll(){
+      ticking = false;
+      els.forEach(el=>{
+        if(el.classList.contains('visible')) return;
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 40 && r.bottom > 0) el.classList.add('visible');
+      });
+    }
+    function onScroll(){
+      if(!ticking){ ticking = true; requestAnimationFrame(checkAll); }
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', checkAll);
+    checkAll();
+  })();
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* ============ LIQUID GOLD CARDS ============ */
+  document.querySelectorAll('[data-card]').forEach(card=>{
+    card.addEventListener('mousemove', (e)=>{
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mx', x+'px');
+      card.style.setProperty('--my', y+'px');
+      card.style.setProperty('--sheen-x', (x/rect.width*100)+'%');
+      card.style.setProperty('--sheen-y', (y/rect.height*100)+'%');
+    });
+  });
+
+  /* ============ ANIMATED COUNTERS ============ */
+  const counters = document.querySelectorAll('.stat-number');
+  const counterObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1400;
+        const startTime = performance.now();
+        function tick(now){
+          const progress = Math.min((now-startTime)/duration, 1);
+          const eased = 1 - Math.pow(1-progress, 3);
+          el.innerHTML = Math.round(eased*target) + '<span class="suffix">'+suffix+'</span>';
+          if(progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, {threshold:0.4});
+  counters.forEach(c=>counterObserver.observe(c));
+
+  /* ============ BACKGROUND DRIFTING LINES ============ */
+  // Один и тот же дрейфующий "золотой пунктир" используется и в hero
+  // (фон вместо убранного видео с машиной), и в блоке "Доверие" — вынесено
+  // в функцию, чтобы не дублировать код на 2 канваса.
+  function initDriftingLines(canvasId, count){
+    const canvas = document.getElementById(canvasId);
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resize(){
+      W = canvas.width = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    const lines = Array.from({length:count}, ()=>({
+      x:Math.random()*W, y:Math.random()*H,
+      len:60+Math.random()*140, angle:-0.35+Math.random()*0.1,
+      speed:0.15+Math.random()*0.35, opacity:0.05+Math.random()*0.15
+    }));
+
+    // Раньше на каждую линию в каждом кадре создавался новый градиент —
+    // это ~3000 объектов в секунду на два канваса, отсюда и подтормаживания.
+    // Рисуем один раз в спрайт и дальше только копируем его.
+    const SPRITE_W = 240, SPRITE_H = 3;
+    const sprites = {};
+    function sprite(opacity){
+      const key = opacity.toFixed(2);
+      if(sprites[key]) return sprites[key];
+      const s = document.createElement('canvas');
+      s.width = SPRITE_W; s.height = SPRITE_H;
+      const sc = s.getContext('2d');
+      const g = sc.createLinearGradient(0,0,SPRITE_W,0);
+      g.addColorStop(0,'rgba(201,169,98,0)');
+      g.addColorStop(0.5,'rgba(201,169,98,'+key+')');
+      g.addColorStop(1,'rgba(201,169,98,0)');
+      sc.strokeStyle = g; sc.lineWidth = 1;
+      sc.beginPath(); sc.moveTo(0,1.5); sc.lineTo(SPRITE_W,1.5); sc.stroke();
+      sprites[key] = s;
+      return s;
+    }
+    lines.forEach(l=>{ l.sprite = sprite(l.opacity); });
+
+    let running = false, rafId = 0;
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      for(let i=0;i<lines.length;i++){
+        const l = lines[i];
+        ctx.save();
+        ctx.translate(l.x, l.y);
+        ctx.rotate(l.angle);
+        ctx.drawImage(l.sprite, 0, -1.5, l.len, SPRITE_H);
+        ctx.restore();
+        l.x += l.speed; l.y += l.speed*0.3;
+        if(l.x - l.len > W){ l.x = -l.len; l.y = Math.random()*H; }
+      }
+      rafId = requestAnimationFrame(draw);
+    }
+    function start(){ if(!running){ running = true; draw(); } }
+    function stop(){ if(running){ running = false; cancelAnimationFrame(rafId); } }
+
+    // Крутим анимацию только когда канвас реально на экране —
+    // фон блока «Доверие» незачем считать, пока смотрят hero, и наоборот.
+    if('IntersectionObserver' in window){
+      new IntersectionObserver((es)=>{
+        es[0].isIntersecting ? start() : stop();
+      }, { threshold:0 }).observe(canvas);
+    } else {
+      start();
+    }
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden) stop();
+    });
+  }
+  initDriftingLines('heroCanvas', 30);
+  initDriftingLines('linesCanvas', 22);
+
+  // Модель вынесена в assets/mercedes-model.glb (см. build-dist.sh)
+
+  /* ============ 3D CONFIGURATOR (Three.js) ============ */
+  (function(){
+    const canvas = document.getElementById('carCanvas');
+    const wrap = canvas.parentElement;
+    const loadingTag = document.getElementById('loadingTag');
+    const dragHint = document.getElementById('dragHint');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(32, wrap.clientWidth/wrap.clientHeight, 0.1, 100);
+    camera.position.set(5.4, 2.0, 5.4);
+    camera.lookAt(0, 0.05, 0);
+
+    const isMobileDevice = window.matchMedia('(max-width: 900px), (pointer: coarse)').matches;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:"high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobileDevice ? 2 : 2));
+    renderer.setSize(wrap.clientWidth, wrap.clientHeight, false); // false = не трогать CSS-размер canvas, им управляет стиль width:100%
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.68;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = isMobileDevice ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
+
+
+    // ---- procedural studio environment map (for reflections) ----
+    function buildEnvMap(){
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      const envCanvas = document.createElement('canvas');
+      envCanvas.width = 512; envCanvas.height = 256;
+      const ex = envCanvas.getContext('2d');
+      const grad = ex.createLinearGradient(0,0,0,256);
+      grad.addColorStop(0, '#3a3a3f');
+      grad.addColorStop(0.35, '#131315');
+      grad.addColorStop(0.55, '#0a0a0b');
+      grad.addColorStop(0.75, '#1c1c1f');
+      grad.addColorStop(1, '#050505');
+      ex.fillStyle = grad; ex.fillRect(0,0,512,256);
+      // soft light band (simulates studio strip light)
+      ex.fillStyle = 'rgba(255,255,255,0.5)';
+      ex.fillRect(0, 40, 512, 10);
+      ex.fillStyle = 'rgba(201,169,98,0.25)';
+      ex.fillRect(0, 170, 512, 14);
+      const envTex = new THREE.CanvasTexture(envCanvas);
+      envTex.mapping = THREE.EquirectangularReflectionMapping;
+      envTex.encoding = THREE.sRGBEncoding;
+      const envMap = pmrem.fromEquirectangular(envTex).texture;
+      envTex.dispose(); pmrem.dispose();
+      return envMap;
+    }
+    const envMap = buildEnvMap();
+    scene.environment = envMap;
+    scene.fog = new THREE.Fog(0x0a0a0b, 5.5, 13);
+
+    // ---- lights ----
+    scene.add(new THREE.AmbientLight(0x404040, 0.04));
+    const key = new THREE.DirectionalLight(0xfff2d8, 0.68);
+    key.position.set(6, 8, 4);
+    key.castShadow = true;
+    key.shadow.mapSize.width = isMobileDevice ? 1024 : 2048;
+    key.shadow.mapSize.height = isMobileDevice ? 1024 : 2048;
+    key.shadow.bias = -0.0006;
+    key.shadow.normalBias = 0.022;
+    key.shadow.radius = 2.5;
+    scene.add(key);
+    scene.add(key.target);
+    const rim = new THREE.DirectionalLight(0xc9a962, 0.20);
+    rim.position.set(-6, 3, -6);
+    scene.add(rim);
+    const fill = new THREE.DirectionalLight(0x8fa8c9, 0.09);
+    fill.position.set(-3, 2, 5);
+    scene.add(fill);
+
+    // ---- ground (large soft-fading floor) ----
+    const groundGeo = new THREE.CircleGeometry(9, 64);
+    const groundMat = new THREE.MeshStandardMaterial({ color:0x08080a, roughness:0.95, metalness:0 });
+    const ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI/2;
+    ground.position.y = -0.62;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // ---- turntable platform — видимый круглый подиум под машиной ----
+    const platformGroup = new THREE.Group();
+
+    const platformTopMat = new THREE.MeshPhysicalMaterial({
+      color:0x1c1c1f, roughness:0.35, metalness:0.4, clearcoat:0.5, clearcoatRoughness:0.3, envMapIntensity:2.2
+    });
+    const platformTop = new THREE.Mesh(new THREE.CylinderGeometry(2.55, 2.6, 0.07, 96), platformTopMat);
+    platformTop.receiveShadow = true;
+    platformGroup.add(platformTop);
+
+    // тонкий золотой кант по краю подиума
+    const rimGeo = new THREE.TorusGeometry(2.58, 0.012, 12, 96);
+    const rimMatGold = new THREE.MeshPhysicalMaterial({
+      color:0xc9a962, roughness:0.2, metalness:0.9, envMapIntensity:1.3,
+      emissive:0x7a5f2e, emissiveIntensity:0.35
+    });
+    const rimRing = new THREE.Mesh(rimGeo, rimMatGold);
+    rimRing.rotation.x = Math.PI/2;
+    rimRing.position.y = 0.03;
+    platformGroup.add(rimRing);
+
+    // едва заметные концентрические насечки на подиуме (ощущение станка/сцены)
+    const grooveGeo = new THREE.RingGeometry(1.9, 1.92, 96);
+    const grooveMat = new THREE.MeshBasicMaterial({ color:0x3a3a3e, transparent:true, opacity:0.4, side:THREE.DoubleSide });
+    const groove = new THREE.Mesh(grooveGeo, grooveMat);
+    groove.rotation.x = -Math.PI/2;
+    groove.position.y = 0.036;
+    platformGroup.add(groove);
+
+    // якорь: верх подиума (локально +0.035) должен оказаться чуть НИЖЕ низа
+    // колёс (world y=0), иначе колёса будут "тонуть" в диске
+    platformGroup.position.y = -0.045;
+    scene.add(platformGroup);
+
+    // ---- car group ----
+    const carGroup = new THREE.Group();
+    scene.add(carGroup);
+
+    // мягкое контактное затемнение под всем силуэтом машины — подстраховка
+    // на случай, если настоящая тень "отклеивается" в местах малого зазора.
+    // Добавляем ВНУТРЬ группы машины, чтобы пятно поворачивалось вместе с ней.
+    const contactCanvas = document.createElement('canvas');
+    contactCanvas.width = 512; contactCanvas.height = 512;
+    const cctx = contactCanvas.getContext('2d');
+    const cg = cctx.createRadialGradient(256,256,10,256,256,190);
+    cg.addColorStop(0, 'rgba(0,0,0,0.5)');
+    cg.addColorStop(0.35, 'rgba(0,0,0,0.34)');
+    cg.addColorStop(0.65, 'rgba(0,0,0,0.15)');
+    cg.addColorStop(1, 'rgba(0,0,0,0)');
+    cctx.fillStyle = cg; cctx.fillRect(0,0,512,512);
+    const contactTex = new THREE.CanvasTexture(contactCanvas);
+    const contactMat = new THREE.MeshBasicMaterial({ map:contactTex, transparent:true, depthWrite:false });
+    const contactShadow = new THREE.Mesh(new THREE.PlaneGeometry(1,1), contactMat);
+    contactShadow.rotation.x = -Math.PI/2;
+    carGroup.add(contactShadow);
+
+    // В этой модели у большинства деталей нет названий, а "белый цвет по
+    // умолчанию" в данных значит просто "нет своей текстуры" — это касается
+    // и стёкол, и суппортов тоже, так что ориентироваться на цвет ненадёжно.
+    // Зато сама краска кузова — единственная деталь, которая идёт ПЕРВОЙ
+    // внутри группы с названием, содержащим "body", и не переиспользуется
+    // больше нигде на машине (ни на колёсах, ни на суппортах). Это железно
+    // однозначный структурный признак именно для этой модели.
+    function convertToPhysical(src){
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: src.color ? src.color.clone() : new THREE.Color(0x1a1a1c),
+        map: src.map || null,
+        normalMap: src.normalMap || null,
+        roughnessMap: src.roughnessMap || null,
+        metalnessMap: src.metalnessMap || null,
+        aoMap: src.aoMap || null,
+        transparent: src.transparent || false,
+        opacity: src.opacity !== undefined ? src.opacity : 1,
+        envMapIntensity: 0.15
+      });
+      mat.name = src.name || '';
+      return mat;
+    }
+
+    const paintMaterials = [];
+    let modelReady = false;
+    let currentColor = '#19191b';
+    let currentEmissive = '#000000', currentEmissiveIntensity = 0;
+    // Красим в одном месте: цвет плюс необязательное собственное свечение.
+    // Свечение задаётся атрибутом data-emissive и сейчас не используется ни
+    // одним цветом — оно нужно, только если понадобится оттенок ярче потолка
+    // сцены (см. HANDOFF.md). Сброс в ноль обязателен: иначе цвет, выбранный
+    // после светящегося, продолжит светиться.
+    function applyPaint(){
+      paintMaterials.forEach(m=>{
+        m.color.set(currentColor);
+        m.emissive.set(currentEmissive);
+        m.emissiveIntensity = currentEmissiveIntensity;
+      });
+    }
+    let currentFinish = 'matte';
+
+    function applyFinish(finish){
+      currentFinish = finish;
+      paintMaterials.forEach(m=>{
+        if(finish === 'matte'){ m.roughness = 0.55; m.clearcoat = 0.3; m.metalness = 0.05; m.clearcoatRoughness = 0.4; }
+        if(finish === 'gloss'){ m.roughness = 0.16; m.clearcoat = 0.9; m.metalness = 0.08; m.clearcoatRoughness = 0.1; }
+        // сатин — середина между матом и глянцем: мягкий широкий блик
+        if(finish === 'satin'){ m.roughness = 0.34; m.clearcoat = 0.6; m.metalness = 0.07; m.clearcoatRoughness = 0.22; }
+        m.needsUpdate = true;
+      });
+    }
+
+    // Принудительно отключаем ImageBitmapLoader — на некоторых мобильных
+    // браузерах он грузит картинки через fetch() и падает с "Failed to
+    // fetch" при открытии сайта не с настоящего сервера. Классический <img>
+    // работает надёжнее. Безопасно оставить и при работе через реальный сервер.
+    try { window.createImageBitmap = undefined; } catch(e){}
+
+    const loader = new THREE.GLTFLoader();
+
+    // СБОРКА ДЛЯ ХОСТИНГА: модель лежит отдельным файлом и грузится через
+    // fetch(). Двойным кликом с диска такая версия не заработает — браузер
+    // блокирует fetch по file://. Для показа с флешки берите index.html из
+    // корня проекта, там модель вшита в код.
+    fetch('assets/mercedes-model.glb')
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.arrayBuffer(); })
+      .then(function(modelBinary){
+    loader.parse(modelBinary, '', (gltf)=>{
+      const model = gltf.scene;
+      let sawBodyGroupChild = false;
+      let largestVolume = -1;
+      let largestMesh = null;
+      let largestOrigMaterial = null;
+
+      model.traverse((child)=>{
+        if(!child.isMesh) return;
+        child.castShadow = true;
+        child.receiveShadow = true;
+
+        const parentName = (child.parent && child.parent.name) || '';
+        const underBodyGroup = /body/i.test(parentName);
+        const isBodyPaint = underBodyGroup && !sawBodyGroupChild;
+        if(underBodyGroup) sawBodyGroupChild = true; // только первая деталь в группе — краска
+
+        // запасной геометрический признак — самая крупная по объёму деталь
+        // (используется, только если структурный признак выше не сработал)
+        if(child.geometry){
+          if(!child.geometry.boundingBox) child.geometry.computeBoundingBox();
+          const dims = new THREE.Vector3();
+          child.geometry.boundingBox.getSize(dims);
+          const vol = dims.x * dims.y * dims.z;
+          if(vol > largestVolume){
+            largestVolume = vol;
+            largestMesh = child;
+            largestOrigMaterial = Array.isArray(child.material) ? child.material[0] : child.material;
+          }
+        }
+
+        const materials = Array.isArray(child.material) ? child.material : [child.material];
+        const newMaterials = materials.map((m)=>{
+          if(isBodyPaint){
+            const physical = convertToPhysical(m);
+            paintMaterials.push(physical);
+            return physical;
+          }
+          return m; // всё остальное — без изменений, оригинальный вид
+        });
+        child.material = Array.isArray(child.material) ? newMaterials : newMaterials[0];
+      });
+
+      // подстраховка: если структурный признак не сработал (пустой список
+      // красящихся материалов) — красим самую крупную по объёму деталь модели
+      if(paintMaterials.length === 0 && largestMesh){
+        console.warn('Структурный признак кузова не найден, красим по объёму детали.');
+        const physical = convertToPhysical(largestOrigMaterial);
+        paintMaterials.push(physical);
+        if(Array.isArray(largestMesh.material)){
+          const idx = largestMesh.material.indexOf(largestOrigMaterial);
+          if(idx > -1) largestMesh.material[idx] = physical;
+        } else {
+          largestMesh.material = physical;
+        }
+      }
+
+      console.log('Найдено красящихся материалов:', paintMaterials.length);
+
+      // нормализуем размер и центрируем модель, чтобы она всегда влезала в кадр
+      let box = new THREE.Box3().setFromObject(model);
+      let size = box.getSize(new THREE.Vector3());
+      const maxDim = Math.max(size.x, size.y, size.z) || 1;
+      const scale = 4.2 / maxDim;
+      model.scale.setScalar(scale);
+
+      box = new THREE.Box3().setFromObject(model);
+      size = box.getSize(new THREE.Vector3());
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.x -= center.x;
+      model.position.z -= center.z;
+      model.position.y -= box.min.y;
+
+      carGroup.add(model);
+
+      // подгоняем пол/подиум/камеру теней под реальные пропорции модели
+      ground.position.y = -0.15;
+      const platformScale = Math.max(size.x, size.z) / 4.6;
+      platformGroup.scale.set(platformScale, 1, platformScale);
+
+      // контактное затемнение — чуть выше поверхности подиума, под колёсами
+      contactShadow.scale.set(size.x*1.25, size.z*1.45, 1);
+      contactShadow.position.y = -0.008;
+
+      // направляем тень от ключевого света на центр машины и подгоняем
+      // область теневой камеры под её реальный габарит
+      key.target.position.set(0, size.y*0.3, 0);
+      key.target.updateMatrixWorld();
+      const shadowExtent = maxDim * 0.62;
+      key.shadow.camera.left = -shadowExtent;
+      key.shadow.camera.right = shadowExtent;
+      key.shadow.camera.top = shadowExtent;
+      key.shadow.camera.bottom = -shadowExtent;
+      key.shadow.camera.near = 0.5;
+      key.shadow.camera.far = maxDim * 5;
+      key.shadow.camera.updateProjectionMatrix();
+
+      // гарантированно вписываем модель в кадр — считаем по ограничивающей
+      // сфере и реальному полю зрения камеры (с учётом соотношения сторон),
+      // а не по приблизительному множителю
+      const sphere = box.getBoundingSphere(new THREE.Sphere());
+      sceneRadius = sphere.radius;
+      sceneLookY = sphere.center.y;
+      fitCamera();
+
+      modelReady = true;
+      applyPaint();
+      applyFinish(currentFinish);
+
+      loadingTag.style.opacity = 0;
+      loadingTag.style.transition = 'opacity 0.5s ease';
+      dragHint.style.transition = 'opacity 0.5s ease';
+      dragHint.style.opacity = 1;
+      setTimeout(()=>{ if(!isDragging) dragHint.style.opacity = 0; }, 3500);
+
+    }, (err)=>{
+      console.error('Ошибка разбора модели:', err);
+      loadingTag.textContent = 'ОШИБКА ЗАГРУЗКИ МОДЕЛИ';
+    });
+      })
+      .catch(function(err){
+        console.error('Не удалось загрузить модель:', err);
+        loadingTag.textContent = 'ОШИБКА ЗАГРУЗКИ МОДЕЛИ';
+      });
+
+    // ---- interaction: drag to rotate + auto-rotate ----
+    let isDragging = false, prevX = 0, autoRotate = true, targetRotY = 0.6, currentRotY = 0.6;
+    carGroup.rotation.y = currentRotY;
+
+    canvas.style.touchAction = 'none';
+    canvas.addEventListener('pointerdown', (e)=>{ isDragging = true; autoRotate = false; prevX = e.clientX; canvas.setPointerCapture(e.pointerId); dragHint.style.opacity = 0; e.preventDefault(); });
+    canvas.addEventListener('pointerup', ()=>{ isDragging = false; });
+    canvas.addEventListener('pointerleave', ()=>{ isDragging = false; });
+    canvas.addEventListener('pointermove', (e)=>{
+      if(!isDragging) return;
+      e.preventDefault();
+      const dx = e.clientX - prevX;
+      prevX = e.clientX;
+      targetRotY += dx * 0.008;
+    });
+    canvas.addEventListener('contextmenu', (e)=>e.preventDefault());
+
+    function resizeCar(){
+      const w = wrap.clientWidth, h = wrap.clientHeight;
+      if(w === 0 || h === 0) return;
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w,h,false);
+      fitCamera();
+    }
+    window.addEventListener('resize', resizeCar);
+    if(typeof ResizeObserver !== 'undefined'){
+      new ResizeObserver(resizeCar).observe(wrap);
+    }
+
+    let sceneRadius = 2.4;
+    let sceneLookY = 0.3;
+
+    function fitCamera(){
+      const vFov = camera.fov * Math.PI/180;
+      const hFov = 2 * Math.atan(Math.tan(vFov/2) * camera.aspect);
+      const fitFov = Math.min(vFov, hFov);
+      const camDist = (sceneRadius / Math.sin(fitFov/2)) * 0.85; // ещё ближе
+      camera.position.set(camDist*0.72, camDist*0.24, camDist*0.72);
+      camera.lookAt(0, sceneLookY, 0);
+    }
+
+    // Рендерим WebGL только пока конфигуратор на экране. Раньше сцена
+    // считалась всё время, даже когда пользователь читал FAQ внизу —
+    // это держало GPU занятым и тормозило скролл всей страницы.
+    let frame = 0, rendering = false, rafId3d = 0;
+    function animate(){
+      rafId3d = requestAnimationFrame(animate);
+      frame++;
+      if(autoRotate){ targetRotY += 0.0025; }
+      currentRotY += (targetRotY - currentRotY) * 0.08;
+      carGroup.rotation.y = currentRotY;
+      renderer.render(scene, camera);
+    }
+    function startRender(){ if(!rendering){ rendering = true; animate(); } }
+    function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
+    let inView = true;
+    if('IntersectionObserver' in window){
+      new IntersectionObserver((es)=>{
+        inView = es[0].isIntersecting;
+        inView ? startRender() : stopRender();
+      }, { threshold:0 }).observe(canvas);
+    } else {
+      startRender();
+    }
+    // при возврате на вкладку возобновляем, только если сцена на экране
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.hidden) stopRender();
+      else if(inView) startRender();
+    });
+
+    // ---- color / finish controls ----
+    const swatches = document.querySelectorAll('.swatch-btn');
+    const finishBtns = document.querySelectorAll('.finish-btn');
+    const colorNameEl = document.getElementById('colorName');
+    const finishNameEl = document.getElementById('finishName');
+    const finishLabels = { matte:'Матовая фактура', gloss:'Глянцевая фактура', satin:'Сатиновая фактура' };
+
+    finishBtns.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        finishBtns.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFinish(btn.dataset.finish);
+        finishNameEl.textContent = finishLabels[btn.dataset.finish];
+      });
+    });
+    swatches.forEach(sw=>{
+      sw.addEventListener('click', ()=>{
+        swatches.forEach(s=>s.classList.remove('active'));
+        sw.classList.add('active');
+        currentColor = sw.dataset.color;
+        currentEmissive = sw.dataset.emissive || '#000000';
+        currentEmissiveIntensity = parseFloat(sw.dataset.emissiveIntensity || 0);
+        applyPaint();
+        colorNameEl.textContent = sw.dataset.name;
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

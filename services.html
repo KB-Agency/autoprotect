@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Услуги и цены — AUTOPROTECTTMN, Тюмень</title>
+<meta name="description" content="Цены AUTOPROTECTTMN в Тюмени: оклейка полиуретаном от 60 000 ₽, смена цвета от 300 000 ₽, полировка с керамикой от 45 000 ₽, шумоизоляция, перешив салона и охранные комплексы.">
+<meta name="theme-color" content="#0a0a0b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUTOPROTECTTMN">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Услуги и цены — AUTOPROTECTTMN, Тюмень">
+<meta property="og:description" content="Оклейка полиуретаном от 60 000 ₽, смена цвета от 300 000 ₽, полировка с керамикой от 45 000 ₽, шумоизоляция, перешив салона и охранные комплексы.">
+<meta property="og:image" content="assets/og-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0b;
+    --graphite:#141416;
+    --graphite-2:#1c1c1f;
+    --graphite-3:#242428;
+    --line:#2e2e32;
+    --paper:#f1efe9;
+    --paper-dim:#9a9892;
+    --gold:#c9a962;
+    --gold-bright:#eed7a3;
+    --gold-dim:#7d6a42;
+    --ease:cubic-bezier(0.65,0,0.35,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+  }
+  ::selection{background:var(--gold); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---- Появление при скролле. Класс .reveal вешает JS, поэтому при
+         отключённом JS ничего не прячется и весь контент виден сразу. ---- */
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  }
+  .reveal.visible{ opacity:1; transform:none; }
+
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    position:sticky;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 6vw;
+    background:rgba(10,10,11,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:16px; display:flex; align-items:center; gap:10px; }
+  .logo-svg{ width:126px; height:50px; display:block; flex-shrink:0; }
+  .logo span{ color:var(--gold); }
+  .nav-links{ display:flex; gap:36px; }
+  .nav-links a{ font-size:13px; font-family:'JetBrains Mono', monospace; color:var(--paper); }
+  .nav-links a.active{ color:var(--gold); }
+  .nav-cta{ font-size:13px; padding:10px 18px; border:1px solid var(--paper); color:var(--paper); font-family:'JetBrains Mono', monospace; }
+  @media (max-width:800px){ .nav-links{ display:none; } }
+
+  .burger-btn{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    width:32px; height:32px;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:6px;
+    z-index:200;
+  }
+  .burger-btn span{
+    display:block; width:22px; height:1.5px; background:var(--paper);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger-btn.open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2){ opacity:0; }
+  .burger-btn.open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0;
+    background:var(--ink);
+    z-index:150;
+    display:flex; flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:28px;
+    padding:0 8vw;
+    opacity:0; pointer-events:none;
+    visibility:hidden;
+    transform:translateY(-12px);
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s linear 0.3s;
+  }
+  .mobile-menu.open{ opacity:1; pointer-events:auto; visibility:visible; transform:translateY(0); transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s; }
+  .mobile-menu a{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:32px; font-weight:600; color:var(--paper);
+  }
+  .mobile-menu a.active{ color:var(--gold); }
+  .mobile-menu a.mobile-cta{
+    margin-top:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; color:var(--gold);
+    border:1px solid var(--gold-dim); padding:14px 24px;
+  }
+
+  @media (max-width:800px){ .burger-btn{ display:flex; } }
+
+  /* ============ HERO ============ */
+  .page-hero{
+    padding:100px 6vw 60px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim);
+    margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--gold-dim); }
+  .page-hero h1{ font-size:clamp(36px, 5vw, 64px); max-width:800px; }
+  .page-hero p{ margin-top:20px; color:var(--paper-dim); font-size:16px; max-width:520px; }
+
+  /* ============ PRICING ============ */
+  .pricing-section{ padding:80px 6vw; border-bottom:1px solid var(--line); scroll-margin-top:130px; }
+  .pricing-section h2{ font-size:clamp(24px, 2.6vw, 32px); margin:0; }
+  .pricing-section .cat-desc{ color:var(--paper-dim); font-size:14.5px; max-width:480px; margin-bottom:40px; }
+
+  .cat-header{ display:flex; align-items:flex-start; gap:18px; margin-bottom:8px; }
+  .cat-icon{ width:26px; height:26px; color:var(--gold); flex-shrink:0; margin-top:3px; }
+  .cat-header .eyebrow{ margin-bottom:8px; }
+
+  /* ============ PRICING QUICK-NAV ============ */
+  .pricing-nav{
+    position:sticky;
+    top:81px;
+    z-index:90;
+    display:flex;
+    gap:28px;
+    padding:16px 6vw;
+    background:rgba(10,10,11,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+  }
+  .pricing-nav a{
+    font-size:12px; font-family:'JetBrains Mono', monospace; color:var(--paper-dim);
+    white-space:nowrap; transition:color 0.3s ease;
+  }
+  .pricing-nav a:hover{ color:var(--gold); }
+
+  .price-list{ display:flex; flex-direction:column; }
+  .price-row{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    align-items:baseline;
+    gap:24px;
+    padding:24px 0;
+    border-top:1px solid var(--line);
+    transition:background 0.25s ease;
+  }
+  .price-row::before{
+    content:'';
+    position:absolute; left:-6vw; top:0; bottom:0; width:3px;
+    background:var(--gold);
+    transform:scaleY(0);
+    transition:transform 0.25s ease;
+  }
+  .price-row:hover{ background:rgba(201,169,98,0.045); }
+  .price-row:hover::before{ transform:scaleY(1); }
+  .price-row:last-child{ border-bottom:1px solid var(--line); }
+  .price-name{ font-family:'Bricolage Grotesque', sans-serif; font-size:18px; font-weight:600; }
+  .price-desc{ color:var(--paper-dim); font-size:13.5px; margin-top:6px; max-width:480px; }
+  .price-duration{ font-size:12px; color:var(--paper-dim); white-space:nowrap; }
+  .price-value{ font-size:18px; color:var(--gold); white-space:nowrap; font-family:'JetBrains Mono', monospace; }
+  @media (max-width:700px){
+    .price-row{ grid-template-columns:1fr; gap:8px; }
+    .price-duration{ order:3; }
+  }
+
+  /* ============ NOTE ============ */
+  .placeholder-note{
+    margin:60px 6vw 0;
+    padding:20px 24px;
+    border:1px dashed var(--gold-dim);
+    color:var(--paper-dim);
+    font-size:13px;
+    font-family:'JetBrains Mono', monospace;
+    max-width:640px;
+  }
+
+  /* ============ CONTACT CTA ============ */
+  .contact-cta-section{
+    padding:100px 6vw;
+    text-align:center;
+  }
+  .contact-cta-section h2{ font-size:clamp(28px,3.6vw,46px); margin-bottom:24px; }
+  .big-cta{
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--gold); color:var(--ink); font-weight:600; font-size:15px;
+    padding:20px 32px; cursor:pointer; transition:transform 0.3s var(--ease);
+  }
+  .big-cta:hover{ transform:translateY(-3px); }
+
+  footer{
+    padding:80px 6vw 28px;
+    border-top:1px solid var(--line);
+    color:var(--paper-dim); letter-spacing:0.02em;
+    background:var(--ink);
+  }
+  .footer-cols{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:60px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand-title{
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+    font-size:22px; color:var(--paper); margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .footer-brand-title span{ color:var(--gold); }
+  .footer-brand-desc{ font-size:13.5px; color:var(--paper-dim); line-height:1.6; max-width:320px; }
+  .footer-col-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--gold-dim); margin-bottom:22px;
+  }
+  .footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col li a{
+    font-size:13.5px; color:var(--paper); transition:color 0.25s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .footer-col li a:hover, .footer-col li a.active{ color:var(--gold); }
+  .footer-col li .item-hint{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--paper-dim); letter-spacing:0.05em; }
+  .footer-col li .item-static{ font-size:13.5px; color:var(--paper); display:inline-flex; align-items:center; gap:8px; }
+  .footer-bottom{
+    padding-top:28px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.05em;
+  }
+  .footer-bottom .mono{ font-family:'JetBrains Mono', monospace; }
+  .footer-credit{ color:var(--paper); transition:color 0.25s ease; }
+  .footer-credit:hover{ color:var(--gold); }
+  @media (max-width:900px){
+    .footer-cols{ grid-template-columns:1fr 1fr; gap:40px 30px; }
+  }
+  @media (max-width:560px){
+    .footer-cols{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="AUTOPROTECTTMN — на главную"><svg class="logo-svg" viewBox="0 0 644 256" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="0" y="117" width="18" height="16"/><rect x="626" y="117" width="18" height="16"/></g><g fill="none" stroke="currentColor" stroke-width="9"><path d="M150 78 V14 H494 V78"/><path d="M150 178 V242 H494 V178"/></g><text x="322" y="177" fill="currentColor" text-anchor="middle" font-family="'Bricolage Grotesque','Arial Black',sans-serif" font-weight="800" font-size="134" textLength="596" lengthAdjust="spacingAndGlyphs">AUTO PROTECT</text></svg></a>
+  <div class="nav-links">
+    <a href="services.html" class="active">Услуги</a>
+    <a href="index.html#configurator">Подбор цвета</a>
+    <a href="works.html">Работы</a>
+    <a href="index.html#stats">О студии</a>
+    <a href="index.html#contact">Контакты</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Записаться</a>
+  <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html" class="active">Услуги</a>
+  <a href="index.html#configurator">Подбор цвета</a>
+  <a href="works.html">Работы</a>
+  <a href="index.html#stats">О студии</a>
+  <a href="index.html#contact">Контакты</a>
+  <a href="index.html#contact" class="mobile-cta">Записаться →</a>
+</div>
+
+<section class="page-hero">
+  <div class="eyebrow mono">УСЛУГИ И ЦЕНЫ</div>
+  <h1>Прозрачный прайс.<br>Без сюрпризов на месте.</h1>
+  <p>Финальная стоимость зависит от модели авто и состояния кузова — на консультации посчитаем точно.</p>
+</section>
+
+<nav class="pricing-nav">
+  <a href="#films">Защитные плёнки</a>
+  <a href="#color">Смена цвета</a>
+  <a href="#polish">Полировка</a>
+  <a href="#interior">Салон</a>
+  <a href="#extra">Доп. услуги</a>
+</nav>
+
+<div class="placeholder-note">
+  Цены указаны «от» — итог зависит от модели авто, состояния кузова и выбранного материала. Точную сумму называем после осмотра.
+</div>
+
+<section class="pricing-section" id="films">
+  <div class="cat-header">
+    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l7 3v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V5l7-3z"/></svg>
+    <div>
+      <div class="eyebrow mono">01 — плёнки</div>
+      <h2>Защитные плёнки</h2>
+    </div>
+  </div>
+  <div class="cat-desc">Полиуретан Legend PPF, Membrane TPU PREMIUM и VEGA PPF — защита лака от сколов, гравия, песка и щёток на мойке.</div>
+  <div class="price-list">
+    <div class="price-row">
+      <div>
+        <div class="price-name">Оклейка лицевой части глянцевым полиуретаном</div>
+        <div class="price-desc">Передний бампер без детализации, светотехника, капот, передние крылья, стойки и полоса над лобовым стеклом, накладки зеркал, зона ручек и зона погрузки на заднем бампере</div>
+      </div>
+      <div class="price-duration mono">2 рабочих дня</div>
+      <div class="price-value">от 60 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Оклейка кузова глянцевым полиуретаном</div>
+        <div class="price-desc">Весь кузов без детализации</div>
+      </div>
+      <div class="price-duration mono">4–5 дней</div>
+      <div class="price-value">от 280 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Оклейка кузова матовым полиуретаном</div>
+        <div class="price-desc">Весь кузов без детализации, матовая фактура</div>
+      </div>
+      <div class="price-duration mono">4–5 дней</div>
+      <div class="price-value">от 280 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Бронирование лобового стекла</div>
+        <div class="price-desc">Плёнка принимает удары гравия на себя — стекло не идёт трещиной</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 27 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="color">
+  <div class="cat-header">
+    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C8 8 5 11.5 5 15a7 7 0 0 0 14 0c0-3.5-3-7-7-13z"/></svg>
+    <div>
+      <div class="eyebrow mono">02 — цвет</div>
+      <h2>Смена цвета</h2>
+    </div>
+  </div>
+  <div class="cat-desc">Матовые, глянцевые и сатиновые плёнки — новый образ без покраски и без потери заводского лака.</div>
+  <div class="price-list">
+    <div class="price-row">
+      <div>
+        <div class="price-name">Смена цвета автомобиля плёнкой</div>
+        <div class="price-desc">Любой цвет и фактура на выбор — подобрать оттенок можно в конфигураторе на главной</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 300 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="polish">
+  <div class="cat-header">
+    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+    <div>
+      <div class="eyebrow mono">03 — полировка</div>
+      <h2>Полировка и защита</h2>
+    </div>
+  </div>
+  <div class="cat-desc">Восстановление глубины лака и долговременное покрытие, которое держит блеск и облегчает мойку.</div>
+  <div class="price-list">
+    <div class="price-row">
+      <div>
+        <div class="price-name">Полировка кузова с керамическим покрытием</div>
+        <div class="price-desc">Убираем паутинку и микроцарапины, сверху — керамика для защиты результата</div>
+      </div>
+      <div class="price-duration mono">3–4 дня</div>
+      <div class="price-value">от 45 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="interior">
+  <div class="cat-header">
+    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M4.2 16.5l5.2-3M19.8 16.5l-5.2-3"/></svg>
+    <div>
+      <div class="eyebrow mono">04 — салон</div>
+      <h2>Салон</h2>
+    </div>
+  </div>
+  <div class="cat-desc">Перетяжка в натуральную кожу и приведение салона в порядок.</div>
+  <div class="price-list">
+    <div class="price-row">
+      <div>
+        <div class="price-name">Перешив руля в натуральную кожу</div>
+        <div class="price-desc">Самая контактная деталь салона — обновляется заметнее всего</div>
+      </div>
+      <div class="price-duration mono">1 день</div>
+      <div class="price-value">от 10 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Перешив салона</div>
+        <div class="price-desc">Материал и цвет подбираем под задачу</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 12 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Перешив потолка салона</div>
+        <div class="price-desc">Решает провисший и затёртый потолок</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 80 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Химчистка салона</div>
+        <div class="price-desc">Глубокая очистка обивки, удаление загрязнений и запахов</div>
+      </div>
+      <div class="price-duration mono">3 дня</div>
+      <div class="price-value">от 20 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="extra" style="border-bottom:none;">
+  <div class="cat-header">
+    <svg class="cat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2-2 2.5-2.5z"/></svg>
+    <div>
+      <div class="eyebrow mono">05 — доп. услуги</div>
+      <h2>Дополнительные услуги</h2>
+    </div>
+  </div>
+  <div class="cat-desc">То, что часто заказывают вместе с основными работами.</div>
+  <div class="price-list">
+    <div class="price-row">
+      <div>
+        <div class="price-name">Шумо-виброизоляция кузова</div>
+        <div class="price-desc">Тише в салоне на трассе, меньше вибраций и дребезга</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 28 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Установка охранного комплекса</div>
+        <div class="price-desc">Pandora или StarLine — подбираем модель под автомобиль</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 50 000 ₽</div>
+    </div>
+    <div class="price-row">
+      <div>
+        <div class="price-name">Установка обвесов</div>
+        <div class="price-desc">Монтаж элементов внешнего тюнинга</div>
+      </div>
+      <div class="price-duration mono">по объёму работ</div>
+      <div class="price-value">от 15 000 ₽</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-cta-section">
+  <h2>Не нашли нужную услугу?</h2>
+  <a href="index.html#contact" class="big-cta">Наши контакты →</a>
+</section>
+
+<footer>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <div class="footer-brand-title">AUTOPROTECT<span>TMN</span></div>
+      <div class="footer-brand-desc">Детейлинг-студия в Тюмени. Защитная полиуретановая плёнка, смена цвета, полировка с керамикой, шумоизоляция, перешив салона и охранные комплексы. Опыт мастеров — более 15 лет.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Навигация</div>
+      <ul>
+        <li><a href="services.html" class="active">Услуги и цены</a></li>
+        <li><a href="index.html#configurator">Подбор цвета</a></li>
+        <li><a href="works.html">Наши работы</a></li>
+        <li><a href="index.html#stats">О студии</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Контакты</div>
+      <ul>
+        <li><a href="tel:+79829384032">+7 (982) 938-40-32</a></li>
+        <li><a href="tel:+79224748887">+7 (922) 474-88-87</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">Тюмень, ул. 50 лет Октября, 202А</a></li>
+        <li><span class="item-static"><span class="item-hint">ПН — ПТ</span> 9:00 — 19:00</span></li>
+        <li><span class="item-static"><span class="item-hint">СБ — ВС</span> по договорённости</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Соцсети</div>
+      <ul>
+        <li><a href="https://www.instagram.com/autoprotecttmn" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">2ГИС</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="mono">© 2026 AUTOPROTECTTMN · ВСЕ ПРАВА ЗАЩИЩЕНЫ</div>
+    <div class="mono">СДЕЛАНО В <a href="https://www.kbagency.ru/" target="_blank" rel="noopener" class="footer-credit">KB AGENCY</a></div>
+  </div>
+</footer>
+
+<script>
+  /* ============ SCROLL REVEAL ============ */
+  // Класс .reveal навешивается здесь, а не в разметке — если JS не отработал
+  // или пользователь просил меньше анимаций, контент просто виден сразу.
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll(
+      '.page-hero > *, .cat-header, .cat-desc, .price-row, ' +
+      '.placeholder-note, .contact-cta-section > *, .footer-col'
+    );
+    els.forEach(el=>{
+      el.classList.add('reveal');
+      const sibs = el.parentElement ? Array.from(el.parentElement.children) : [];
+      const i = sibs.indexOf(el);
+      if(i > 0 && i < 6) el.style.transitionDelay = (i * 70) + 'ms';
+    });
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(el=>obs.observe(el));
+
+    // Страховка. Наблюдатель в редких случаях не срабатывает для элементов
+    // у самого низа длинной страницы — тогда контент остался бы невидимым.
+    // Обычная проверка по скроллу это подстраховывает.
+    let ticking = false;
+    function checkAll(){
+      ticking = false;
+      els.forEach(el=>{
+        if(el.classList.contains('visible')) return;
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 40 && r.bottom > 0) el.classList.add('visible');
+      });
+    }
+    function onScroll(){
+      if(!ticking){ ticking = true; requestAnimationFrame(checkAll); }
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', checkAll);
+    checkAll();
+  })();
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

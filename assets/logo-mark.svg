@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AUTOPROTECTTMN">
+  <title>AUTOPROTECTTMN</title>
+  <!-- Квадратная версия знака: рамка-скобка и монограмма. Используется как
+       favicon, поэтому детали крупные — на 16 px мелочь всё равно пропадёт. -->
+  <rect width="64" height="64" rx="12" fill="#0a0a0b"/>
+  <g fill="none" stroke="#c9a962" stroke-width="3">
+    <path d="M15 26 V13 H49 V26"/>
+    <path d="M15 38 V51 H49 V38"/>
+  </g>
+  <text x="32" y="39.4" fill="#f1efe9" text-anchor="middle"
+        font-family="'Arial Black','Helvetica Neue',Impact,sans-serif"
+        font-weight="900" font-size="16"
+        textLength="25" lengthAdjust="spacingAndGlyphs">AP</text>
+</svg>

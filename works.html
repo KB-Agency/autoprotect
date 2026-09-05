@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наши работы — AUTOPROTECTTMN, Тюмень</title>
+<meta name="description" content="Работы студии AUTOPROTECTTMN в Тюмени: фото до и после оклейки защитной и цветной плёнкой, видео процесса нанесения на кузов.">
+<meta name="theme-color" content="#0a0a0b">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUTOPROTECTTMN">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Наши работы — AUTOPROTECTTMN, Тюмень">
+<meta property="og:description" content="Видео процесса оклейки и готовых работ: Cadillac Escalade, Mercedes GLE, Defender, BMW и Porsche.">
+<meta property="og:image" content="assets/og-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0b;
+    --graphite:#141416;
+    --graphite-2:#1c1c1f;
+    --graphite-3:#242428;
+    --line:#2e2e32;
+    --paper:#f1efe9;
+    --paper-dim:#9a9892;
+    --gold:#c9a962;
+    --gold-bright:#eed7a3;
+    --gold-dim:#7d6a42;
+    --ease:cubic-bezier(0.65,0,0.35,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+  }
+  ::selection{background:var(--gold); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---- Появление при скролле. Класс .reveal вешает JS, поэтому при
+         отключённом JS ничего не прячется и весь контент виден сразу. ---- */
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  }
+  .reveal.visible{ opacity:1; transform:none; }
+
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    position:sticky;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 6vw;
+    background:rgba(10,10,11,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:16px; display:flex; align-items:center; gap:10px; }
+  .logo-svg{ width:126px; height:50px; display:block; flex-shrink:0; }
+  .logo span{ color:var(--gold); }
+  .nav-links{ display:flex; gap:36px; }
+  .nav-links a{ font-size:13px; font-family:'JetBrains Mono', monospace; color:var(--paper); }
+  .nav-links a.active{ color:var(--gold); }
+  .nav-cta{ font-size:13px; padding:10px 18px; border:1px solid var(--paper); color:var(--paper); font-family:'JetBrains Mono', monospace; }
+  @media (max-width:800px){ .nav-links{ display:none; } }
+
+  .burger-btn{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    width:32px; height:32px;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:6px;
+    z-index:200;
+  }
+  .burger-btn span{
+    display:block; width:22px; height:1.5px; background:var(--paper);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger-btn.open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2){ opacity:0; }
+  .burger-btn.open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0;
+    background:var(--ink);
+    z-index:150;
+    display:flex; flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:28px;
+    padding:0 8vw;
+    opacity:0; pointer-events:none;
+    visibility:hidden;
+    transform:translateY(-12px);
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s linear 0.3s;
+  }
+  .mobile-menu.open{ opacity:1; pointer-events:auto; visibility:visible; transform:translateY(0); transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s; }
+  .mobile-menu a{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:32px; font-weight:600; color:var(--paper);
+  }
+  .mobile-menu a.active{ color:var(--gold); }
+  .mobile-menu a.mobile-cta{
+    margin-top:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; color:var(--gold);
+    border:1px solid var(--gold-dim); padding:14px 24px;
+  }
+
+  @media (max-width:800px){ .burger-btn{ display:flex; } }
+
+  /* ============ HERO ============ */
+  .page-hero{
+    padding:100px 6vw 60px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dim);
+    margin-bottom:20px; display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--gold-dim); }
+  .page-hero h1{ font-size:clamp(36px, 5vw, 64px); max-width:800px; }
+  .page-hero p{ margin-top:20px; color:var(--paper-dim); font-size:16px; max-width:520px; }
+
+  /* ============ NOTE ============ */
+  .placeholder-note{
+    margin:60px 6vw 0;
+    padding:20px 24px;
+    border:1px dashed var(--gold-dim);
+    color:var(--paper-dim);
+    font-size:13px;
+    font-family:'JetBrains Mono', monospace;
+    max-width:640px;
+  }
+
+  /* ============ WORKS SECTIONS ============ */
+  .works-section{ padding:80px 6vw; border-bottom:1px solid var(--line); }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(28px, 3vw, 40px); margin-bottom:16px; }
+  .section-head p{ color:var(--paper-dim); font-size:16px; line-height:1.6; max-width:520px; }
+
+
+  /* ============ ПРОЕКТЫ (карусель работ) ============ */
+  /* Один блок — одна машина: название, кадры, история. Живёт и на главной,
+     и на странице работ, поэтому стили одинаковые в обоих файлах. */
+  .project{ max-width:1120px; margin:0 auto; }
+  .project + .project{ margin-top:clamp(64px,9vw,120px); }
+  .project-title{
+    position:relative;
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800; letter-spacing:-0.025em; line-height:1.02;
+    font-size:clamp(30px,5.4vw,60px);
+    padding-bottom:18px;
+  }
+  /* золотая черта под названием машины — вместо подписи-приписки */
+  .project-title::after{
+    content:''; position:absolute; left:0; bottom:0;
+    width:58px; height:2px; background:var(--gold);
+  }
+  .project-meta{
+    display:flex; align-items:center; gap:11px; flex-wrap:wrap;
+    margin-top:14px; font-size:11px; letter-spacing:0.16em; color:var(--gold-dim);
+  }
+  .project-meta::before{ content:''; width:22px; height:1px; background:var(--gold-dim); flex-shrink:0; }
+
+  .project-stage{
+    position:relative; margin-top:26px;
+    aspect-ratio:16/9;
+    background:var(--graphite-2);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+  /* Вертикальные ролики (сторис с телефона) показываем в таком же
+     горизонтальном кадре, что и остальные — иначе страница выглядит как
+     мобильная вёрстка, растянутая на десктоп. Сам ролик вписывается целиком
+     (`contain`), а пустые бока закрывает сильно размытый постер того же
+     кадра. Развернуть вертикальное видео в горизонт нельзя: по бокам просто
+     нет снятой картинки. */
+  .project--portrait .project-slide{ background:var(--graphite-2); }
+  .project--portrait .project-slide::before{
+    content:''; position:absolute; inset:0;
+    background-image:var(--poster);
+    background-size:cover; background-position:center;
+    transform:scale(1.2);
+    filter:blur(34px) saturate(0.55) brightness(0.4);
+  }
+  .project--portrait .project-slide video{
+    position:relative;
+    object-fit:contain;
+    background:transparent;
+  }
+  /* Слайды лежат друг на друге, а не в потоке — высота кадра не прыгает
+     при листании, даже если фото разной пропорции. */
+  .project-slide{
+    position:absolute; inset:0; margin:0;
+    opacity:0; visibility:hidden;
+    transition:opacity 0.45s var(--ease);
+  }
+  .project-slide.is-active{ opacity:1; visibility:visible; }
+  .project-slide img,
+  .project-slide video{ width:100%; height:100%; object-fit:cover; display:block; background:#000; }
+  .project-soon{
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    letter-spacing:0.2em; color:var(--paper-dim);
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.014) 0 12px, transparent 12px 24px),
+      var(--graphite-2);
+  }
+
+  .project-arrow{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:42px; height:62px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(10,10,11,0.62); border:1px solid var(--line);
+    color:var(--paper); cursor:pointer; z-index:3;
+    transition:background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .project-arrow:hover{ background:var(--ink); color:var(--gold); border-color:var(--gold-dim); }
+  .project-arrow--prev{ left:0; border-left:none; }
+  .project-arrow--next{ right:0; border-right:none; }
+  .project-counter{
+    position:absolute; right:12px; bottom:12px; z-index:3;
+    padding:5px 10px; background:rgba(10,10,11,0.72); border:1px solid var(--line);
+    font-size:10px; letter-spacing:0.14em; color:var(--paper-dim);
+  }
+  .project-counter b{ color:var(--paper); font-weight:400; }
+
+  .project-dots{ display:flex; gap:8px; margin-top:16px; }
+  .project-dots button{
+    width:26px; height:2px; padding:0; border:none; cursor:pointer;
+    background:var(--line); transition:background 0.25s ease;
+  }
+  .project-dots button[aria-selected="true"]{ background:var(--gold); }
+
+  .project-story{
+    margin-top:22px; max-width:620px;
+    color:var(--paper-dim); font-size:16px; line-height:1.7;
+  }
+
+  /* Если кадр один — навигация не нужна и только мешает. */
+  .project.is-single .project-arrow,
+  .project.is-single .project-dots,
+  .project.is-single .project-counter{ display:none; }
+
+  @media (max-width:760px){
+    .project-arrow{ width:36px; height:52px; }
+    .project-stage{ margin-top:18px; }
+    .project-story{ font-size:15px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .project-slide{ transition:none; }
+  }
+
+  /* ============ CONTACT CTA ============ */
+  .contact-cta-section{
+    padding:100px 6vw;
+    text-align:center;
+  }
+  .contact-cta-section h2{ font-size:clamp(28px,3.6vw,46px); margin-bottom:24px; }
+  .big-cta{
+    display:inline-flex; align-items:center; gap:12px;
+    background:var(--gold); color:var(--ink); font-weight:600; font-size:15px;
+    padding:20px 32px; cursor:pointer; transition:transform 0.3s var(--ease);
+  }
+  .big-cta:hover{ transform:translateY(-3px); }
+
+  footer{
+    padding:80px 6vw 28px;
+    border-top:1px solid var(--line);
+    color:var(--paper-dim); letter-spacing:0.02em;
+    background:var(--ink);
+  }
+  .footer-cols{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:60px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand-title{
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+    font-size:22px; color:var(--paper); margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .footer-brand-title span{ color:var(--gold); }
+  .footer-brand-desc{ font-size:13.5px; color:var(--paper-dim); line-height:1.6; max-width:320px; }
+  .footer-col-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--gold-dim); margin-bottom:22px;
+  }
+  .footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col li a{
+    font-size:13.5px; color:var(--paper); transition:color 0.25s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .footer-col li a:hover, .footer-col li a.active{ color:var(--gold); }
+  .footer-col li .item-hint{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--paper-dim); letter-spacing:0.05em; }
+  .footer-col li .item-static{ font-size:13.5px; color:var(--paper); display:inline-flex; align-items:center; gap:8px; }
+  .footer-bottom{
+    padding-top:28px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.05em;
+  }
+  .footer-bottom .mono{ font-family:'JetBrains Mono', monospace; }
+  .footer-credit{ color:var(--paper); transition:color 0.25s ease; }
+  .footer-credit:hover{ color:var(--gold); }
+  @media (max-width:900px){
+    .footer-cols{ grid-template-columns:1fr 1fr; gap:40px 30px; }
+  }
+  @media (max-width:560px){
+    .footer-cols{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="AUTOPROTECTTMN — на главную"><svg class="logo-svg" viewBox="0 0 644 256" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="0" y="117" width="18" height="16"/><rect x="626" y="117" width="18" height="16"/></g><g fill="none" stroke="currentColor" stroke-width="9"><path d="M150 78 V14 H494 V78"/><path d="M150 178 V242 H494 V178"/></g><text x="322" y="177" fill="currentColor" text-anchor="middle" font-family="'Bricolage Grotesque','Arial Black',sans-serif" font-weight="800" font-size="134" textLength="596" lengthAdjust="spacingAndGlyphs">AUTO PROTECT</text></svg></a>
+  <div class="nav-links">
+    <a href="services.html">Услуги</a>
+    <a href="index.html#configurator">Подбор цвета</a>
+    <a href="works.html" class="active">Работы</a>
+    <a href="index.html#stats">О студии</a>
+    <a href="index.html#contact">Контакты</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Записаться</a>
+  <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html">Услуги</a>
+  <a href="index.html#configurator">Подбор цвета</a>
+  <a href="works.html" class="active">Работы</a>
+  <a href="index.html#stats">О студии</a>
+  <a href="index.html#contact">Контакты</a>
+  <a href="index.html#contact" class="mobile-cta">Записаться →</a>
+</div>
+
+<section class="page-hero">
+  <div class="eyebrow mono">НАШИ РАБОТЫ</div>
+  <h1>Видно на кузове,<br>не на словах.</h1>
+  <p>Реальные автомобили наших клиентов: готовый результат и полный процесс работы в боксе.</p>
+</section>
+
+<section class="works-section" id="cases">
+  <div class="section-head">
+    <h2>Проекты</h2>
+    <p>Каждый блок — одна машина: процесс в боксе и готовый результат. Пролистайте кадры стрелками или свайпом.</p>
+  </div>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Audi RS6</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/audi-rs6-2.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/audi-rs6-2.jpg">
+          <source src="assets/video/audi-rs6-2.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Mercedes-Maybach S-Class</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/maybach-3.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/maybach-3.jpg">
+          <source src="assets/video/maybach-3.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">BMW X5 M</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/bmw-x5m-4.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/bmw-x5m-4.jpg">
+          <source src="assets/video/bmw-x5m-4.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Range Rover</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/range-rover-1.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/range-rover-1.jpg">
+          <source src="assets/video/range-rover-1.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">RAM 1500 RHO</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/ram-rho.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/ram-rho.jpg">
+          <source src="assets/video/ram-rho.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Mercedes-Benz S-Class W223</h3>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/mercedes-w223.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/mercedes-w223.jpg">
+          <source src="assets/video/mercedes-w223.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project" data-project>
+    <h3 class="project-title">Land Rover Defender</h3>
+    <div class="project-meta mono">Защита кузова полиуретаном</div>
+    <div class="project-stage">
+      <figure class="project-slide is-active">
+        <video controls playsinline preload="none" poster="assets/poster/defender.jpg">
+          <source src="assets/video/defender.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project" data-project>
+    <h3 class="project-title">Porsche Cayenne GTS</h3>
+    <div class="project-meta mono">Матовый полиуретан</div>
+    <div class="project-stage">
+      <figure class="project-slide is-active">
+        <video controls playsinline preload="none" poster="assets/poster/porsche.jpg">
+          <source src="assets/video/porsche.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </article>
+  <article class="project project--portrait" data-project>
+    <h3 class="project-title">Как мы работаем</h3>
+    <div class="project-meta mono">Съёмка в студии</div>
+    <div class="project-stage">
+      <figure class="project-slide is-active" style="--poster:url('assets/poster/process-2.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/process-2.jpg">
+          <source src="assets/video/process-2.mp4" type="video/mp4">
+        </video>
+      </figure>
+      <figure class="project-slide" style="--poster:url('assets/poster/promo-story.jpg')">
+        <video controls playsinline preload="none" poster="assets/poster/promo-story.jpg">
+          <source src="assets/video/promo-story.mp4" type="video/mp4">
+        </video>
+      </figure>
+      <button type="button" class="project-arrow project-arrow--prev" aria-label="Предыдущий ролик"><svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2 L2.5 8 L8.5 14"/></svg></button>
+      <button type="button" class="project-arrow project-arrow--next" aria-label="Следующий ролик"><svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 2 L8.5 8 L2.5 14"/></svg></button>
+      <div class="project-counter mono" aria-hidden="true"></div>
+    </div>
+    <div class="project-dots" role="tablist" aria-label="Ролики проекта"></div>
+  </article>
+</section>
+
+<section class="contact-cta-section">
+  <h2>Хотите так же?</h2>
+  <a href="index.html#contact" class="big-cta">Наши контакты →</a>
+</section>
+
+<footer>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <div class="footer-brand-title">AUTOPROTECT<span>TMN</span></div>
+      <div class="footer-brand-desc">Детейлинг-студия в Тюмени. Защитная полиуретановая плёнка, смена цвета, полировка с керамикой, шумоизоляция, перешив салона и охранные комплексы. Опыт мастеров — более 15 лет.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Навигация</div>
+      <ul>
+        <li><a href="services.html">Услуги и цены</a></li>
+        <li><a href="index.html#configurator">Подбор цвета</a></li>
+        <li><a href="works.html" class="active">Наши работы</a></li>
+        <li><a href="index.html#stats">О студии</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Контакты</div>
+      <ul>
+        <li><a href="tel:+79829384032">+7 (982) 938-40-32</a></li>
+        <li><a href="tel:+79224748887">+7 (922) 474-88-87</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">Тюмень, ул. 50 лет Октября, 202А</a></li>
+        <li><span class="item-static"><span class="item-hint">ПН — ПТ</span> 9:00 — 19:00</span></li>
+        <li><span class="item-static"><span class="item-hint">СБ — ВС</span> по договорённости</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Соцсети</div>
+      <ul>
+        <li><a href="https://www.instagram.com/autoprotecttmn" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">2ГИС</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="mono">© 2026 AUTOPROTECTTMN · ВСЕ ПРАВА ЗАЩИЩЕНЫ</div>
+    <div class="mono">СДЕЛАНО В <a href="https://www.kbagency.ru/" target="_blank" rel="noopener" class="footer-credit">KB AGENCY</a></div>
+  </div>
+</footer>
+
+<script>
+  /* ============ SCROLL REVEAL ============ */
+  // Класс .reveal навешивается здесь, а не в разметке — если JS не отработал
+  // или пользователь просил меньше анимаций, контент просто виден сразу.
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll(
+      '.page-hero > *, .section-head, .project, ' +
+      '.contact-cta-section > *, .footer-col'
+    );
+    els.forEach(el=>{
+      el.classList.add('reveal');
+      const sibs = el.parentElement ? Array.from(el.parentElement.children) : [];
+      const i = sibs.indexOf(el);
+      if(i > 0 && i < 6) el.style.transitionDelay = (i * 70) + 'ms';
+    });
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(el=>obs.observe(el));
+
+    // Страховка. Наблюдатель в редких случаях не срабатывает для элементов
+    // у самого низа длинной страницы — тогда контент остался бы невидимым.
+    // Обычная проверка по скроллу это подстраховывает.
+    let ticking = false;
+    function checkAll(){
+      ticking = false;
+      els.forEach(el=>{
+        if(el.classList.contains('visible')) return;
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 40 && r.bottom > 0) el.classList.add('visible');
+      });
+    }
+    function onScroll(){
+      if(!ticking){ ticking = true; requestAnimationFrame(checkAll); }
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', checkAll);
+    checkAll();
+  })();
+
+
+  /* ============ КАРУСЕЛЬ ПРОЕКТОВ ============ */
+  // Без библиотек: листание стрелками, точками, свайпом и клавишами.
+  // Если JS не отработал, первый слайд всё равно виден — он размечен
+  // классом is-active прямо в HTML.
+  (function(){
+    const roots = document.querySelectorAll('[data-project]');
+    if(!roots.length) return;
+
+    roots.forEach(function(root){
+      const slides  = Array.prototype.slice.call(root.querySelectorAll('.project-slide'));
+      const stage   = root.querySelector('.project-stage');
+      const dotsBox = root.querySelector('.project-dots');
+      const counter = root.querySelector('.project-counter');
+      const prev    = root.querySelector('.project-arrow--prev');
+      const next    = root.querySelector('.project-arrow--next');
+      if(slides.length < 2){ root.classList.add('is-single'); return; }
+
+      let index = slides.findIndex(function(s){ return s.classList.contains('is-active'); });
+      if(index < 0) index = 0;
+
+      // точки строим кодом — их всегда столько же, сколько кадров
+      const dots = slides.map(function(_, i){
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('role', 'tab');
+        b.setAttribute('aria-label', 'Кадр ' + (i + 1));
+        b.addEventListener('click', function(){ go(i); });
+        dotsBox.appendChild(b);
+        return b;
+      });
+
+      function go(next_i){
+        const n = (next_i + slides.length) % slides.length;
+        if(n === index) return;
+        // видео на уходящем кадре останавливаем, иначе звук играет из-за кулис
+        const leaving = slides[index].querySelector('video');
+        if(leaving && !leaving.paused) leaving.pause();
+
+        slides[index].classList.remove('is-active');
+        slides[n].classList.add('is-active');
+        index = n;
+        paint();
+      }
+
+      function paint(){
+        dots.forEach(function(d, i){ d.setAttribute('aria-selected', i === index ? 'true' : 'false'); });
+        if(counter) counter.innerHTML = '<b>' + (index + 1) + '</b> / ' + slides.length;
+      }
+
+      if(prev) prev.addEventListener('click', function(){ go(index - 1); });
+      if(next) next.addEventListener('click', function(){ go(index + 1); });
+
+      // свайп: считаем только явно горизонтальный жест, чтобы не перехватывать
+      // вертикальную прокрутку страницы
+      let x0 = null, y0 = null;
+      stage.addEventListener('touchstart', function(e){
+        x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+      }, { passive:true });
+      stage.addEventListener('touchend', function(e){
+        if(x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        const dy = e.changedTouches[0].clientY - y0;
+        if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+        x0 = y0 = null;
+      }, { passive:true });
+
+      root.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowLeft'){ e.preventDefault(); go(index - 1); }
+        if(e.key === 'ArrowRight'){ e.preventDefault(); go(index + 1); }
+      });
+
+      paint();
+    });
+  })();
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

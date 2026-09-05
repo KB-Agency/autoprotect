@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Страница не найдена — AUTOPROTECTTMN</title>
+<meta name="description" content="Страница не найдена. Вернитесь на главную AUTOPROTECTTMN — детейлинг-студия в Тюмени: защитная плёнка, смена цвета, полировка, салон.">
+<meta name="theme-color" content="#0a0a0b">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AUTOPROTECTTMN">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Страница не найдена — AUTOPROTECTTMN">
+<meta property="og:description" content="Такой страницы нет. Загляните на главную — детейлинг-студия AUTOPROTECTTMN в Тюмени.">
+<meta property="og:image" content="assets/og-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="assets/logo-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0b;
+    --graphite:#141416;
+    --graphite-2:#1c1c1f;
+    --graphite-3:#242428;
+    --line:#2e2e32;
+    --paper:#f1efe9;
+    --paper-dim:#9a9892;
+    --gold:#c9a962;
+    --gold-bright:#eed7a3;
+    --gold-dim:#7d6a42;
+    --ease:cubic-bezier(0.65,0,0.35,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter', sans-serif;
+  }
+  ::selection{background:var(--gold); color:var(--ink);}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---- Появление при скролле. Класс .reveal вешает JS, поэтому при
+         отключённом JS ничего не прячется и весь контент виден сразу. ---- */
+  .reveal{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  }
+  .reveal.visible{ opacity:1; transform:none; }
+
+  a{color:inherit; text-decoration:none;}
+  h1,h2,h3{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+
+  /* ============ NAV ============ */
+  nav{
+    position:sticky;
+    top:0; left:0; right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 6vw;
+    background:rgba(10,10,11,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:16px; display:flex; align-items:center; gap:10px; }
+  .logo-svg{ width:126px; height:50px; display:block; flex-shrink:0; }
+  .logo span{ color:var(--gold); }
+  .nav-links{ display:flex; gap:36px; }
+  .nav-links a{ font-size:13px; font-family:'JetBrains Mono', monospace; color:var(--paper); }
+  .nav-links a.active{ color:var(--gold); }
+  .nav-cta{ font-size:13px; padding:10px 18px; border:1px solid var(--paper); color:var(--paper); font-family:'JetBrains Mono', monospace; }
+  @media (max-width:800px){ .nav-links{ display:none; } }
+
+  .burger-btn{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    width:32px; height:32px;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:6px;
+    z-index:200;
+  }
+  .burger-btn span{
+    display:block; width:22px; height:1.5px; background:var(--paper);
+    transition:transform 0.3s var(--ease), opacity 0.3s var(--ease);
+  }
+  .burger-btn.open span:nth-child(1){ transform:translateY(7.5px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2){ opacity:0; }
+  .burger-btn.open span:nth-child(3){ transform:translateY(-7.5px) rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0;
+    background:var(--ink);
+    z-index:150;
+    display:flex; flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:28px;
+    padding:0 8vw;
+    opacity:0; pointer-events:none;
+    visibility:hidden;
+    transform:translateY(-12px);
+    transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s linear 0.3s;
+  }
+  .mobile-menu.open{ opacity:1; pointer-events:auto; visibility:visible; transform:translateY(0); transition:opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0s; }
+  .mobile-menu a{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-size:32px; font-weight:600; color:var(--paper);
+  }
+  .mobile-menu a.active{ color:var(--gold); }
+  .mobile-menu a.mobile-cta{
+    margin-top:20px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:15px; color:var(--gold);
+    border:1px solid var(--gold-dim); padding:14px 24px;
+  }
+
+  @media (max-width:800px){ .burger-btn{ display:flex; } }
+
+  footer{
+    padding:80px 6vw 28px;
+    border-top:1px solid var(--line);
+    color:var(--paper-dim); letter-spacing:0.02em;
+    background:var(--ink);
+  }
+  .footer-cols{
+    display:grid;
+    grid-template-columns:1.6fr 1fr 1fr 1fr;
+    gap:60px;
+    padding-bottom:60px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-brand-title{
+    font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+    font-size:22px; color:var(--paper); margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .footer-brand-title span{ color:var(--gold); }
+  .footer-brand-desc{ font-size:13.5px; color:var(--paper-dim); line-height:1.6; max-width:320px; }
+  .footer-col-title{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--gold-dim); margin-bottom:22px;
+  }
+  .footer-col ul{ list-style:none; display:flex; flex-direction:column; gap:12px; }
+  .footer-col li a{
+    font-size:13.5px; color:var(--paper); transition:color 0.25s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .footer-col li a:hover, .footer-col li a.active{ color:var(--gold); }
+  .footer-col li .item-hint{ font-family:'JetBrains Mono', monospace; font-size:10px; color:var(--paper-dim); letter-spacing:0.05em; }
+  .footer-col li .item-static{ font-size:13.5px; color:var(--paper); display:inline-flex; align-items:center; gap:8px; }
+  .footer-bottom{
+    padding-top:28px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px;
+    font-size:11px; color:var(--paper-dim); letter-spacing:0.05em;
+  }
+  .footer-bottom .mono{ font-family:'JetBrains Mono', monospace; }
+  .footer-credit{ color:var(--paper); transition:color 0.25s ease; }
+  .footer-credit:hover{ color:var(--gold); }
+  @media (max-width:900px){
+    .footer-cols{ grid-template-columns:1fr 1fr; gap:40px 30px; }
+  }
+  @media (max-width:560px){
+    .footer-cols{ grid-template-columns:1fr; }
+  }
+
+  /* ============ 404 ============ */
+  .err{
+    position:relative;
+    min-height:calc(100vh - 82px);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:56px 6vw 0;
+    overflow:hidden;
+    background:
+      radial-gradient(900px 520px at 18% 12%, rgba(201,169,98,0.10), transparent 62%),
+      radial-gradient(760px 460px at 92% 88%, rgba(143,168,201,0.06), transparent 66%),
+      var(--ink);
+  }
+  .err-grid{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size:56px 56px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 70% at 30% 30%, black, transparent 72%);
+            mask-image:radial-gradient(ellipse 70% 70% at 30% 30%, black, transparent 72%);
+  }
+  .err-inner{ position:relative; z-index:2; max-width:1180px; margin:0 auto; width:100%; }
+
+  /* Цифры наполовину «оклеены»: нижний слой — затёртый лак, верхний —
+     та же надпись под плёнкой, обрезанная по диагонали. По линии реза
+     идёт золотая кромка — край плёнки. */
+  .err-num{
+    position:relative;
+    /* inline-block, иначе блок тянется на всю ширину и золотая кромка
+       плёнки уезжает далеко за пределы цифр */
+    display:inline-block;
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    font-size:clamp(110px, 19vw, 250px);
+    line-height:0.85;
+    letter-spacing:-0.04em;
+    margin-bottom:8px;
+    user-select:none;
+  }
+  .err-num span{ display:block; }
+  .err-base{
+    color:#37373d;
+    text-shadow:0 1px 0 rgba(0,0,0,0.6);
+  }
+  .err-film{
+    position:absolute; inset:0;
+    background:linear-gradient(122deg, #6f6f79 0%, #f1efe9 38%, #cfcdc7 52%, #8d8d96 70%, #55555e 100%);
+    -webkit-background-clip:text; background-clip:text;
+    color:transparent;
+    -webkit-clip-path:polygon(0 0, 100% 0, 100% 42%, 0 74%);
+            clip-path:polygon(0 0, 100% 0, 100% 42%, 0 74%);
+  }
+  .err-edge{
+    position:absolute; inset:0;
+    background:var(--gold);
+    -webkit-clip-path:polygon(0 74%, 100% 42%, 100% 43.6%, 0 75.6%);
+            clip-path:polygon(0 74%, 100% 42%, 100% 43.6%, 0 75.6%);
+    opacity:0.85;
+  }
+  .err-tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.2em; color:var(--gold-dim);
+    display:flex; align-items:center; gap:12px; margin-bottom:26px;
+  }
+  .err-tag::before{ content:''; width:22px; height:1px; background:var(--gold-dim); }
+
+  .err-body{ max-width:560px; margin-top:30px; }
+  .err-body h1{ font-size:clamp(26px,3.4vw,40px); margin-bottom:16px; }
+  .err-body p{ color:var(--paper-dim); font-size:16px; line-height:1.65; }
+
+  .err-links{ display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+  .err-link{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px; letter-spacing:0.04em;
+    padding:14px 22px; border:1px solid var(--line); color:var(--paper);
+    display:inline-flex; align-items:center; gap:10px;
+    transition:border-color 0.25s ease, color 0.25s ease, gap 0.25s var(--ease);
+  }
+  .err-link:hover{ border-color:var(--gold-dim); color:var(--gold); gap:16px; }
+  .err-link--gold{ background:var(--gold); color:var(--ink); border-color:var(--gold); }
+  .err-link--gold:hover{ color:var(--ink); background:var(--gold-bright); border-color:var(--gold-bright); }
+
+  /* ---- Лист плёнки на всю секцию ----
+     Продолжение метафоры из цифр: сверху — поверхность под плёнкой, снизу за
+     резом — голый лак, по линии реза плёнка отходит и загибается лоскутом.
+     Наклон реза тот же, что у .err-film на цифрах. Всё в процентах, поэтому
+     на узком экране сцена масштабируется сама. Картинок нет вообще. */
+  .err-sheet{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    /* --cut-l / --cut-r — где линия реза пересекает левый и правый край.
+       Держим её низко, чтобы не спорила с заголовком и кнопками. */
+    --cut-l:92%;
+    --cut-r:66%;
+    --flap:clamp(160px, 21vw, 300px);
+    /* Отрыв живёт только в правой половине кадра: слева всё гасится маской.
+       Так рез не перечёркивает кнопки и выглядит как настоящий задир, а не
+       как линия, проведённая через весь макет. */
+    --peel-mask:linear-gradient(90deg, transparent 44%, #000 68%);
+  }
+  .err-sheet > span{ position:absolute; display:block; }
+  .err-sheet > .sheet-gloss,
+  .err-sheet > .sheet-bare,
+  .err-sheet > .sheet-shade,
+  .err-sheet > .sheet-edge{ inset:0; }
+
+  /* поверхность плёнки — слабое отражение на глянце */
+  .sheet-gloss{
+    background:linear-gradient(122deg,
+      rgba(255,255,255,0.045) 0%,
+      rgba(255,255,255,0.010) 44%,
+      rgba(255,255,255,0.050) 66%,
+      rgba(255,255,255,0) 90%);
+    -webkit-clip-path:polygon(0 0, 100% 0, 100% var(--cut-r), 0 var(--cut-l));
+            clip-path:polygon(0 0, 100% 0, 100% var(--cut-r), 0 var(--cut-l));
+  }
+  /* за резом плёнки нет — поверхность глуше */
+  .sheet-bare{
+    background:rgba(0,0,0,0.26);
+    -webkit-clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% 100%, 0 100%);
+            clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% 100%, 0 100%);
+    -webkit-mask-image:var(--peel-mask); mask-image:var(--peel-mask);
+  }
+  /* тень, которую отбрасывает приподнятый край: она и даёт объём */
+  .sheet-shade{
+    background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0) 52px);
+    -webkit-clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% 100%, 0 100%);
+            clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% 100%, 0 100%);
+    -webkit-mask-image:var(--peel-mask); mask-image:var(--peel-mask);
+  }
+  /* Золотая кромка реза. Тот же приём, что и .err-edge на цифрах, но
+     маской гасим её слева: настоящий край плёнки не идёт ровной линией
+     через весь кадр, он должен уходить в тень. */
+  .sheet-edge{
+    background:var(--gold); opacity:0.5;
+    -webkit-clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% calc(var(--cut-r) + 0.35%), 0 calc(var(--cut-l) + 0.35%));
+            clip-path:polygon(0 var(--cut-l), 100% var(--cut-r), 100% calc(var(--cut-r) + 0.35%), 0 calc(var(--cut-l) + 0.35%));
+    -webkit-mask-image:var(--peel-mask); mask-image:var(--peel-mask);
+  }
+
+  /* Загнутый лоскут: единственный буквальный элемент сцены. Рисуем его
+     SVG, а не clip-path, потому что у отогнутой плёнки свободный край
+     всегда идёт дугой — прямой многоугольник читается как лист бумаги.
+     Сидит на правом конце реза, поэтому позиция считается от --cut-r. */
+  .err-sheet > .sheet-flap{
+    /* низ валика должен лечь ровно на рез: в SVG база проходит на 0.42
+       высоты кадра, а высота — четверть ширины */
+    top:calc(var(--cut-r) + 1.3% - var(--flap) * 0.105);
+    right:5%;
+    width:var(--flap);
+    filter:drop-shadow(2px 7px 10px rgba(0,0,0,0.6));
+  }
+  .sheet-flap svg{ display:block; width:100%; height:auto; }
+
+  @media (max-width:760px){
+    /* снизу нужен запас: там проходит рез, иначе он наезжает на кнопки */
+    .err{ min-height:auto; padding-bottom:120px; }
+    .err-body{ margin-top:22px; }
+    .err-sheet{ --cut-l:99%; --cut-r:92%; --flap:132px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo" aria-label="AUTOPROTECTTMN — на главную"><svg class="logo-svg" viewBox="0 0 644 256" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="0" y="117" width="18" height="16"/><rect x="626" y="117" width="18" height="16"/></g><g fill="none" stroke="currentColor" stroke-width="9"><path d="M150 78 V14 H494 V78"/><path d="M150 178 V242 H494 V178"/></g><text x="322" y="177" fill="currentColor" text-anchor="middle" font-family="'Bricolage Grotesque','Arial Black',sans-serif" font-weight="800" font-size="134" textLength="596" lengthAdjust="spacingAndGlyphs">AUTO PROTECT</text></svg></a>
+  <div class="nav-links">
+    <a href="services.html">Услуги</a>
+    <a href="index.html#configurator">Подбор цвета</a>
+    <a href="works.html">Работы</a>
+    <a href="index.html#stats">О студии</a>
+    <a href="index.html#contact">Контакты</a>
+  </div>
+  <a href="index.html#contact" class="nav-cta">Записаться</a>
+  <button class="burger-btn" id="burgerBtn" aria-label="Открыть меню" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="services.html">Услуги</a>
+  <a href="index.html#configurator">Подбор цвета</a>
+  <a href="works.html">Работы</a>
+  <a href="index.html#stats">О студии</a>
+  <a href="index.html#contact">Контакты</a>
+  <a href="index.html#contact" class="mobile-cta">Записаться →</a>
+</div>
+<section class="err">
+  <div class="err-grid"></div>
+
+  <!-- Лист защитной плёнки поверх всей секции: сверху глянец, по диагонали
+       рез с золотой кромкой, ниже — голая поверхность, справа плёнка отошла
+       и завернулась лоскутом. Целиком на CSS, ни одной картинки. -->
+  <div class="err-sheet" aria-hidden="true">
+    <span class="sheet-gloss"></span>
+    <span class="sheet-bare"></span>
+    <span class="sheet-shade"></span>
+    <span class="sheet-edge"></span>
+    <span class="sheet-flap">
+      <svg viewBox="0 0 240 62" role="presentation">
+        <defs>
+          <!-- Валик подвёрнутой плёнки: снизу он лежит на кузове и тонет в
+               тени, сверху скруглённая кромка развёрнута к свету. Поэтому
+               градиент идёт снизу вверх от почти чёрного к светлому. -->
+          <linearGradient id="flapFace" x1="0.5" y1="1" x2="0.42" y2="0">
+            <stop offset="0"    stop-color="#131319" stop-opacity="0.95"/>
+            <stop offset="0.42" stop-color="#43444e" stop-opacity="0.9"/>
+            <stop offset="0.82" stop-color="#8f919c" stop-opacity="0.92"/>
+            <stop offset="1"    stop-color="#c2c4cc" stop-opacity="0.95"/>
+          </linearGradient>
+          <!-- блик по скруглению: к левому концу задир сходит на нет -->
+          <linearGradient id="flapFold" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0"    stop-color="#efece5" stop-opacity="0"/>
+            <stop offset="0.45" stop-color="#efece5" stop-opacity="0.55"/>
+            <stop offset="0.9"  stop-color="#efece5" stop-opacity="0.85"/>
+            <stop offset="1"    stop-color="#c9a962" stop-opacity="0.7"/>
+          </linearGradient>
+        </defs>
+        <!-- низ валика лежит на линии реза, верх — дуга скруглённой кромки;
+             к правому краю задир глубже, влево сходит на нет -->
+        <path fill="url(#flapFace)" d="M4 56 L236 26 C 202 3, 92 15, 4 56 Z"/>
+        <path stroke="url(#flapFold)" stroke-width="2" fill="none"
+              d="M236 26 C 202 3, 92 15, 4 56"/>
+      </svg>
+    </span>
+  </div>
+
+  <div class="err-inner">
+    <div class="err-tag">ОШИБКА 404</div>
+
+    <div class="err-num" aria-label="404">
+      <span class="err-base" aria-hidden="true">404</span>
+      <span class="err-film" aria-hidden="true">404</span>
+      <span class="err-edge" aria-hidden="true"></span>
+    </div>
+
+    <div class="err-body">
+      <h1>Такой страницы у нас нет.</h1>
+      <p>Похоже, ссылка устарела или в адресе опечатка. Кузов мы бы уже вернули на место — а страницу проще найти через меню ниже.</p>
+      <div class="err-links">
+        <a class="err-link err-link--gold" href="index.html">На главную <span class="cta-arrow">→</span></a>
+        <a class="err-link" href="services.html">Услуги и цены</a>
+        <a class="err-link" href="works.html">Наши работы</a>
+        <a class="err-link" href="index.html#contact">Контакты</a>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <div class="footer-brand-title">AUTOPROTECT<span>TMN</span></div>
+      <div class="footer-brand-desc">Детейлинг-студия в Тюмени. Защитная полиуретановая плёнка, смена цвета, полировка с керамикой, шумоизоляция, перешив салона и охранные комплексы. Опыт мастеров — более 15 лет.</div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Навигация</div>
+      <ul>
+        <li><a href="services.html">Услуги и цены</a></li>
+        <li><a href="index.html#configurator">Подбор цвета</a></li>
+        <li><a href="works.html">Наши работы</a></li>
+        <li><a href="index.html#stats">О студии</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Контакты</div>
+      <ul>
+        <li><a href="tel:+79829384032">+7 (982) 938-40-32</a></li>
+        <li><a href="tel:+79224748887">+7 (922) 474-88-87</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">Тюмень, ул. 50 лет Октября, 202А</a></li>
+        <li><span class="item-static"><span class="item-hint">ПН — ПТ</span> 9:00 — 19:00</span></li>
+        <li><span class="item-static"><span class="item-hint">СБ — ВС</span> по договорённости</span></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Соцсети</div>
+      <ul>
+        <li><a href="https://www.instagram.com/autoprotecttmn" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" target="_blank" rel="noopener">2ГИС</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="mono">© 2026 AUTOPROTECTTMN · ВСЕ ПРАВА ЗАЩИЩЕНЫ</div>
+    <div class="mono">СДЕЛАНО В <a href="https://www.kbagency.ru/" target="_blank" rel="noopener" class="footer-credit">KB AGENCY</a></div>
+  </div>
+</footer>
+
+<script>
+  /* ============ SCROLL REVEAL ============ */
+  // Класс .reveal навешивается здесь, а не в разметке — если JS не отработал
+  // или пользователь просил меньше анимаций, контент просто виден сразу.
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!('IntersectionObserver' in window)) return;
+    const els = document.querySelectorAll(
+      '.err-tag, .err-num, .err-body > *, .footer-col'
+    );
+    els.forEach(el=>{
+      el.classList.add('reveal');
+      const sibs = el.parentElement ? Array.from(el.parentElement.children) : [];
+      const i = sibs.indexOf(el);
+      if(i > 0 && i < 6) el.style.transitionDelay = (i * 70) + 'ms';
+    });
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+    els.forEach(el=>obs.observe(el));
+
+    // Страховка. Наблюдатель в редких случаях не срабатывает для элементов
+    // у самого низа длинной страницы — тогда контент остался бы невидимым.
+    // Обычная проверка по скроллу это подстраховывает.
+    let ticking = false;
+    function checkAll(){
+      ticking = false;
+      els.forEach(el=>{
+        if(el.classList.contains('visible')) return;
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight - 40 && r.bottom > 0) el.classList.add('visible');
+      });
+    }
+    function onScroll(){
+      if(!ticking){ ticking = true; requestAnimationFrame(checkAll); }
+    }
+    window.addEventListener('scroll', onScroll, { passive:true });
+    window.addEventListener('resize', onScroll);
+    window.addEventListener('load', checkAll);
+    checkAll();
+  })();
+
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burgerBtn.addEventListener('click', ()=>{
+    const isOpen = mobileMenu.classList.toggle('open');
+    burgerBtn.classList.toggle('open', isOpen);
+    burgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      mobileMenu.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>
