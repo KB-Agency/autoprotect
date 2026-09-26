@@ -70,6 +70,24 @@
 
   a{color:inherit; text-decoration:none;}
 
+  /* ---- Видимая рамка при навигации с клавиатуры ----
+     Раньше её не было: браузерную обводку сбрасывал наш сброс стилей, а
+     своей не поставили. Человек, который ходит по сайту клавишей Tab, не
+     видел, где находится, и жал Enter вслепую.
+     Именно :focus-visible, а не :focus — браузер показывает рамку только
+     при заходе с клавиатуры. По клику мышью она не появляется, поэтому
+     на внешний вид сайта это никак не влияет. */
+  a:focus-visible,
+  button:focus-visible,
+  summary:focus-visible,
+  video:focus-visible,
+  [tabindex]:focus-visible{
+    outline:2px solid var(--gold);
+    outline-offset:3px;
+  }
+  /* у круглых кнопок цвета обводка идёт по окружности */
+  .swatch-btn:focus-visible{ outline-offset:4px; }
+
   /* ============ NAV ============ */
   nav{
     position:fixed;
@@ -2477,6 +2495,7 @@
     }
     function startRender(){ if(!rendering){ rendering = true; animate(); } }
     function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
 
 
 
