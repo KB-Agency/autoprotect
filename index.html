@@ -1033,7 +1033,12 @@
           <!-- Оттенки сняты пипеткой с фотографий реально оклеенных этой
                студией машин (см. папку «Примеры цвет»), а не выдуманы:
                Range Rover, Ram Rho, AMG GTR, W223, Jaguar F-Type, G63. -->
-          <button class="swatch-btn active" style="background:#19191b" data-color="#19191b" data-name="Чёрный" aria-label="Чёрный"></button>
+          <!-- Кружок оставлен #19191b, иначе он сливается с тёмным интерфейсом.
+               Материал намного темнее: при нейтральном студийном свете база
+               #19191b давала на кузове ровный серый, заказчик справедливо
+               сказал «это не чёрный». С #050506 кузов читается чёрным, а
+               блики остаются только на рёбрах и капоте. -->
+          <button class="swatch-btn active" style="background:#19191b" data-color="#050506" data-name="Чёрный" aria-label="Чёрный"></button>
           <button class="swatch-btn" style="background:#75634e" data-color="#75634e" data-name="Песочный" aria-label="Песочный"></button>
           <!-- Кружок показывает цвет плёнки как он есть, data-color задаёт материал.
                Они намеренно разные: свет и тонмаппинг осветляют кузов, поэтому
@@ -2472,6 +2477,7 @@
     }
     function startRender(){ if(!rendering){ rendering = true; animate(); } }
     function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
 
 
 
