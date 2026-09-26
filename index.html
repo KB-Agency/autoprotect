@@ -2060,7 +2060,12 @@
     insetScene.background = new THREE.Color(0x0d0d0f);
     insetScene.environment = envMap;
     const insetMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(1, 64, 48),
+      // Радиус 1.5, а не 1: при камере на расстоянии 2.16 шар единичного
+      // радиуса перекрывал кадр по ширине и высоте, но НЕ по диагонали —
+      // в углах оставался фон. Диагональный полуугол кадра 29°, угловой
+      // радиус шара был 27.6°. Теперь 44°, углы закрыты с запасом, а
+      // поверхность в кадре стала площе — ближе к виду настоящей панели.
+      new THREE.SphereGeometry(1.5, 72, 54),
       new THREE.MeshPhysicalMaterial({ color:0x19191b })
     );
     insetScene.add(insetMesh);
@@ -2462,6 +2467,7 @@
     }
     function startRender(){ if(!rendering){ rendering = true; animate(); } }
     function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
 
 
 
