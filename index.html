@@ -2070,7 +2070,12 @@
     );
     insetScene.add(insetMesh);
     const insetCam = new THREE.PerspectiveCamera(34, 230 / 150, 0.1, 20);
-    insetCam.position.set(0.35, 0.55, 2.05);
+    // Положение подобрано замером, а не на глаз: блик — это отражение
+    // софтбокса, и при прежнем ракурсе он упирался в верхний край кадра.
+    // Здесь он приходится на 71% по ширине и 27% по высоте, то есть виден
+    // целиком с запасом до краёв. Будешь двигать камеру — проверь, что
+    // блик на ГЛЯНЦЕ не касается границ окна.
+    insetCam.position.set(0.5, 1.1, 1.69);
     insetCam.lookAt(0, 0, 0);
     insetScene.add(new THREE.AmbientLight(0xffffff, 0.09));
     const insetKey = new THREE.DirectionalLight(0xffffff, 0.78);
@@ -2467,6 +2472,7 @@
     }
     function startRender(){ if(!rendering){ rendering = true; animate(); } }
     function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
 
 
 
