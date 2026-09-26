@@ -187,8 +187,17 @@
     -webkit-mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent 75%);
             mask-image:radial-gradient(ellipse 60% 60% at 50% 50%, black, transparent 75%);
   }
+  /* знак студии над заголовком первого экрана */
+  .hero-mark{
+    width:clamp(210px, 26vw, 340px);
+    height:auto;
+    display:block;
+    margin-bottom:clamp(26px, 4vw, 48px);
+    color:var(--paper);
+    position:relative; z-index:2;
+  }
   .hero h1{
-    font-size:clamp(40px, 7vw, 96px);
+    font-size:clamp(32px, 5vw, 66px);
     color:var(--paper);
     max-width:1000px;
     position:relative; z-index:2;
@@ -367,6 +376,29 @@
     position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
     font-size:11px; color:var(--paper-dim); letter-spacing:0.08em; text-transform:uppercase;
     display:flex; align-items:center; gap:8px; pointer-events:none;
+  }
+  /* Окно крупного плана: заказчик жаловался, что фактуру плёнки на
+     машине целиком не разглядеть. Рамку и подпись держим в DOM, а сам
+     кадр WebGL рисует в этот же угол холста через scissor. */
+  .zoom-frame{
+    position:absolute; top:20px; right:20px;
+    width:230px; height:150px;
+    border:1px solid var(--line);
+    pointer-events:none;
+    box-shadow:0 14px 34px rgba(0,0,0,0.5);
+  }
+  .zoom-frame::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+  .zoom-label{
+    position:absolute; left:0; right:0; bottom:-22px;
+    text-align:center; font-size:9.5px; letter-spacing:0.14em;
+    color:var(--paper-dim); text-transform:uppercase; white-space:nowrap;
+  }
+  @media (max-width:900px){
+    .zoom-frame{ width:150px; height:100px; top:14px; right:14px; }
+    .zoom-label{ font-size:8.5px; bottom:-19px; }
   }
   .loading-tag{
     position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -912,8 +944,9 @@
 <section class="hero">
   <canvas id="heroCanvas" class="hero-canvas"></canvas>
   <div class="hero-grid"></div>
-  <h1>Совершенство <em>не</em><br>видно сразу</h1>
-  <p>Раскрываем то, что скрыто под каждым слоем защиты — вручную, без компромиссов.</p>
+  <svg class="hero-mark" viewBox="0 0 644 256" aria-hidden="true" focusable="false"><g fill="currentColor"><rect x="0" y="117" width="18" height="16"/><rect x="626" y="117" width="18" height="16"/></g><g fill="none" stroke="currentColor" stroke-width="9"><path d="M150 78 V14 H494 V78"/><path d="M150 178 V242 H494 V178"/></g><text x="322" y="177" fill="currentColor" text-anchor="middle" font-family="'Bricolage Grotesque','Arial Black',sans-serif" font-weight="800" font-size="134" textLength="596" lengthAdjust="spacingAndGlyphs">AUTO PROTECT</text></svg>
+  <h1>Центр профессиональной<br>оклейки автомобилей</h1>
+  <p>Тюмень. Защитная плёнка, смена цвета, полировка.</p>
   <a href="#configurator" class="cta-btn hero-cta">
     <span>Подобрать цвет и плёнку</span>
     <span class="cta-arrow">→</span>
@@ -924,8 +957,8 @@
 <section class="services" id="services">
   <div class="eyebrow">01 — услуги</div>
   <div class="services-head">
-    <h2>Не мойка.<br>Преображение и защита.</h2>
-    <p>Наведите курсор на карточку — свет скользит по поверхности так же, как по настоящей плёнке.</p>
+    <h2>Не мойка.<br>Защита и смена цвета.</h2>
+    <p>Наведите курсор на карточку, чтобы посмотреть подробности.</p>
   </div>
   <div class="card-grid">
     <div class="service-card" data-card>
@@ -984,8 +1017,8 @@
   <div class="config-wrap">
     <div class="config-left">
       <div class="eyebrow">02 — конфигуратор</div>
-      <h2>Один автомобиль.<br>Любой характер.</h2>
-      <p>Вращайте модель мышью, выберите оттенок и фактуру — это стилизованный силуэт премиум-седана, ориентир для встречи в студии.</p>
+      <h2>Посмотрите, как будет<br>выглядеть ваша машина.</h2>
+      <p>Вращайте модель мышью. Выберите цвет и фактуру плёнки — в окошке справа вверху поверхность видно вблизи.</p>
 
       <div>
         <div class="group-label mono">Фактура плёнки</div>
@@ -1004,15 +1037,15 @@
           <button class="swatch-btn" style="background:#75634e" data-color="#75634e" data-name="Песочный" aria-label="Песочный"></button>
           <!-- Кружок показывает цвет плёнки как он есть, data-color задаёт материал.
                Они намеренно разные: свет и тонмаппинг осветляют кузов, поэтому
-               материал #005a00 отрисовывается на кузове как #016102 — тот самый
+               материал #007400 отрисовывается на кузове как #006600 — тот самый
                тёмно-зелёный. Замерено gl.readPixels по кузову. -->
-          <button class="swatch-btn" style="background:#006600" data-color="#005a00" data-name="Зелёный" aria-label="Зелёный"></button>
+          <button class="swatch-btn" style="background:#006600" data-color="#007400" data-name="Зелёный" aria-label="Зелёный"></button>
           <button class="swatch-btn" style="background:#336593" data-color="#336593" data-name="Голубой" aria-label="Голубой"></button>
           <!-- Бордовый: кружок показывает цвет плёнки, data-color задаёт материал.
                Свет и тонмаппинг притемняют краску, поэтому материал #9a0000
                отрисовывается на кузове как #8a0005 — нужный #8B0000.
                Замерено gl.readPixels по кузову. -->
-          <button class="swatch-btn" style="background:#8B0000" data-color="#9a0000" data-name="Бордовый" aria-label="Бордовый"></button>
+          <button class="swatch-btn" style="background:#8B0000" data-color="#d00000" data-name="Бордовый" aria-label="Бордовый"></button>
           <button class="swatch-btn" style="background:#7c8283" data-color="#7c8283" data-name="Серый" aria-label="Серый"></button>
         </div>
       </div>
@@ -1032,6 +1065,11 @@
       <canvas id="carCanvas"></canvas>
       <div class="loading-tag mono" id="loadingTag">ЗАГРУЗКА МОДЕЛИ...</div>
       <div class="drag-hint mono" id="dragHint" style="opacity:0">← ПОТЯНИТЕ, ЧТОБЫ ПОВЕРНУТЬ →</div>
+      <!-- Рамка и подпись окна крупного плана. Сам кадр рисует WebGL прямо
+           в этот угол холста, здесь только обводка и текст поверх. -->
+      <div class="zoom-frame" id="zoomFrame" aria-hidden="true">
+        <div class="zoom-label mono"><span id="zoomFinish">МАТОВАЯ</span> · <span id="zoomColor">ЧЁРНЫЙ</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1039,8 +1077,8 @@
 <section class="compare" id="protection">
   <div class="eyebrow">03 — защита</div>
   <div class="services-head">
-    <h2>Что плёнка делает с капотом.</h2>
-    <p>Потяните ползунок. Слева — лак без защиты после пары сезонов: паутинка от моек, песка и щёток. Справа — тот же капот под полиуретаном.</p>
+    <h2>Результат после установки плёнки на капот.</h2>
+    <p>Потяните ползунок. Слева — капот без плёнки после пары сезонов моек. Справа — тот же капот под плёнкой.</p>
   </div>
 
   <!-- Обе половины — один и тот же капот, отрисованный кодом. Нижний слой
@@ -1194,8 +1232,8 @@
 <section class="works-cases" id="works">
   <div class="eyebrow">04 — работы</div>
   <div class="services-head">
-    <h2>Машины, которые уже ездят.</h2>
-    <p>Съёмка в боксе и на улице, без ретуши цвета. Пролистайте кадры — на каждом проекте видно и процесс, и результат.</p>
+    <h2>Готовый результат.</h2>
+    <p>Настоящие машины наших клиентов. Листайте ролики стрелками.</p>
   </div>
   <article class="project project--portrait" data-project>
     <h3 class="project-title">Audi RS6</h3>
@@ -1243,8 +1281,8 @@
 <section class="process" id="process">
   <div class="eyebrow">05 — процесс</div>
   <div class="services-head">
-    <h2>Как проходит работа.</h2>
-    <p>От первого звонка до выдачи автомобиля — пять понятных шагов, без сюрпризов по срокам и стоимости.</p>
+    <h2>Этап за этапом — результат.</h2>
+    <p>От звонка до выдачи машины — пять шагов. Срок и цену называем сразу.</p>
   </div>
   <div class="process-grid">
     <div class="step">
@@ -1284,7 +1322,7 @@
   <div class="stats-canvas-wrap"><canvas id="linesCanvas"></canvas></div>
   <div class="stats-inner">
     <div class="eyebrow">06 — доверие</div>
-    <h2>Цифры, а не обещания.</h2>
+    <h2>Коротко о студии.</h2>
     <div class="stats-grid">
       <div class="stat-item">
         <div class="stat-number mono" data-count="15" data-suffix="+ лет">0</div>
@@ -1309,8 +1347,8 @@
 <section class="faq" id="faq">
   <div class="eyebrow">07 — вопросы</div>
   <div class="services-head">
-    <h2>Что обычно спрашивают.</h2>
-    <p>Короткие ответы на то, что волнует перед первой оклейкой. Остальное разберём на консультации.</p>
+    <h2>Частые вопросы.</h2>
+    <p>Если вашего вопроса здесь нет — позвоните, ответим.</p>
   </div>
   <div class="faq-list">
     <details class="faq-item">
@@ -1959,43 +1997,90 @@
     renderer.setSize(wrap.clientWidth, wrap.clientHeight, false); // false = не трогать CSS-размер canvas, им управляет стиль width:100%
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.68;
+    renderer.toneMappingExposure = 0.40;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = isMobileDevice ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
 
 
-    // ---- procedural studio environment map (for reflections) ----
+    // ---- Нейтральная студия для отражений ----
+    // Мат, сатин и глянец различаются ТОЛЬКО тем, как они отражают
+    // окружение. Раньше здесь был тёмный градиент с одной полоской и
+    // золотым подтоном — отражать было нечего, поэтому все три фактуры
+    // выглядели одинаково. Теперь это честная съёмочная студия: потолочная
+    // панель и два боковых софтбокса на нейтрально-сером фоне.
     function buildEnvMap(){
       const pmrem = new THREE.PMREMGenerator(renderer);
-      const envCanvas = document.createElement('canvas');
-      envCanvas.width = 512; envCanvas.height = 256;
-      const ex = envCanvas.getContext('2d');
-      const grad = ex.createLinearGradient(0,0,0,256);
-      grad.addColorStop(0, '#3a3a3f');
-      grad.addColorStop(0.35, '#131315');
-      grad.addColorStop(0.55, '#0a0a0b');
-      grad.addColorStop(0.75, '#1c1c1f');
-      grad.addColorStop(1, '#050505');
-      ex.fillStyle = grad; ex.fillRect(0,0,512,256);
-      // soft light band (simulates studio strip light)
-      ex.fillStyle = 'rgba(255,255,255,0.5)';
-      ex.fillRect(0, 40, 512, 10);
-      ex.fillStyle = 'rgba(201,169,98,0.25)';
-      ex.fillRect(0, 170, 512, 14);
-      const envTex = new THREE.CanvasTexture(envCanvas);
-      envTex.mapping = THREE.EquirectangularReflectionMapping;
-      envTex.encoding = THREE.sRGBEncoding;
-      const envMap = pmrem.fromEquirectangular(envTex).texture;
-      envTex.dispose(); pmrem.dispose();
+      const c = document.createElement('canvas');
+      c.width = 1024; c.height = 512;
+      const x = c.getContext('2d');
+
+      const g = x.createLinearGradient(0, 0, 0, 512);
+      g.addColorStop(0.00, '#8e8e92');   // потолок
+      g.addColorStop(0.26, '#46464a');
+      g.addColorStop(0.50, '#242428');   // линия горизонта
+      g.addColorStop(0.74, '#141416');
+      g.addColorStop(1.00, '#0a0a0b');   // пол
+      x.fillStyle = g; x.fillRect(0, 0, 1024, 512);
+
+      // мягкий софтбокс: яркий центр, плавно гаснущий к краям
+      function softbox(cx, cy, w, h, a){
+        const r = x.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) / 2);
+        r.addColorStop(0,    'rgba(255,255,255,' + a + ')');
+        r.addColorStop(0.55, 'rgba(255,255,255,' + (a * 0.45) + ')');
+        r.addColorStop(1,    'rgba(255,255,255,0)');
+        x.fillStyle = r;
+        x.fillRect(cx - w / 2, cy - h / 2, w, h);
+      }
+      x.fillStyle = 'rgba(255,255,255,0.92)';
+      x.fillRect(0, 0, 1024, 40);            // потолочная панель по кругу
+      softbox(200, 168, 460, 300, 0.90);     // боковой софтбокс слева
+      softbox(720, 156, 420, 280, 0.85);     // боковой справа
+      softbox(470, 120, 260, 180, 0.55);     // подсветка спереди
+      softbox(460, 372, 520, 170, 0.14);     // слабый отскок от пола
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.mapping = THREE.EquirectangularReflectionMapping;
+      tex.encoding = THREE.sRGBEncoding;
+      const envMap = pmrem.fromEquirectangular(tex).texture;
+      tex.dispose(); pmrem.dispose();
       return envMap;
     }
     const envMap = buildEnvMap();
     scene.environment = envMap;
     scene.fog = new THREE.Fog(0x0a0a0b, 5.5, 13);
 
-    // ---- lights ----
-    scene.add(new THREE.AmbientLight(0x404040, 0.04));
-    const key = new THREE.DirectionalLight(0xfff2d8, 0.68);
+    // ---- Сцена крупного плана ----
+    // Отдельная мини-сцена с одним шаром: камера стоит вплотную, поэтому в
+    // кадре видно кусок гладкой поверхности — как капот вблизи. Материал
+    // берём ТОТ ЖЕ, что на машине, поэтому цвет и фактура меняются вместе
+    // с конфигуратором без единой строчки синхронизации.
+    // Рисуем этот шар, а не саму машину: второй проход по всей модели
+    // удвоил бы нагрузку на видеокарту ради окошка 230x150.
+    const insetScene = new THREE.Scene();
+    insetScene.background = new THREE.Color(0x0d0d0f);
+    insetScene.environment = envMap;
+    const insetMesh = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 64, 48),
+      new THREE.MeshPhysicalMaterial({ color:0x19191b })
+    );
+    insetScene.add(insetMesh);
+    const insetCam = new THREE.PerspectiveCamera(34, 230 / 150, 0.1, 20);
+    insetCam.position.set(0.35, 0.55, 2.05);
+    insetCam.lookAt(0, 0, 0);
+    insetScene.add(new THREE.AmbientLight(0xffffff, 0.09));
+    const insetKey = new THREE.DirectionalLight(0xffffff, 0.78);
+    insetKey.position.set(3, 4, 3);
+    insetScene.add(insetKey);
+    const insetRim = new THREE.DirectionalLight(0xffffff, 0.42);
+    insetRim.position.set(-3, 2, -3);
+    insetScene.add(insetRim);
+
+    // ---- Свет: нейтральный студийный ----
+    // Был тёплый ключ (0xfff2d8), золотой контровой и синяя заливка —
+    // кузов уходил в желтизну и свет падал только сверху. Теперь три
+    // белых источника с трёх сторон, как в съёмочном боксе.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.09));
+    const key = new THREE.DirectionalLight(0xffffff, 0.78);
     key.position.set(6, 8, 4);
     key.castShadow = true;
     key.shadow.mapSize.width = isMobileDevice ? 1024 : 2048;
@@ -2005,11 +2090,11 @@
     key.shadow.radius = 2.5;
     scene.add(key);
     scene.add(key.target);
-    const rim = new THREE.DirectionalLight(0xc9a962, 0.20);
-    rim.position.set(-6, 3, -6);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.42);
+    rim.position.set(-6, 4, -6);
     scene.add(rim);
-    const fill = new THREE.DirectionalLight(0x8fa8c9, 0.09);
-    fill.position.set(-3, 2, 5);
+    const fill = new THREE.DirectionalLight(0xffffff, 0.34);
+    fill.position.set(-5, 2.5, 6);
     scene.add(fill);
 
     // ---- ground (large soft-fading floor) ----
@@ -2025,7 +2110,7 @@
     const platformGroup = new THREE.Group();
 
     const platformTopMat = new THREE.MeshPhysicalMaterial({
-      color:0x1c1c1f, roughness:0.35, metalness:0.4, clearcoat:0.5, clearcoatRoughness:0.3, envMapIntensity:2.2
+      color:0x090a0c, roughness:0.82, metalness:0.05, clearcoat:0.18, clearcoatRoughness:0.7, envMapIntensity:0.12
     });
     const platformTop = new THREE.Mesh(new THREE.CylinderGeometry(2.55, 2.6, 0.07, 96), platformTopMat);
     platformTop.receiveShadow = true;
@@ -2034,7 +2119,7 @@
     // тонкий золотой кант по краю подиума
     const rimGeo = new THREE.TorusGeometry(2.58, 0.012, 12, 96);
     const rimMatGold = new THREE.MeshPhysicalMaterial({
-      color:0xc9a962, roughness:0.2, metalness:0.9, envMapIntensity:1.3,
+      color:0xc9a962, roughness:0.28, metalness:0.9, envMapIntensity:0.55,
       emissive:0x7a5f2e, emissiveIntensity:0.35
     });
     const rimRing = new THREE.Mesh(rimGeo, rimMatGold);
@@ -2094,7 +2179,7 @@
         aoMap: src.aoMap || null,
         transparent: src.transparent || false,
         opacity: src.opacity !== undefined ? src.opacity : 1,
-        envMapIntensity: 0.15
+        envMapIntensity: 0.55
       });
       mat.name = src.name || '';
       return mat;
@@ -2118,13 +2203,31 @@
     }
     let currentFinish = 'matte';
 
+    // Три фактуры теперь расходятся по трём параметрам сразу: шероховатости,
+    // лаку и силе отражения окружения. Раньше различались только roughness
+    // и разница почти не читалась. Главный из них — envMapIntensity: мат
+    // рассеивает отражение, глянец отдаёт его зеркально.
+    // Сила отражения окружения у всех фактур ОДИНАКОВАЯ. Сначала я развёл
+    // её (мат 0.35 / глянец 1.3) — фактуры стали различимы, но вместе с ними
+    // поехал цвет: зелёный на глянце превращался в травяной, бордовый в алый.
+    // Отражение добавляет энергии, а значит и светлоты. Поэтому фактуры
+    // разводим только шероховатостью и лаком: одно и то же количество света
+    // мат размазывает по поверхности, глянец собирает в резкий блик.
+    const FINISHES = {
+      matte: { roughness:0.82, clearcoat:0.00, clearcoatRoughness:0.90, metalness:0.02 },
+      satin: { roughness:0.42, clearcoat:0.30, clearcoatRoughness:0.50, metalness:0.05 },
+      gloss: { roughness:0.06, clearcoat:1.00, clearcoatRoughness:0.03, metalness:0.07 }
+    };
+    const PAINT_ENV = 0.55;
     function applyFinish(finish){
       currentFinish = finish;
+      const f = FINISHES[finish] || FINISHES.matte;
       paintMaterials.forEach(m=>{
-        if(finish === 'matte'){ m.roughness = 0.55; m.clearcoat = 0.3; m.metalness = 0.05; m.clearcoatRoughness = 0.4; }
-        if(finish === 'gloss'){ m.roughness = 0.16; m.clearcoat = 0.9; m.metalness = 0.08; m.clearcoatRoughness = 0.1; }
-        // сатин — середина между матом и глянцем: мягкий широкий блик
-        if(finish === 'satin'){ m.roughness = 0.34; m.clearcoat = 0.6; m.metalness = 0.07; m.clearcoatRoughness = 0.22; }
+        m.roughness = f.roughness;
+        m.clearcoat = f.clearcoat;
+        m.clearcoatRoughness = f.clearcoatRoughness;
+        m.metalness = f.metalness;
+        m.envMapIntensity = PAINT_ENV;
         m.needsUpdate = true;
       });
     }
@@ -2252,6 +2355,9 @@
       modelReady = true;
       applyPaint();
       applyFinish(currentFinish);
+      // шар в окошке берёт материал кузова, а не копию: тогда цвет и
+      // фактура меняются там сами, без отдельной синхронизации
+      if(paintMaterials.length) insetMesh.material = paintMaterials[0];
 
       loadingTag.style.opacity = 0;
       loadingTag.style.transition = 'opacity 0.5s ease';
@@ -2315,6 +2421,36 @@
     // считалась всё время, даже когда пользователь читал FAQ внизу —
     // это держало GPU занятым и тормозило скролл всей страницы.
     let frame = 0, rendering = false, rafId3d = 0;
+    // Окошко рисуется в тот же холст через scissor: при включённом
+    // scissorTest three.js чистит и рисует только этот прямоугольник,
+    // поэтому основная сцена под ним остаётся нетронутой.
+    const zoomFrame = document.getElementById('zoomFrame');
+    function renderInset(){
+      if(!zoomFrame) return;
+      const box = zoomFrame.getBoundingClientRect();
+      const stage = canvas.getBoundingClientRect();
+      if(!box.width || !stage.width) return;
+      // ВАЖНО: three.js сам домножает setViewport/setScissor на pixelRatio,
+      // поэтому сюда передаём CSS-пиксели. Если передать уже умноженные —
+      // прямоугольник уезжает за край буфера и окно просто не рисуется.
+      let w = box.width, h = box.height;
+      let x = box.left - stage.left;
+      // у WebGL начало координат снизу, у DOM сверху — отсюда переворот
+      let y = stage.bottom - box.bottom;
+      x = Math.max(0, Math.min(x, stage.width  - 1));
+      y = Math.max(0, Math.min(y, stage.height - 1));
+      w = Math.min(w, stage.width  - x);
+      h = Math.min(h, stage.height - y);
+      if(w < 8 || h < 8) return;
+      insetCam.aspect = w / h;
+      insetCam.updateProjectionMatrix();
+      renderer.setViewport(x, y, w, h);
+      renderer.setScissor(x, y, w, h);
+      renderer.setScissorTest(true);
+      renderer.render(insetScene, insetCam);
+      renderer.setScissorTest(false);
+      renderer.setViewport(0, 0, stage.width, stage.height);
+    }
     function animate(){
       rafId3d = requestAnimationFrame(animate);
       frame++;
@@ -2322,9 +2458,12 @@
       currentRotY += (targetRotY - currentRotY) * 0.08;
       carGroup.rotation.y = currentRotY;
       renderer.render(scene, camera);
+      renderInset();
     }
     function startRender(){ if(!rendering){ rendering = true; animate(); } }
     function stopRender(){ if(rendering){ rendering = false; cancelAnimationFrame(rafId3d); } }
+
+
 
     let inView = true;
     if('IntersectionObserver' in window){
@@ -2354,6 +2493,8 @@
         btn.classList.add('active');
         applyFinish(btn.dataset.finish);
         finishNameEl.textContent = finishLabels[btn.dataset.finish];
+        const zf = document.getElementById('zoomFinish');
+        if(zf) zf.textContent = finishLabels[btn.dataset.finish];
       });
     });
     swatches.forEach(sw=>{
@@ -2365,6 +2506,8 @@
         currentEmissiveIntensity = parseFloat(sw.dataset.emissiveIntensity || 0);
         applyPaint();
         colorNameEl.textContent = sw.dataset.name;
+        const zc = document.getElementById('zoomColor');
+        if(zc) zc.textContent = sw.dataset.name;
       });
     });
   })();
