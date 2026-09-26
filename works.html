@@ -291,6 +291,13 @@
     .project-arrow{ width:36px; height:52px; }
     .project-stage{ margin-top:18px; }
     .project-story{ font-size:15px; }
+    /* На телефоне экран сам вертикальный. Держать сторис в кадре 16:9 —
+       значит показывать ролик мелким, с размытыми боками на пол-экрана.
+       Поэтому у вертикальных проектов кадр тоже становится вертикальным:
+       ролик занимает его целиком, и размытая подложка уже не нужна. */
+    .project--portrait .project-stage{ aspect-ratio:9/16; }
+    .project--portrait .project-slide::before{ display:none; }
+    .project--portrait .project-slide video{ object-fit:cover; }
   }
   @media (prefers-reduced-motion: reduce){
     .project-slide{ transition:none; }
