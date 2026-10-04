@@ -303,6 +303,50 @@
     .project-slide{ transition:none; }
   }
 
+  /* gallery:css:start */
+  /* ============ ГАЛЕРЕЯ ============ */
+  /* Колонки, а не сетка: фото вертикальные и горизонтальные вперемешку, в
+     колонках они укладываются без пустот и без обрезки. */
+  .gallery-grid{ columns:3 280px; column-gap:14px; }
+  .g-item{
+    display:block; position:relative; margin:0 0 14px; overflow:hidden;
+    break-inside:avoid; cursor:zoom-in;
+    background:var(--graphite-2); border:1px solid var(--line);
+  }
+  .g-item img{ display:block; width:100%; height:auto; transition:transform 0.6s var(--ease); }
+  .g-item:hover img{ transform:scale(1.035); }
+  @media (max-width:760px){
+    .gallery-grid{ columns:2; column-gap:10px; }
+    .g-item{ margin-bottom:10px; }
+  }
+  /* просмотр фото на весь экран */
+  .lb{
+    position:fixed; inset:0; z-index:400; display:none;
+    align-items:center; justify-content:center;
+    background:rgba(6,6,7,0.95);
+  }
+  .lb.open{ display:flex; }
+  .lb img{ max-width:94vw; max-height:86vh; object-fit:contain; display:block; }
+  .lb button{
+    position:absolute; background:none; border:1px solid var(--line); color:var(--paper);
+    width:46px; height:46px; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:border-color 0.25s ease, color 0.25s ease;
+  }
+  .lb button:hover{ border-color:var(--gold-dim); color:var(--gold); }
+  .lb-close{ top:18px; right:18px; }
+  .lb-prev{ left:18px; top:50%; transform:translateY(-50%); }
+  .lb-next{ right:18px; top:50%; transform:translateY(-50%); }
+  .lb-count{
+    position:absolute; bottom:18px; left:50%; transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:0.14em; color:var(--paper-dim);
+  }
+  @media (max-width:760px){
+    .lb-prev, .lb-next{ top:auto; bottom:14px; transform:none; }
+    .lb-prev{ left:14px; } .lb-next{ right:14px; }
+    .lb img{ max-height:80vh; }
+  }
+  /* gallery:css:end */
+
   /* ============ CONTACT CTA ============ */
   .contact-cta-section{
     padding:100px 6vw;
@@ -509,6 +553,149 @@
   </article>
 </section>
 
+<!-- gallery:start -->
+<section class="works-section gallery" id="gallery">
+  <div class="section-head">
+    <h2>Галерея</h2>
+  </div>
+  <div class="gallery-grid">
+    <a class="g-item" href="assets/gallery/g001.webp" aria-label="Открыть фото"><img src="assets/gallery/t001.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g002.webp" aria-label="Открыть фото"><img src="assets/gallery/t002.webp" width="640" height="598" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g003.webp" aria-label="Открыть фото"><img src="assets/gallery/t003.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g004.webp" aria-label="Открыть фото"><img src="assets/gallery/t004.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g005.webp" aria-label="Открыть фото"><img src="assets/gallery/t005.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g006.webp" aria-label="Открыть фото"><img src="assets/gallery/t006.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g007.webp" aria-label="Открыть фото"><img src="assets/gallery/t007.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g008.webp" aria-label="Открыть фото"><img src="assets/gallery/t008.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g009.webp" aria-label="Открыть фото"><img src="assets/gallery/t009.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g010.webp" aria-label="Открыть фото"><img src="assets/gallery/t010.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g011.webp" aria-label="Открыть фото"><img src="assets/gallery/t011.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g012.webp" aria-label="Открыть фото"><img src="assets/gallery/t012.webp" width="640" height="598" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g013.webp" aria-label="Открыть фото"><img src="assets/gallery/t013.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g014.webp" aria-label="Открыть фото"><img src="assets/gallery/t014.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g015.webp" aria-label="Открыть фото"><img src="assets/gallery/t015.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g016.webp" aria-label="Открыть фото"><img src="assets/gallery/t016.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g017.webp" aria-label="Открыть фото"><img src="assets/gallery/t017.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g018.webp" aria-label="Открыть фото"><img src="assets/gallery/t018.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g019.webp" aria-label="Открыть фото"><img src="assets/gallery/t019.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g020.webp" aria-label="Открыть фото"><img src="assets/gallery/t020.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g021.webp" aria-label="Открыть фото"><img src="assets/gallery/t021.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g022.webp" aria-label="Открыть фото"><img src="assets/gallery/t022.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g023.webp" aria-label="Открыть фото"><img src="assets/gallery/t023.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g024.webp" aria-label="Открыть фото"><img src="assets/gallery/t024.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g025.webp" aria-label="Открыть фото"><img src="assets/gallery/t025.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g026.webp" aria-label="Открыть фото"><img src="assets/gallery/t026.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g027.webp" aria-label="Открыть фото"><img src="assets/gallery/t027.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g028.webp" aria-label="Открыть фото"><img src="assets/gallery/t028.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g029.webp" aria-label="Открыть фото"><img src="assets/gallery/t029.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g030.webp" aria-label="Открыть фото"><img src="assets/gallery/t030.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g031.webp" aria-label="Открыть фото"><img src="assets/gallery/t031.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g032.webp" aria-label="Открыть фото"><img src="assets/gallery/t032.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g033.webp" aria-label="Открыть фото"><img src="assets/gallery/t033.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g034.webp" aria-label="Открыть фото"><img src="assets/gallery/t034.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g035.webp" aria-label="Открыть фото"><img src="assets/gallery/t035.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g036.webp" aria-label="Открыть фото"><img src="assets/gallery/t036.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g037.webp" aria-label="Открыть фото"><img src="assets/gallery/t037.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g038.webp" aria-label="Открыть фото"><img src="assets/gallery/t038.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g039.webp" aria-label="Открыть фото"><img src="assets/gallery/t039.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g040.webp" aria-label="Открыть фото"><img src="assets/gallery/t040.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g041.webp" aria-label="Открыть фото"><img src="assets/gallery/t041.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g042.webp" aria-label="Открыть фото"><img src="assets/gallery/t042.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g043.webp" aria-label="Открыть фото"><img src="assets/gallery/t043.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g044.webp" aria-label="Открыть фото"><img src="assets/gallery/t044.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g045.webp" aria-label="Открыть фото"><img src="assets/gallery/t045.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g046.webp" aria-label="Открыть фото"><img src="assets/gallery/t046.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g047.webp" aria-label="Открыть фото"><img src="assets/gallery/t047.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g048.webp" aria-label="Открыть фото"><img src="assets/gallery/t048.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g049.webp" aria-label="Открыть фото"><img src="assets/gallery/t049.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g050.webp" aria-label="Открыть фото"><img src="assets/gallery/t050.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g051.webp" aria-label="Открыть фото"><img src="assets/gallery/t051.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g052.webp" aria-label="Открыть фото"><img src="assets/gallery/t052.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g053.webp" aria-label="Открыть фото"><img src="assets/gallery/t053.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g054.webp" aria-label="Открыть фото"><img src="assets/gallery/t054.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g055.webp" aria-label="Открыть фото"><img src="assets/gallery/t055.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g056.webp" aria-label="Открыть фото"><img src="assets/gallery/t056.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g057.webp" aria-label="Открыть фото"><img src="assets/gallery/t057.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g058.webp" aria-label="Открыть фото"><img src="assets/gallery/t058.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g059.webp" aria-label="Открыть фото"><img src="assets/gallery/t059.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g060.webp" aria-label="Открыть фото"><img src="assets/gallery/t060.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g061.webp" aria-label="Открыть фото"><img src="assets/gallery/t061.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g062.webp" aria-label="Открыть фото"><img src="assets/gallery/t062.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g063.webp" aria-label="Открыть фото"><img src="assets/gallery/t063.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g064.webp" aria-label="Открыть фото"><img src="assets/gallery/t064.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g065.webp" aria-label="Открыть фото"><img src="assets/gallery/t065.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g066.webp" aria-label="Открыть фото"><img src="assets/gallery/t066.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g067.webp" aria-label="Открыть фото"><img src="assets/gallery/t067.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g068.webp" aria-label="Открыть фото"><img src="assets/gallery/t068.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g069.webp" aria-label="Открыть фото"><img src="assets/gallery/t069.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g070.webp" aria-label="Открыть фото"><img src="assets/gallery/t070.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g071.webp" aria-label="Открыть фото"><img src="assets/gallery/t071.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g072.webp" aria-label="Открыть фото"><img src="assets/gallery/t072.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g073.webp" aria-label="Открыть фото"><img src="assets/gallery/t073.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g074.webp" aria-label="Открыть фото"><img src="assets/gallery/t074.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g075.webp" aria-label="Открыть фото"><img src="assets/gallery/t075.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g076.webp" aria-label="Открыть фото"><img src="assets/gallery/t076.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g077.webp" aria-label="Открыть фото"><img src="assets/gallery/t077.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g078.webp" aria-label="Открыть фото"><img src="assets/gallery/t078.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g079.webp" aria-label="Открыть фото"><img src="assets/gallery/t079.webp" width="640" height="758" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g080.webp" aria-label="Открыть фото"><img src="assets/gallery/t080.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g081.webp" aria-label="Открыть фото"><img src="assets/gallery/t081.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g082.webp" aria-label="Открыть фото"><img src="assets/gallery/t082.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g083.webp" aria-label="Открыть фото"><img src="assets/gallery/t083.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g084.webp" aria-label="Открыть фото"><img src="assets/gallery/t084.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g085.webp" aria-label="Открыть фото"><img src="assets/gallery/t085.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g086.webp" aria-label="Открыть фото"><img src="assets/gallery/t086.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g087.webp" aria-label="Открыть фото"><img src="assets/gallery/t087.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g088.webp" aria-label="Открыть фото"><img src="assets/gallery/t088.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g089.webp" aria-label="Открыть фото"><img src="assets/gallery/t089.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g090.webp" aria-label="Открыть фото"><img src="assets/gallery/t090.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g091.webp" aria-label="Открыть фото"><img src="assets/gallery/t091.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g092.webp" aria-label="Открыть фото"><img src="assets/gallery/t092.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g093.webp" aria-label="Открыть фото"><img src="assets/gallery/t093.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g094.webp" aria-label="Открыть фото"><img src="assets/gallery/t094.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g095.webp" aria-label="Открыть фото"><img src="assets/gallery/t095.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g096.webp" aria-label="Открыть фото"><img src="assets/gallery/t096.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g097.webp" aria-label="Открыть фото"><img src="assets/gallery/t097.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g098.webp" aria-label="Открыть фото"><img src="assets/gallery/t098.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g099.webp" aria-label="Открыть фото"><img src="assets/gallery/t099.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g100.webp" aria-label="Открыть фото"><img src="assets/gallery/t100.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g101.webp" aria-label="Открыть фото"><img src="assets/gallery/t101.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g102.webp" aria-label="Открыть фото"><img src="assets/gallery/t102.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g103.webp" aria-label="Открыть фото"><img src="assets/gallery/t103.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g104.webp" aria-label="Открыть фото"><img src="assets/gallery/t104.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g105.webp" aria-label="Открыть фото"><img src="assets/gallery/t105.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g106.webp" aria-label="Открыть фото"><img src="assets/gallery/t106.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g107.webp" aria-label="Открыть фото"><img src="assets/gallery/t107.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g108.webp" aria-label="Открыть фото"><img src="assets/gallery/t108.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g109.webp" aria-label="Открыть фото"><img src="assets/gallery/t109.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g110.webp" aria-label="Открыть фото"><img src="assets/gallery/t110.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g111.webp" aria-label="Открыть фото"><img src="assets/gallery/t111.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g112.webp" aria-label="Открыть фото"><img src="assets/gallery/t112.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g113.webp" aria-label="Открыть фото"><img src="assets/gallery/t113.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g114.webp" aria-label="Открыть фото"><img src="assets/gallery/t114.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g115.webp" aria-label="Открыть фото"><img src="assets/gallery/t115.webp" width="640" height="1096" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g116.webp" aria-label="Открыть фото"><img src="assets/gallery/t116.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g117.webp" aria-label="Открыть фото"><img src="assets/gallery/t117.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g118.webp" aria-label="Открыть фото"><img src="assets/gallery/t118.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g119.webp" aria-label="Открыть фото"><img src="assets/gallery/t119.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g120.webp" aria-label="Открыть фото"><img src="assets/gallery/t120.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g121.webp" aria-label="Открыть фото"><img src="assets/gallery/t121.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g122.webp" aria-label="Открыть фото"><img src="assets/gallery/t122.webp" width="640" height="318" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g123.webp" aria-label="Открыть фото"><img src="assets/gallery/t123.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g124.webp" aria-label="Открыть фото"><img src="assets/gallery/t124.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g125.webp" aria-label="Открыть фото"><img src="assets/gallery/t125.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g126.webp" aria-label="Открыть фото"><img src="assets/gallery/t126.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g127.webp" aria-label="Открыть фото"><img src="assets/gallery/t127.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g128.webp" aria-label="Открыть фото"><img src="assets/gallery/t128.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g129.webp" aria-label="Открыть фото"><img src="assets/gallery/t129.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g130.webp" aria-label="Открыть фото"><img src="assets/gallery/t130.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g131.webp" aria-label="Открыть фото"><img src="assets/gallery/t131.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g132.webp" aria-label="Открыть фото"><img src="assets/gallery/t132.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+    <a class="g-item" href="assets/gallery/g134.webp" aria-label="Открыть фото"><img src="assets/gallery/t134.webp" width="640" height="438" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
+  </div>
+</section>
+<!-- gallery:end -->
+
 <section class="contact-cta-section">
   <h2>Хотите так же?</h2>
   <a href="index.html#contact" class="big-cta">Наши контакты →</a>
@@ -552,6 +739,65 @@
     <div class="mono">СДЕЛАНО В <a href="https://www.kbagency.ru/" target="_blank" rel="noopener" class="footer-credit">KB AGENCY</a></div>
   </div>
 </footer>
+
+<!-- gallery:js:start -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Просмотр фото">
+  <button type="button" class="lb-close" aria-label="Закрыть"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button>
+  <button type="button" class="lb-prev" aria-label="Предыдущее фото"><svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 2 L2.5 8 L8.5 14"/></svg></button>
+  <img id="lbImg" alt="">
+  <button type="button" class="lb-next" aria-label="Следующее фото"><svg width="11" height="16" viewBox="0 0 11 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 2 L8.5 8 L2.5 14"/></svg></button>
+  <div class="lb-count" id="lbCount" aria-hidden="true"></div>
+</div>
+<script>
+  /* Просмотр фото галереи: стрелки, Esc, свайп. Полноразмерный файл
+     подгружается только по клику, в сетке лежат лёгкие превью. */
+  (function(){
+    const links = Array.prototype.slice.call(document.querySelectorAll('.g-item'));
+    const lb = document.getElementById('lb'), img = document.getElementById('lbImg'),
+          count = document.getElementById('lbCount');
+    if(!links.length || !lb) return;
+    let cur = 0, opener = null;
+    function show(i){
+      cur = (i + links.length) % links.length;
+      img.src = links[cur].getAttribute('href');
+      count.textContent = (cur + 1) + ' / ' + links.length;
+      // соседние подгружаем заранее, чтобы листание не мигало
+      [cur + 1, cur - 1].forEach(function(k){
+        const n = new Image(); n.src = links[(k + links.length) % links.length].getAttribute('href');
+      });
+    }
+    function open(i, from){
+      opener = from; lb.classList.add('open'); document.body.style.overflow = 'hidden';
+      show(i); lb.querySelector('.lb-close').focus();
+    }
+    function close(){
+      lb.classList.remove('open'); document.body.style.overflow = ''; img.removeAttribute('src');
+      if(opener) opener.focus();
+    }
+    links.forEach(function(a, i){
+      a.addEventListener('click', function(e){ e.preventDefault(); open(i, a); });
+    });
+    lb.querySelector('.lb-close').addEventListener('click', close);
+    lb.querySelector('.lb-prev').addEventListener('click', function(){ show(cur - 1); });
+    lb.querySelector('.lb-next').addEventListener('click', function(){ show(cur + 1); });
+    lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+    document.addEventListener('keydown', function(e){
+      if(!lb.classList.contains('open')) return;
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowLeft') show(cur - 1);
+      if(e.key === 'ArrowRight') show(cur + 1);
+    });
+    let x0 = null;
+    lb.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+    lb.addEventListener('touchend', function(e){
+      if(x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if(Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+    });
+  })();
+</script>
+<!-- gallery:js:end -->
+
 
 <script>
   /* ============ SCROLL REVEAL ============ */
