@@ -78,13 +78,26 @@
 })();
 
 /* Главная: шапка лежит поверх видео и темнеет после прокрутки;
-   при «уменьшении движения» в системе фоновое видео не играет. */
+   */
 (function(){
   var h = document.querySelector('.site-header');
   if(h && document.body.classList.contains('home')){
     var f = function(){ h.classList.toggle('is-solid', window.scrollY > 40); };
     f(); window.addEventListener('scroll', f, {passive:true});
   }
+})();
+
+/* Фоновое видео должно стартовать само. Часть браузеров не запускает его
+   по атрибуту autoplay (экономия трафика/заряда) — принудительно играем
+   без звука и повторяем при первом касании, если запуск был отклонён. */
+(function(){
   var v = document.querySelector('.dc-hero-video');
-  if(v && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); v.pause(); }
+  if(!v) return;
+  v.muted = true; v.defaultMuted = true; v.setAttribute('muted',''); v.setAttribute('playsinline','');
+  var go = function(){ var p = v.play(); if(p && p.catch) p.catch(function(){}); };
+  go();
+  v.addEventListener('loadeddata', go);
+  ['touchstart','click','scroll','keydown'].forEach(function(e){
+    window.addEventListener(e, function once(){ if(v.paused) go(); window.removeEventListener(e, once); }, {passive:true});
+  });
 })();

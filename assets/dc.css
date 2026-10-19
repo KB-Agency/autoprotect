@@ -56,9 +56,10 @@ body.home .site-header.is-solid{ background:rgba(0,0,0,0.9); }
 /* ---------- первый экран: видео на весь экран ---------- */
 .dc-hero{ position:relative; height:100vh; height:100svh; min-height:520px; overflow:hidden; background:#000; }
 .dc-hero-video{ position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; }
-.dc-hero-shade{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.1) 40%, rgba(0,0,0,.7) 100%); }
+.dc-hero-shade{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,.6) 100%); }
 .dc-hero-in{ position:absolute; left:0; right:0; bottom:0; padding-bottom:clamp(40px, 9vh, 90px); max-width:var(--wrap); margin:0 auto; }
-.dc-hero h1{ font-size:clamp(28px, 3.34vw, 48px); line-height:1.2; max-width:780px; margin-bottom:28px; }
+.dc-hero h1{ font-size:clamp(20px, 2.1vw, 30px); line-height:1.25; font-weight:600; max-width:560px; margin-bottom:12px; }
+.dc-hero-sub{ font-size:clamp(15px, 1.35vw, 19px); line-height:1.5; color:#e6e6e6; max-width:560px; margin-bottom:22px; }
 
 /* ---------- вводный абзац ---------- */
 .dc-intro{ background:#0b0b0b; padding:60px 0 48px; }
@@ -172,7 +173,7 @@ body.home .site-header.is-solid{ background:rgba(0,0,0,0.9); }
   .dc-facts{ grid-template-columns:1fr; gap:30px; }
 }
 @media (max-width:620px){
-  .dc-hero h1{ font-size:clamp(20px, 6.2vw, 30px); margin-bottom:22px; }
+  .dc-hero h1{ font-size:clamp(17px, 5vw, 22px); margin-bottom:10px; }
   .dc-hero .dc-btn{ display:none; }   /* звонок уже есть в нижней панели */
   .dc-hero-in{ padding-bottom:96px; }
   .header-in .btn--sm{ display:none; }
