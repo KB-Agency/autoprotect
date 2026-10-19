@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AUTOPROTECTTMN — детейлинг-студия в Тюмени: плёнка, полировка, интерьер</title>
 <meta name="description" content="AUTOPROTECTTMN — детейлинг-студия в Тюмени: оклейка защитной полиуретановой плёнкой, смена цвета кузова, восстановительная полировка с керамикой, шумо-виброизоляция, реставрация интерьера. Опыт мастеров более 15 лет, гарантия 1 год.">
-<meta name="theme-color" content="#060814">
+<meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AUTOPROTECTTMN">
 <meta property="og:locale" content="ru_RU">
@@ -19,6 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/dc.css">
 <link rel="canonical" href="https://autoprotect-olive.vercel.app/">
 <meta property="og:url" content="https://autoprotect-olive.vercel.app/">
 <meta name="robots" content="noindex, nofollow">
@@ -73,7 +74,7 @@
 }
 </script>
 </head>
-<body>
+<body class="home">
 
 <header class="site-header">
   <div class="wrap header-in">
@@ -99,116 +100,111 @@
 </div>
 
 <main>
-<section class="hero">
-  <div class="wrap hero-in">
-    <div>
-      <div class="hero-kicker">Тюмень</div>
-      <h1>Центр профессиональной <span>оклейки</span> автомобилей</h1>
-      <p class="hero-sub">Мы ценим Ваше время</p>
-      <div class="hero-actions">
-        <a href="tel:+79829384032" class="btn btn--solid">Позвонить</a>
-        <a href="works.html" class="btn">Смотреть работы</a>
-      </div>
-      <ul class="hero-badges">
-        <li>Опыт мастеров — более 15 лет</li>
-        <li>Гарантия 1 год</li>
-      </ul>
-    </div>
-    <div class="hero-photo">
-      <img src="assets/gallery/t001.webp" width="640" height="810" alt="Автомобиль после оклейки плёнкой в студии AUTOPROTECTTMN" decoding="async">
+<section class="dc-hero">
+  <video class="dc-hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/poster/hero-bg.jpg" aria-hidden="true" tabindex="-1">
+    <source src="assets/video/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="dc-hero-shade"></div>
+  <div class="wrap dc-hero-in">
+    <h1>Центр профессиональной оклейки автомобилей</h1>
+    <a href="tel:+79829384032" class="dc-btn">Позвонить</a>
+  </div>
+</section>
+
+<section class="dc-intro">
+  <div class="wrap">
+    <p>AUTOPROTECTTMN — центр профессиональной оклейки автомобилей в Тюмени. Защитная полиуретановая плёнка, смена цвета кузова, восстановительная полировка с керамикой, шумо-виброизоляция, реставрация интерьера. Опыт наших мастеров — более 15 лет, гарантия 1 год. Мы ценим Ваше время.</p>
+  </div>
+</section>
+
+<section class="dc-block" id="services">
+  <div class="wrap">
+    <h2 class="dc-title">Наши услуги</h2>
+    <p class="dc-lead">Выберите услугу, чтобы посмотреть подробности и цены.</p>
+    <div class="dc-cards">
+      <a class="dc-card" href="services.html#films">
+        <img src="assets/gallery/t084.webp" width="640" height="810" alt="Оклейка защитной плёнкой" loading="lazy" decoding="async">
+        <span><small>от 60 000 ₽</small>Защитная плёнка</span>
+      </a>
+      <a class="dc-card" href="services.html#color">
+        <img src="assets/gallery/t002.webp" width="640" height="598" alt="Смена цвета кузова" loading="lazy" decoding="async">
+        <span><small>от 300 000 ₽</small>Смена цвета</span>
+      </a>
+      <a class="dc-card" href="services.html#polish">
+        <img src="assets/gallery/t022.webp" width="640" height="810" alt="Полировка и керамическое покрытие" loading="lazy" decoding="async">
+        <span><small>от 45 000 ₽</small>Восстановительная полировка и нанесение керамического покрытия</span>
+      </a>
+      <a class="dc-card" href="services.html#interior">
+        <img src="assets/gallery/t094.webp" width="640" height="810" alt="Реставрация интерьера" loading="lazy" decoding="async">
+        <span><small>от 10 000 ₽</small>Реставрация интерьера</span>
+      </a>
+      <a class="dc-card" href="services.html#extra">
+        <img src="assets/gallery/t116.webp" width="640" height="810" alt="Шумо-виброизоляция кузова" loading="lazy" decoding="async">
+        <span><small>от 28 000 ₽</small>Шумо-виброизоляция кузова</span>
+      </a>
+      <a class="dc-card" href="services.html#extra">
+        <img src="assets/gallery/t008.webp" width="640" height="810" alt="Охрана и тюнинг" loading="lazy" decoding="async">
+        <span><small>от 15 000 ₽</small>Охрана и тюнинг</span>
+      </a>
     </div>
   </div>
 </section>
 
-<section class="section" id="benefits">
+<section class="dc-block dc-band" id="benefits">
   <div class="wrap">
-    <div class="section-head"><h2>Наши преимущества</h2></div>
-    <div class="benefits">
-      <div class="benefit"><div class="ring" style="--c:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Более 15 лет опыта</h3><p>Опыт работы с автомобильными плёнками у наших мастеров и руководителей.</p></div>
-      <div class="benefit"><div class="ring" style="--c:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h3>Гарантия 1 год</h3><p>Гарантия от самопроизвольного отклеивания при соблюдении условий эксплуатации.</p></div>
-      <div class="benefit"><div class="ring" style="--c:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/></svg></div><h3>Проверенные материалы</h3><p>Полиуретан в работе: Legend PPF, Membrane TPU PREMIUM и VEGA PPF.</p></div>
+    <h2 class="dc-title">Почему мы</h2>
+    <div class="dc-facts">
+      <div><b>15+</b><h3>лет опыта</h3><p>Опыт работы с автомобильными плёнками у наших мастеров и руководителей.</p></div>
+      <div><b>1</b><h3>год гарантии</h3><p>Гарантия от самопроизвольного отклеивания при соблюдении условий эксплуатации.</p></div>
+      <div><b>3</b><h3>проверенные плёнки</h3><p>Полиуретан в работе: Legend PPF, Membrane TPU PREMIUM и VEGA PPF.</p></div>
     </div>
   </div>
 </section>
 
-<section class="section" id="services" style="padding-top:0">
+<section class="dc-block" id="works">
   <div class="wrap">
-    <div class="section-head"><h2>Защита и смена цвета</h2><p>Выберите услугу, чтобы посмотреть подробности и цены.</p></div>
-    <div class="services">
-      <a class="service c-blue" href="services.html#films">
-        <div class="ring" style="--c:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/></svg></div>
-        <h3>Защитная плёнка</h3>
-        <p>Полиуретан Legend PPF, Membrane TPU PREMIUM и VEGA PPF — защита кузова от сколов, гравия и щёток на мойке.</p>
-        <div class="service-foot"><span class="price">от 60 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-      <a class="service c-violet" href="services.html#color">
-        <div class="ring" style="--c:var(--violet)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 7 6 10a6 6 0 0 1-12 0c0-3 3-6 6-10z"/></svg></div>
-        <h3>Смена цвета</h3>
-        <p>Матовые, глянцевые и сатиновые плёнки — новый образ.</p>
-        <div class="service-foot"><span class="price">от 300 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-      <a class="service c-orange" href="services.html#polish">
-        <div class="ring" style="--c:var(--orange)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></svg></div>
-        <h3>Восстановительная полировка и нанесение керамического покрытия</h3>
-        <p>Восстановление блеска кузова, устранение царапин и потёртостей. Керамика для защиты, глубокого блеска и насыщенного цвета.</p>
-        <div class="service-foot"><span class="price">от 45 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-      <a class="service c-green" href="services.html#interior">
-        <div class="ring" style="--c:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M4.2 16.5l5.2-3M19.8 16.5l-5.2-3"/></svg></div>
-        <h3>Реставрация интерьера</h3>
-        <p>Перешив руля в натуральную кожу, реставрация сидений, перешив потолка в оригинальную ткань либо алькантару.</p>
-        <div class="service-foot"><span class="price">от 10 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-      <a class="service c-cyan" href="services.html#extra">
-        <div class="ring" style="--c:var(--cyan)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6M8 6v12M12 3v18M16 6v12M20 9v6"/></svg></div>
-        <h3>Шумо-виброизоляция кузова</h3>
-        <p>Скрытая забота о Вашем комфорте: посторонние звуки исчезают, остается только удовольствие от вождения.</p>
-        <div class="service-foot"><span class="price">от 28 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-      <a class="service c-pink" href="services.html#extra">
-        <div class="ring" style="--c:var(--pink)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div>
-        <h3>Охрана и тюнинг</h3>
-        <p>Установка комплексов Pandora и StarLine, монтаж обвесов.</p>
-        <div class="service-foot"><span class="price">от 15 000 ₽</span><span class="more">Подробнее →</span></div>
-      </a>
-    </div>
-    <div class="section-cta"><a href="services.html" class="btn">Все услуги и цены</a></div>
-  </div>
-</section>
-
-<section class="section" id="process" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head"><h2>Этап за этапом — результат</h2><p>От звонка до выдачи машины — пять шагов. Срок и цену называем сразу.</p></div>
-    <div class="steps">
-      <div class="step"><h3>Заявка и консультация</h3><p>Звоните или пишете — уточняем модель авто, состояние кузова и что именно нужно защитить.</p><span class="step-time">15 минут</span></div>
-      <div class="step"><h3>Подбор плёнки и расчёт</h3><p>Приезжаете в студию — смотрим кузов вживую, собираем палитру образцов и считаем точную стоимость.</p><span class="step-time">в день визита</span></div>
-      <div class="step"><h3>Подготовка кузова</h3><p>Мойка, обезжиривание, устранение загрязнений. Плёнка ложится только на идеально чистую поверхность.</p><span class="step-time">до 1 дня</span></div>
-      <div class="step"><h3>Оклейка</h3><p>Раскрой по лекалам, нанесение вручную, подгибы кромок. Никакой спешки — от этого зависит срок службы.</p><span class="step-time">1–5 дней</span></div>
-      <div class="step"><h3>Приёмка и гарантия</h3><p>Осматриваем результат вместе с вами при ярком свете, выдаём гарантию и рассказываем про уход.</p><span class="step-time">гарантия 1 год</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="works" style="padding-top:0">
-  <div class="wrap">
-    <div class="section-head"><h2>Результаты наших работ</h2><p>Процесс работы с техникой наших клиентов и готовый результат</p></div>
+    <h2 class="dc-title">Результаты наших работ</h2>
+    <p class="dc-lead">Процесс работы с техникой наших клиентов и готовый результат</p>
     <div class="strip">
       <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t001.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
-      <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t002.webp" width="640" height="598" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
       <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t006.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
       <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t010.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
       <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t009.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
-      <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t008.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
-      <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t022.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
-      <a href="works.html#gallery" aria-label="Смотреть галерею"><img src="assets/gallery/t024.webp" width="640" height="810" alt="Работа студии AUTOPROTECTTMN" loading="lazy" decoding="async"></a>
     </div>
-    <div class="section-cta"><a href="works.html" class="btn">Все работы и видео</a></div>
+    <div class="dc-more"><a href="works.html#gallery" class="dc-btn">Вся галерея</a></div>
   </div>
 </section>
 
-<section class="section" id="faq" style="padding-top:0">
+<section class="dc-block dc-band" id="video">
   <div class="wrap">
-    <div class="section-head"><h2>Частые вопросы</h2><p>Если вашего вопроса здесь нет — позвоните, ответим.</p></div>
+    <h2 class="dc-title">Видео работ</h2>
+    <p class="dc-lead">Как мы работаем и что получается в итоге.</p>
+    <div class="dc-videos">
+      <a href="works.html" class="dc-vid"><img src="assets/poster/defender.jpg" alt="Land Rover Defender" loading="lazy" decoding="async"><span>Land Rover Defender</span></a>
+      <a href="works.html" class="dc-vid"><img src="assets/poster/porsche.jpg" alt="Porsche Cayenne GTS" loading="lazy" decoding="async"><span>Porsche Cayenne GTS</span></a>
+      <a href="works.html" class="dc-vid"><img src="assets/poster/promo-story.jpg" alt="Как мы работаем" loading="lazy" decoding="async"><span>Как мы работаем</span></a>
+    </div>
+    <div class="dc-more"><a href="works.html" class="dc-btn">Смотреть все видео</a></div>
+  </div>
+</section>
+
+<section class="dc-block" id="process">
+  <div class="wrap">
+    <h2 class="dc-title">Этап за этапом — результат</h2>
+    <p class="dc-lead">От звонка до выдачи машины — пять шагов. Срок и цену называем сразу.</p>
+    <ol class="dc-steps">
+      <li><h3>Заявка и консультация</h3><p>Звоните или пишете — уточняем модель авто, состояние кузова и что именно нужно защитить.</p><em>15 минут</em></li>
+      <li><h3>Подбор плёнки и расчёт</h3><p>Приезжаете в студию — смотрим кузов вживую, собираем палитру образцов и считаем точную стоимость.</p><em>в день визита</em></li>
+      <li><h3>Подготовка кузова</h3><p>Мойка, обезжиривание, устранение загрязнений. Плёнка ложится только на идеально чистую поверхность.</p><em>до 1 дня</em></li>
+      <li><h3>Оклейка</h3><p>Раскрой по лекалам, нанесение вручную, подгибы кромок. Никакой спешки — от этого зависит срок службы.</p><em>1–5 дней</em></li>
+      <li><h3>Приёмка и гарантия</h3><p>Осматриваем результат вместе с вами при ярком свете, выдаём гарантию и рассказываем про уход.</p><em>гарантия 1 год</em></li>
+    </ol>
+  </div>
+</section>
+
+<section class="dc-block dc-band" id="faq">
+  <div class="wrap dc-narrow">
+    <h2 class="dc-title">Частые вопросы</h2>
     <div class="faq">
     <details><summary>Сколько держится плёнка?</summary><div class="faq-answer">Гарантию на сам материал даёт производитель плёнки. От студии — гарантия 1 год на то, что плёнка не отклеится самопроизвольно, при соблюдении условий эксплуатации. Условия проговариваем при выдаче автомобиля, там нет ничего неожиданного: аккуратная мойка и разумное обращение с кромками.</div></details>
     <details><summary>Можно ли мыть машину на мойке?</summary><div class="faq-answer">Да. Обычная бесконтактная мойка плёнке не вредит. Единственное, о чём просим — не направлять струю высокого давления вплотную к кромкам и стыкам плёнки, и первые несколько дней после оклейки дать материалу окончательно схватиться.</div></details>
@@ -219,22 +215,25 @@
   </div>
 </section>
 
-<section id="contact" style="padding-top:0">
+<section class="dc-block dc-contacts" id="contact">
   <div class="wrap">
-    <div class="contact-card">
-      <div class="contact-head">
-        <h2>Свяжитесь с нами</h2>
-        <p>Приезжайте со своим автомобилем — соберём палитру образцов и посчитаем точную стоимость на месте.</p>
+    <h2 class="dc-title dc-title--xl">Контакты</h2>
+    <div class="dc-contact-grid">
+      <div>
+        <small>Адрес</small>
+        <p>Тюмень, ул. 50 лет Октября, 202, литера А</p>
+        <small>Режим работы</small>
+        <p>Пн — Пт, 9:00 — 19:00<span>Сб и Вс — по предварительной договорённости</span></p>
       </div>
-      <div class="contact-grid">
-        <div class="contact-item"><small>Телефон</small><a class="phone" href="tel:+79829384032">+7 (982) 938-40-32</a><a class="phone" href="tel:+79224748887">+7 (922) 474-88-87</a></div>
-        <div class="contact-item"><small>Адрес</small><p>Тюмень, ул. 50 лет Октября, 202, литера А</p></div>
-        <div class="contact-item"><small>Режим работы</small><p>Пн — Пт, 9:00 — 19:00<span>Сб и Вс — по предварительной договорённости</span></p></div>
-      </div>
-      <div class="contact-actions">
-        <a href="tel:+79829384032" class="btn btn--solid">Позвонить</a>
-        <a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" class="btn" target="_blank" rel="noopener">Маршрут в 2ГИС</a>
-        <a href="https://www.instagram.com/autoprotecttmn" class="btn btn--ghost" target="_blank" rel="noopener">Instagram</a>
+      <div>
+        <small>Телефон</small>
+        <a class="phone" href="tel:+79829384032">+7 (982) 938-40-32</a>
+        <a class="phone" href="tel:+79224748887">+7 (922) 474-88-87</a>
+        <div class="dc-contact-actions">
+          <a href="tel:+79829384032" class="dc-btn">Позвонить</a>
+          <a href="https://2gis.ru/tyumen/geo/1830223003881510/65.624840,57.120010" class="dc-btn dc-btn--ghost" target="_blank" rel="noopener">Маршрут в 2ГИС</a>
+          <a href="https://www.instagram.com/autoprotecttmn" class="dc-btn dc-btn--ghost" target="_blank" rel="noopener">Instagram</a>
+        </div>
       </div>
     </div>
   </div>
