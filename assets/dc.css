@@ -193,3 +193,6 @@ body.home .site-header.is-solid{ background:rgba(0,0,0,0.9); }
 
 /* iOS в режиме экономии заряда рисует поверх видео кнопку «плей» — прячем её */
 .dc-hero-video::-webkit-media-controls, .dc-hero-video::-webkit-media-controls-start-playback-button, .dc-hero-video::-webkit-media-controls-panel{ display:none !important; -webkit-appearance:none; }
+
+/* яркое фото салона — чуть темнее, чтобы не слепило */
+.dc-card--dim img{ filter:brightness(.72) saturate(.95); }
