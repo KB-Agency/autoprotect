@@ -38,7 +38,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, video:focus-visibl
 /* ---------- шапка ---------- */
 .site-header{ background:rgba(0,0,0,0.9); border-bottom:0; }
 .header-in{ height:71px; gap:clamp(14px, 3vw, 40px); }
-.logo svg{ width:116px; height:34px; }
+.logo svg{ width:108px; height:36px; }
 .nav a{ font-size:14px; font-weight:600; letter-spacing:0.06em; color:#fff; }
 .nav a:hover{ color:var(--blue); }
 .nav a.is-active::after{ box-shadow:none; }
