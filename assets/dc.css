@@ -281,3 +281,11 @@ body.home .site-header.is-solid{ background:rgba(0,0,0,0.9); }
 .works-pick-card::after{ content:'→'; position:absolute; z-index:2; right:clamp(20px, 3vw, 44px); bottom:clamp(26px, 4vw, 60px); font-size:clamp(30px, 4vw, 60px); color:#fff; }
 #cases, #gallery{ scroll-margin-top:90px; }
 @media (max-width:620px){ .works-pick{ height:auto; min-height:0; } .works-pick-card{ aspect-ratio:1/1.15; } }
+
+/* фото показываем в своей пропорции (640×810 / 1440×1824), без доп. обрезки */
+.strip a{ aspect-ratio:640/810; }
+.strip a img{ width:100%; height:100%; object-fit:cover; }
+.sv-photos img{ aspect-ratio:640/810; }
+.sv-split-photo img{ aspect-ratio:1440/1824; }
+.sv-hero-a, .sv-hero-b{ aspect-ratio:1440/1824; }
+@media (max-width:900px){ .sv-hero-a, .sv-hero-b{ aspect-ratio:1440/1824; } }
